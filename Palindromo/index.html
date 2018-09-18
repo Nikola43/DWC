@@ -1,0 +1,46 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
+</head>
+
+<body>
+
+<script type="text/javascript">
+
+    //Definir una función que determine si la cadena de texto que se le pasa como parámetro es un palíndromo, es decir,
+    //si se lee de la misma forma desde la izquierda y desde la derecha. Ejemplo de palíndromo complejo:
+    // "La ruta nos aporto otro paso natural".
+
+
+    let palindromo = "La ruta nos aporto otro paso natural";
+
+
+    console.log(comprobarPalindromo(palindromo));
+
+
+    function comprobarPalindromo(text) {
+        let result = false;
+
+        let palindromoOriginal = text.toString().toLocaleLowerCase().trim().split("");
+
+
+
+        //let palindromo = text.toString().toLocaleLowerCase().split("");
+        //let palindromoReverse = palindromo.reverse();
+
+
+
+        console.log(palindromoOriginal);
+        //console.log(palindromoReverse);
+
+        //if (palindromoOriginal === palindromoReverse) {
+        //    result = true;
+       // }
+
+        return result;
+    }
+
+</script>
+
+</body>
+</html>
