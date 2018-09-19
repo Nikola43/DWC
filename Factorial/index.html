@@ -15,11 +15,7 @@
     }
 
     function calcularFactorialRecursivo(num) {
-        let result;
-        if (num === 1)
-            return 1;
-        result = num * calcularFactorialRecursivo(num - 1);
-        return (result);
+        return (num === 1 ? 1 : num * calcularFactorialRecursivo(num - 1));
     }
 
     let num = prompt("Introduce el numero");

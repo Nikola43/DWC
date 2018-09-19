@@ -11,35 +11,12 @@
     //si se lee de la misma forma desde la izquierda y desde la derecha. Ejemplo de palíndromo complejo:
     // "La ruta nos aporto otro paso natural".
 
-
     let palindromo = "La ruta nos aporto otro paso natural";
+    document.write(esPalindromo(palindromo));
 
-
-    console.log(comprobarPalindromo(palindromo));
-
-
-    function comprobarPalindromo(text) {
-        let result = false;
-
-        let palindromoOriginal = text.toString().toLocaleLowerCase().trim().split("");
-
-
-
-        //let palindromo = text.toString().toLocaleLowerCase().split("");
-        //let palindromoReverse = palindromo.reverse();
-
-
-
-        console.log(palindromoOriginal);
-        //console.log(palindromoReverse);
-
-        //if (palindromoOriginal === palindromoReverse) {
-        //    result = true;
-       // }
-
-        return result;
+    function esPalindromo(text) {
+        return text.toString().toLowerCase().replace(/\s/g, "") === text.toString().toLowerCase().split("").reverse().join("").replace(/\s/g, "");
     }
-
 </script>
 
 </body>

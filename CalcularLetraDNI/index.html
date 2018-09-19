@@ -8,19 +8,17 @@
 <body>
 
 <script type="text/javascript">
-    let letras = "TRWAGMYFPDXBNJZSQVHLCKET";
+
 
     let userDNI = prompt("Introduce el numero de tu DNI", "12345678");
-    let position = userDNI % 23;
-
-    alert("userDNI: "+userDNI);
-    alert("position:"+position);
+    document.write(userDNI+calcularLetraDNI(userDNI));
 
 
+    function calcularLetraDNI(dni) {
+        let letras = "TRWAGMYFPDXBNJZSQVHLCKET";
+        return letras[userDNI % 23];
+    }
 
-        let letter = userDNI.charAt(position);
-        alert(letter);
-        alert("Letra DNI: "+letter);
 
 
 
