@@ -34,10 +34,10 @@
 
 <script type="text/javascript">
     //  Creamos la Clase Punto:
-    function Punto(f, c) {
+    function Punto(x, y) {
         //  Damos valor por defecto a los parámetros para el caso que NO hayan sido pasados:
-        this.x = f || 0;
-        this.y = c || 0;
+        this.x = x || 0;
+        this.y = y || 0;
         this.mostrar = function () {
             return "(" + this.x + ", " + this.y + ")";
         }
@@ -46,27 +46,42 @@
     //  Creamos la clase Rectangulo
     //  < EL EJERCICIO ES CREAR LA CLASE Rectangulo >
     function Rectangulo(p1, p2, p3, p4) {
-        if (p1 instanceof Punto && p2 instanceof Punto) {
+        //comprobamos que los dos primeros parametros son puntos válidos
+        if (p1 instanceof Punto && p2 instanceof Punto && !esNull(p1) && !esNull(p2)) {
             this.p1 = p1;
             this.p2 = p2;
             this.ladoA = Math.abs(p1.x - p2.x);
             this.ladoB = Math.abs(p1.y - p2.y);
-        } else {
+        }
+        //comprobamos que los parametros p3 y p4 no son nulos y son numeros
+        else if (!esNull(p3) && !esNull(p4) && typeof p3 === 'number' && typeof p4 === 'number') {
             this.p1 = new Punto(p1, p2);
             this.p2 = new Punto(p3, p4);
             this.ladoA = Math.abs(p1 - p3);
             this.ladoB = Math.abs(p2 - p4);
         }
+        else {
+            this.p1 = 0;
+            this.p2 = 0;
+            this.ladoA = 0;
+            this.ladoB = 0;
+        }
+
+        //Preguntar al profesor por que asi no funciona
+        //this.ladoA = Math.abs(p1.x - p2.x);
+        //this.ladoB = Math.abs(p1.y - p2.y);
 
         this.mostrar = function () {
             return "(" + this.p1.x + ", " + this.p1.y + ", " + this.p2.x + ", " + this.p2.y + ")";
         };
+
         /**
          * @return {number}
          */
         this.Area = function () {
-            return this.ladoA * this.ladoB;
+            return (this.ladoA * this.ladoB);
         };
+
         /**
          * @return {number}
          */
@@ -79,16 +94,21 @@
     //  Creamos la clase Cubo:
     //  < EL EJERCICIO ES CREAR LA CLASE Cubo >
     function Cubo(p1, p2) {
-        if (p1 instanceof Rectangulo) {
+        //comprobamos que el parametro p1 es un rectangulo y que el parametro p2 no es nulo y es de tipo numero
+        if (p1 instanceof Rectangulo && !esNull(p1) && !esNull(p2) && typeof p2 === 'number') {
             this.rectangulo = p1;
-        } else {
-            this.rectangulo = 0;
+            this.altura = p2;
         }
-        this.altura = p2;
+        else {
+            this.rectangulo = new Rectangulo(0,0,0,0);
+            this.altura = 0;
+        }
 
         this.mostrar = function () {
-            return "(" + this.rectangulo.mostrar() + ", " + this.altura + ")";
+            return esNull(this.rectangulo) ? undefined : "(" + this.rectangulo.mostrar() + ", " + this.altura + ")";
+
         };
+
         /**
          * @return {number}
          */
@@ -110,8 +130,11 @@
 
         sal += "<p>Creamos dos Rectangulos r1 y r2: <br>";
 
-        var r1 = new Rectangulo(1, 1, 100, 150);
+        var r1 = new Rectangulo(1, 1, 150, 100);
         var r2 = new Rectangulo(p1, p2);
+
+        //var r1 = new Rectangulo();
+        //var r2 = new Rectangulo();
 
         sal += "r1 = " + r1.mostrar() + "<br>";
         sal += "r2 = " + r2.mostrar() + "<br> </p>";
@@ -130,8 +153,8 @@
 
 
         sal += "<p>Creamos dos Cubos: cubo1 y cubo2: <br>";
-        var cubo1 = new Cubo(r1, 10);
-        var cubo2 = new Cubo(r2, 15);
+        var cubo1 = new Cubo();
+        var cubo2 = new Cubo();
 
         sal += "cubo1 = " + cubo1.mostrar() + "<br>";
         sal += "cubo2 = " + cubo2.mostrar() + "<br> </p>";
@@ -141,26 +164,30 @@
         document.getElementById(salida).innerHTML = sal;
 
         cambiarColorFondo("#aaaaaa");
-        dibujarRectangulo(20,20,r1, "red");
-        dibujarRectangulo(20,200,r2, "blue");
+        dibujarRectangulo(20, 20, r1, "red");
+        dibujarRectangulo(20, 200, r2, "blue");
+    }
+
+    function esNull(myVar) {
+        return typeof myVar === 'undefined' || myVar == null;
     }
 
     function cambiarColorFondo(color) {
         var c = document.getElementById("myCanvas");
         var ctx = c.getContext("2d");
         ctx.beginPath();
-        ctx.rect(0,0,c.width, c.height);
+        ctx.rect(0, 0, c.width, c.height);
         ctx.fillStyle = color;
         ctx.fill();
     }
 
 
-    function dibujarRectangulo(posicionX, posicionY,rectangulo, color) {
+    function dibujarRectangulo(posicionX, posicionY, rectangulo, color) {
         if (rectangulo instanceof Rectangulo) {
             var c = document.getElementById("myCanvas");
             var ctx = c.getContext("2d");
             ctx.beginPath();
-            ctx.rect(posicionX,posicionY,rectangulo.ladoA, rectangulo.ladoB);
+            ctx.rect(posicionX, posicionY, rectangulo.ladoA, rectangulo.ladoB);
             ctx.fillStyle = color;
             ctx.fill();
         }
