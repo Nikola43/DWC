@@ -8,7 +8,6 @@
 			#salida {
 				margin-left: 4%;
 			}
-			
 		</style>
 		
 		<script type="text/javascript">
@@ -23,9 +22,21 @@
 				}
 			}
 			
-			//  Creamos la clase Rectangulo:
-			
+			//  Creamos la clase Rectangulo
 			//  < EL EJERCICIO ES CREAR LA CLASE Rectangulo >
+			function Rectangulo(y1, x1, y2, x2){
+			    this.p1 = new Punto(y1, x1);
+			    this.p2 = new Punto(y2, x2);
+			    this.mostrar = function(){
+                    return ("(" + this.p1 + ", " + this.p2 + ")");
+                };
+                /**
+                 * @return {number}
+                 */
+                this.Area = function () {
+                    return (x1 - x2) * (y1 - y2)
+                }
+			}
 			
 			
 			
