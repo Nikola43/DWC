@@ -130,7 +130,7 @@
 
         sal += "<p>Creamos dos Rectangulos r1 y r2: <br>";
 
-        var r1 = new Rectangulo(1, 1, 150, 100);
+        var r1 = new Rectangulo(1, 1, 100, 100);
         var r2 = new Rectangulo(p1, p2);
 
         //var r1 = new Rectangulo();
@@ -153,8 +153,8 @@
 
 
         sal += "<p>Creamos dos Cubos: cubo1 y cubo2: <br>";
-        var cubo1 = new Cubo();
-        var cubo2 = new Cubo();
+        var cubo1 = new Cubo(r1, 10);
+        var cubo2 = new Cubo(r2, 15);
 
         sal += "cubo1 = " + cubo1.mostrar() + "<br>";
         sal += "cubo2 = " + cubo2.mostrar() + "<br> </p>";
@@ -168,9 +168,6 @@
         dibujarRectangulo(20, 200, r2, "blue");
     }
 
-    function esNull(myVar) {
-        return (typeof(value) === "undefined" || !value);
-    }
 
     function cambiarColorFondo(color) {
         var c = document.getElementById("myCanvas");
@@ -191,6 +188,10 @@
             ctx.fillStyle = color;
             ctx.fill();
         }
+    }
+
+    function esNull(myVar) {
+        return (typeof(myVar) === "undefined" || !myVar);
     }
 
 
