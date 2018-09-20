@@ -46,6 +46,7 @@
     //  Creamos la clase Rectangulo
     //  < EL EJERCICIO ES CREAR LA CLASE Rectangulo >
     function Rectangulo(p1, p2, p3, p4) {
+        //Asi si funciona
         //comprobamos que los dos primeros parametros son puntos válidos
         if (p1 instanceof Punto && p2 instanceof Punto && !esNull(p1) && !esNull(p2)) {
             this.p1 = p1;
@@ -67,9 +68,29 @@
             this.ladoB = 0;
         }
 
-        //Preguntar al profesor por que asi no funciona
-        //this.ladoA = Math.abs(p1.x - p2.x);
-        //this.ladoB = Math.abs(p1.y - p2.y);
+        //Asi no funciona
+        //definiendo los atributos fuera del if y del else sale NaN
+        //pero en teoria ya esta creado el objeto p1 con la funcion new Punto()
+        /*
+        //comprobamos que los dos primeros parametros son puntos válidos
+        if (p1 instanceof Punto && p2 instanceof Punto && !esNull(p1) && !esNull(p2)) {
+            this.p1 = p1;
+            this.p2 = p2;
+        }
+        //comprobamos que los parametros p3 y p4 no son nulos y son numeros
+        else if (!esNull(p3) && !esNull(p4) && typeof p3 === 'number' && typeof p4 === 'number') {
+            this.p1 = new Punto(p1, p2);
+            this.p2 = new Punto(p3, p4);
+        }
+        else {
+            this.p1 = 0;
+            this.p2 = 0;
+            this.ladoA = 0;
+            this.ladoB = 0;
+        }
+        this.ladoA = Math.abs(p1.x - p2.x);
+        this.ladoB = Math.abs(p1.y - p2.y);
+        */
 
         this.mostrar = function () {
             return "(" + this.p1.x + ", " + this.p1.y + ", " + this.p2.x + ", " + this.p2.y + ")";
