@@ -82,13 +82,33 @@
 			
 			
 			//  Creamos la clase Cubo:
-			
-			//  <  DESARROLLAR LA CLASE Cubo  >
 
-			function Cubo(p1, p2) {
-                Rectangulo.call(this, p1);
-            }
+			//  <  DESARROLLAR LA CLASE Cubo  >
             Cubo.prototype = new Rectangulo();  //  hereda de Rectangulo
+			function Cubo(p1, p2, p3, p4, p5) {
+			    // llamamos al constructor de la clase padre
+                Rectangulo.call(this, p1, p2, p4, p4);
+
+                // Si el primer parametro es un cubo, asignamos la altura
+                if (p1 instanceof Rectangulo){
+                    this.h = p2;
+                } else {
+                    this.h = p5;
+                }
+
+                this.mostrarC = function () {
+                    return this.mostrarR() + " " + this.h;
+                };
+
+                /**
+                 * @return {number}
+                 */
+                this.Volumen = function () {
+                    return this.Area() * this.h;
+                };
+
+            }
+
 			
 			
 			
@@ -126,6 +146,7 @@
 				sal += "cubo2 = " + cubo2.mostrarC() + "<br>";
 				sal += "Volumen cubo1 = " + cubo1.Volumen() + "<br>";
 				sal += "Volumen cubo2 = " + cubo2.Volumen() + "<br> </p>";
+				console.log(cubo1);
 				
 				document.getElementById(salida).innerHTML = sal;
 			}
