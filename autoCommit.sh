@@ -1,25 +1,25 @@
 #!/bin/bash
-cd /c/Users/Paulo\ Soares/GitHub/DAW/
+cd $HOME/GitHub/DAW/
 git add .
 git commit -m "autocommit"
 git push
 
-cd /c/Users/Paulo\ Soares/GitHub/DIW/
+cd $HOME/GitHub/DIW/
 git add .
 git commit -m "autocommit"
 git push
 
-cd /c/Users/Paulo\ Soares/GitHub/DWC/
+cd $HOME/GitHub/DWC/
 git add .
 git commit -m "autocommit"
 git push
 
-cd /c/Users/Paulo\ Soares/GitHub/DWS/
+cd $HOME/GitHub/DWS/
 git add .
 git commit -m "autocommit"
 git push
 
-cd /c/Users/Paulo\ Soares/GitHub/HLC/
+cd $HOME/GitHub/HLC/
 git add .
 git commit -m "autocommit"
 git push
