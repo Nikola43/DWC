@@ -76,12 +76,13 @@
 
         // CLASE CUBO
         // Suponemos que nos pasan, o bien un cubo, o un rectangulo, o dos puntos, o cuatro coordenadas
-        class Cubo {
+        class Cubo extends Rectangulo{
             constructor(p1, p2, p3, p4, p5) {
+                super(p1, p2, p3, p4);
                 // si nos pasan un cubo
                 if (p1 instanceof Cubo) {
                     // clonamos el cubo
-                    this.r = p1.r;
+                    //this.r = p1.r;
                     this.h = p1.h;
                 } else {
                     // si nos pasan un rectangulo
