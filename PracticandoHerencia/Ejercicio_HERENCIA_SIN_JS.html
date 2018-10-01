@@ -83,17 +83,30 @@
 			
 			//  Creamos la clase Cubo:
 			//  <  DESARROLLAR LA CLASE Cubo  >
+            // Suponemos que nos pasan, o bien un cubo, o un rectangulo, o dos puntos, o cuatro coordenadas
             Cubo.prototype = new Rectangulo();  //  hereda de Rectangulo
 			function Cubo(p1, p2, p3, p4, p5) {
 			    // llamamos al constructor de la clase padre
                 Rectangulo.call(this, p1, p2, p4, p4);
 
-                // Si el primer parametro es un cubo, asignamos la altura
-                if (p1 instanceof Rectangulo){
-                    this.h = p2;
+                // si nos pasan un cubo
+                if (p1 instanceof Cubo) {
+                    this.h = p1.h;
                 } else {
-                    this.h = p5;
+                    // si nos pasan un rectangulo
+                    if (p1 instanceof Rectangulo) {
+                        this.h = p2;
+                    } else {
+                        // si nos pasan dos puntos
+                        if (p1 instanceof Punto && p2 instanceof Punto) {
+                            this.h = p3;
+                        } else {
+                            // si nos pasan cuatro coordenadas
+                            this.h = p5;
+                        }
+                    }
                 }
+
 
                 this.mostrarC = function () {
                     return this.mostrarR() + " " + this.h;
@@ -139,7 +152,7 @@
 				
 				sal += "<p>Creamos dos Cubos: cubo1 y cubo2: <br>";
 				var cubo1 = new Cubo(r1, 10);
-				var cubo2 = new Cubo(r2, 15);
+                var cubo2 = new Cubo(23, 53, 74, 74, 15);
 				
 				sal += "cubo1 = " + cubo1.mostrarC() + "<br>";
 				sal += "cubo2 = " + cubo2.mostrarC() + "<br>";

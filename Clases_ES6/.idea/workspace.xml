@@ -2,10 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c8a3d65b-e21e-4c1e-8105-ae853e212096" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../DOM/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../DOM/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Ejercicio_CLASES_SIN_JS_ES6.html" beforeDir="false" afterPath="$PROJECT_DIR$/Ejercicio_CLASES_SIN_JS_ES6.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../DOM/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../DOM/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../DOM/ejercicio11.html" beforeDir="false" afterPath="$PROJECT_DIR$/../DOM/ejercicio11.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../PracticandoHerencia/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../PracticandoHerencia/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../PracticandoHerencia/Ejercicio_HERENCIA_SIN_JS.html" beforeDir="false" afterPath="$PROJECT_DIR$/../PracticandoHerencia/Ejercicio_HERENCIA_SIN_JS.html" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -20,12 +20,12 @@
     <session id="600366831">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="5" />
-          <entry key="project.open.time.0" value="2" />
+          <entry key="project.closed" value="6" />
+          <entry key="project.open.time.0" value="3" />
           <entry key="project.open.time.15" value="1" />
           <entry key="project.open.time.3" value="1" />
           <entry key="project.open.time.5" value="1" />
-          <entry key="project.opened" value="5" />
+          <entry key="project.opened" value="6" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -87,8 +87,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Ejercicio_CLASES_SIN_JS_ES6.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="427">
-              <caret line="96" column="32" lean-forward="true" selection-start-line="96" selection-start-column="32" selection-end-line="96" selection-end-column="32" />
+            <state relative-caret-position="187">
+              <caret line="78" column="26" lean-forward="true" selection-start-line="78" selection-start-column="26" selection-end-line="78" selection-end-column="26" />
             </state>
           </provider>
         </entry>
@@ -113,10 +113,9 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-8" />
-    <option name="y" value="-8" />
-    <option name="width" value="1936" />
-    <option name="height" value="1056" />
+    <option name="x" value="953" />
+    <option name="width" value="974" />
+    <option name="height" value="1047" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -141,7 +140,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -153,6 +151,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -196,11 +195,12 @@
       <workItem from="1537948286711" duration="24000" />
       <workItem from="1537957974728" duration="85000" />
       <workItem from="1537962978036" duration="147000" />
+      <workItem from="1538393071913" duration="728000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="8426000" />
+    <option name="totallyTimeSpent" value="9154000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -241,8 +241,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Ejercicio_CLASES_SIN_JS_ES6.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="427">
-          <caret line="96" column="32" lean-forward="true" selection-start-line="96" selection-start-column="32" selection-end-line="96" selection-end-column="32" />
+        <state relative-caret-position="187">
+          <caret line="78" column="26" lean-forward="true" selection-start-line="78" selection-start-column="26" selection-end-line="78" selection-end-column="26" />
         </state>
       </provider>
     </entry>

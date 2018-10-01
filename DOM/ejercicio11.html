@@ -19,7 +19,7 @@ window.onload = function() {
     var numeroEnlacesApuntanPrueba = 0;
 
     for (var i = 0; i < enlaces.length; i++)
-        if (enlaces[i].href === "http://prueba/")
+        if (enlaces[i].href === "http://prueba/" || enlaces[i].href === "http://prueba")
             numeroEnlacesApuntanPrueba++;
 
     console.log("Numero de enlaces que apuntan a http://prueba: " + numeroEnlacesApuntanPrueba);
@@ -28,11 +28,20 @@ window.onload = function() {
     var numeroEnlacesTercerParrafo = document.getElementsByTagName("p")[2].getElementsByTagName("a").length;
     console.log("Numero de enlaces del tercer párrafo: " +numeroEnlacesTercerParrafo);
 
-    document.getElementById("resultado").innerHTML =
-        "Numero de enlaces de la pagina: " + numeroEnlacesPagina + "</br>\n" +
-        "Direccion del penultimo enlace: " + direccionPenultimoEnlace + "</br>\n" +
-        "Numero de enlaces que apuntan a http://prueba: " + numeroEnlacesApuntanPrueba + "</br>\n" +
-        "Numero de enlaces del tercer párrafo: " +numeroEnlacesTercerParrafo + "</br>\n";
+    var div1 = document.createElement("div");
+    var div2 = document.createElement("div");
+    var div3 = document.createElement("div");
+    var div4 = document.createElement("div");
+
+    div1.innerText = "Numero de enlaces de la pagina: " + numeroEnlacesPagina;
+    div2.innerText = "Direccion del penultimo enlace: " + direccionPenultimoEnlace;
+    div3.innerText = "Numero de enlaces que apuntan a http://prueba: " + numeroEnlacesApuntanPrueba;
+    div4.innerText = "Numero de enlaces del tercer párrafo: " +numeroEnlacesTercerParrafo;
+
+    document.getElementById("resultado").appendChild(div1);
+    document.getElementById("resultado").appendChild(div2);
+    document.getElementById("resultado").appendChild(div3);
+    document.getElementById("resultado").appendChild(div4);
 }
 </script>
 </head>
