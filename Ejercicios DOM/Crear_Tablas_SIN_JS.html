@@ -5,40 +5,23 @@
     <title>Ejercicio Tablas. CREAR TABLAS</title>
 
     <script type="text/javascript">
-
-      
       function Generar_Tabla(ifila, iCol) {
-
-
-
           var tabla = document.createElement("table");
-          tabla.setAttribute("id", "mi_tabla");
-          tabla.setAttribute("border", "1px solid black");
-          document.body.appendChild(tabla);
-/*
-          var tr = document.createElement("tr");
-          tabla.appendChild(tr);
-
-          var td = document.createElement("td");
-          var texto = document.createTextNode("cell");
-          td.appendChild(texto);
-          tr.appendChild(td);
-*/
-
-
+          tabla.border = 1;
+          var tr;
+          var td;
 
       	//  Generamos la tabla dinámicamente y la mentemos en el div "tabla".
           for (var i = 0; i < ifila; i++){
+              tr = document.createElement("tr");
+              tabla.appendChild(tr);
               for (var j = 0; j < iCol; j++){
-                  var tr = document.createElement("tr");
-                  tabla.appendChild(tr);
-
-                  var td = document.createElement("td");
-                  var texto = document.createTextNode("cell");
-                  td.appendChild(texto);
+                  td = document.createElement("td");
+                  td.innerText = "Fila: "+i + " Col "+j;
                   tr.appendChild(td);
               }
           }
+          document.getElementById("tabla").appendChild(tabla);
       }
          
     </script>
