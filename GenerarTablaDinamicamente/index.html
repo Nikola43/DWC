@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <title>Ejercicio Tablas. CREAR TABLAS</title>
+
+    <script type="text/javascript">
+        function Generar_Tabla() {
+            // creamos los elemento tabla, tbody y thead
+            var tabla;
+            var thead;
+            var tbody;
+
+            // creamos variables para controlas lar filas y columnas
+            var iFil;
+            var iCol;
+
+            // creamos elementos tr, th y td para manejar crear la estructura de la tabla
+            var tr;
+            var th;
+            var td;
+
+
+            // creamos una tabla
+            tabla = document.createElement("table");
+
+            // insertamos un thead a la tabla
+            thead = document.createElement("thead");
+            tabla.appendChild(thead);
+
+            // insertamos una fila en el thead para la cabecera
+            tr = document.createElement("tr");
+            thead.appendChild(tr);
+
+            // extraemos las dimensiones de la tabla del html
+            iFil = document.getElementById("fil").value;
+            iCol = document.getElementById("col").value;
+
+            // recorremos la cabecera insertando el titulo en cada columna
+            for (var a = 1; a <= iCol; a++){
+                th = document.createElement("th");
+                tr.appendChild(th).innerText = "COLUMNA " + a;
+            }
+
+
+            // recorremos las filas
+            for (var i = 1; i <= iFil; i++) {
+
+                // Crea las filas de la tabla
+                var fila = document.createElement("tr");
+
+                for (var j = 1; j <= iCol; j++) {
+                    // Crea un elemento <td> y un nodo de texto, haz que el nodo de
+                    // texto sea el contenido de <td>, ubica el elemento <td> al final
+                    // de la hilera de la tabla
+                    var celda = document.createElement("td");
+                    var textoCelda = document.createTextNode("fila "+i+", columna "+j);
+                    celda.appendChild(textoCelda);
+                    fila.appendChild(celda);
+                }
+
+                // agrega la hilera al final de la tabla (al final del elemento tbody)
+                tbody = document.createElement("tbody");
+                tbody.appendChild(fila);
+            }
+
+            // posiciona el <tbody> debajo del elemento <table>
+            tabla.appendChild(tbody);
+
+            // modifica el atributo "border" de la tabla y lo fija a "2";
+            tabla.setAttribute("border", "2");
+
+            // insertamos la tabla en el div
+            document.getElementById("tabla").appendChild(tabla);
+        }
+
+    </script>
+
+</head>
+
+<body>
+<br>
+<h2>Ejercicio Tablas. CREAR TABLAS</h2>
+<h3>Introducir el código javascript necesario, para que al pulsar sobre
+    el botón, se cree una tabla con un número fijo de filas y columnas.
+</h3>
+
+<br/>
+<label for="fil">Filas: </label>
+<input id="fil" type="text" name="filas" title="filas"><br>
+
+<label for="col">Columnas: </label>
+<input id="col" type="text" name="columnas" title="columnas"><br>
+<p>
+    <button onclick="Generar_Tabla()">Generar Tabla</button>
+</p>
+<br>
+
+
+<div id="tabla">
+    Aquí se colocará la tabla que se cree dinámicamente con javascript
+</div>
+
+
+</body>
+</html>
