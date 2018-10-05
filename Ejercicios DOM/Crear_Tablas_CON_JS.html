@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  	<meta charset="UTF-8"/>
+    <title>Ejercicio Tablas. CREAR TABLAS</title>
+
+    <script type="text/javascript">
+
+      
+      function Generar_Tabla(ifila, iCol) {
+      	var tabla = document.createElement("table");
+		tabla.border = 1;
+		var tr, td, texto;
+		for (var i = 1; i<=ifila; i++){
+			tr = document.createElement("tr");
+			tabla.appendChild(tr);
+			for(var j=1; j<=iCol; j++){
+				td = document.createElement("td");
+				td.innerText = "Fila " + i + "  Columna "+ j;
+			//	texto = document.createTextNode( "Fila " + i + "  Columna "+ j);
+			//	td.appendChild(texto);
+				tr.appendChild(td);
+			}
+		}
+        document.getElementById("tabla").appendChild(tabla);
+      }
+	  
+	  function Generar_Tabla_V2() {  
+		var ifila = document.getElementById("nFilas").value;
+		var iCol = document.getElementById("nColumnas").value;
+		console.log(ifila, iCol);
+		
+      	var tabla = document.createElement("table");
+		tabla.border = 1;
+		var tr, td;
+		for (var i = 1; i<=ifila; i++){
+			tr = document.createElement("tr");
+			tabla.appendChild(tr);
+			for(var j=1; j<=iCol; j++){
+				td = document.createElement("td");
+				td.innerText = "Fila " + i + "  Columna "+ j;
+				tr.appendChild(td);
+			}
+		}
+		document.getElementById("divtabla").innerHTML = "";
+        document.getElementById("divtabla").appendChild(tabla);
+      }
+	  
+	  
+	  
+	  
+	  window.onload = function(){
+	//	document.getElementById("btGenerar").onclick = Generar_Tabla_V2;
+		document.getElementById("btGenerar").onclick = function(){
+			var miArray = [
+				["columna 1", "columna 2", "columna 3"],
+				["dato 1 1", "dato 1 2", "dato 1 2"],
+				["dato 2 1", "dato 2 2", "dato 2 3"],
+				["dato 3 1", "dato 3 2", "dato 3 3"]
+			];
+			console.log(miArray);
+			Generar_Tabla_V3(miArray);
+		}
+	  }
+	  
+	  
+	  function Generar_Tabla_V3(aTabla) {  
+      	var tabla = document.createElement("table");
+		tabla.border = 1;
+		var tr, td;
+		tabla.appendChild(creaFila(aTabla[0], true));
+		for (var i = 1; i<aTabla.length; i++)
+			tabla.appendChild(creaFila(aTabla[i], false));
+		document.getElementById("divtabla").innerHTML = "";
+        document.getElementById("divtabla").appendChild(tabla);
+      }
+	  
+	  function creaFila(aFila, cabecera = ""){
+		var fila = document.createElement("tr");
+		var td;
+		var tipo = "td";
+		if (cabecera | cabecera.toString().toUpperCase() == "CABECERA")
+			tipo = "th";
+		for(var i=0; i<aFila.length; i++){
+			td = document.createElement(tipo);
+			td.innerText = aFila[i];
+			fila.appendChild(td);
+		}
+		return fila;
+	  }	
+         
+    </script>
+
+  </head>
+
+  <body>
+  	<br>
+  	<h2>Ejercicio Tablas. CREAR TABLAS</h2>
+  	<h3>Introducir el código javascript necesario, para que al pulsar sobre 
+  		el botón, se cree una tabla con un número fijo de filas y columnas.
+  	</h3>
+
+    <br/>
+	<label for="nFilas">Cuantas filas: </label>
+	<input id="nFilas" name="input1" type="number" value="15">
+	<br>
+	<label for="nColumnas">Cuantas columnas: </label>
+	<input id="nColumnas" name="input2" type="number" value="5">
+	<p>
+      <button id="btGenerar">Generar Tabla</button>
+	</p>
+    <br>
+    
+    
+    <div id="divtabla">
+    	Aquí se colocará la tabla que se cree dinámicamente con javascript
+    </div>
+
+
+  </body>
+</html>

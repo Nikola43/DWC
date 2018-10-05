@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <script type="text/javascript">
+        function crearFila(Afila, cabecera) {
+            //fila
+            var tr = document.createElement("tr");
+            var th;
+            var tipoFila;
+
+        if(cabecera || cabecera == "cabecera"){
+            tipoFila = "th";
+
+        }else{
+            tipoFila = "td";
+        }
+
+            for ( var i = 0; i < Afila.length; i++){
+                th = document.createElement(tipoFila);
+                th.innerText = Afila[i];
+                tr.appendChild(th);
+            }
+
+        }
+
+        function Pro_var(){
+           var cabecera = "cabecera"||true;
+           var datos = ["1", "hola", "adios", "5"];
+           console.log(crearFila(datos));
+        }
+    </script>
+</head>
+<body>
+
+</body>
+</html>

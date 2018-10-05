@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <title>Ejercicio Tablas</title>
+
+
+
+    <script type="text/javascript">
+
+        function Generar_TablaV2() {
+
+            //alert("entro");
+            //return ;
+            var ifila = document.getElementById("numFilas").value;
+            var iCol = document.getElementById("numColumnas").value;
+            console.log(ifila,iCol);
+
+            var table = document.createElement("table");
+            table.border = 2;
+            var tr, td;
+
+            for (var i = 1; i <= ifila; i++) {
+                //creando filas
+                var tr = document.createElement("tr");
+                table.appendChild(tr);
+
+                for (var j = 1; j <= iCol; j++) {
+                    // Crea un elemento <td>
+                    var td = document.createElement("td");
+                    td.innerText = "filas:" + i + " Columnas:" + j;
+                    tr.appendChild(td);
+                }
+            }
+            //si no lo ponemos se crean las tablas debajo
+            //si lo ponemos se borranlas tablas y aparecen la otra.
+            document.getElementById("tabla").innerHTML ="";
+
+            //buscame el id tabla y dentro de ese padre abreme el element table
+            document.getElementById("tabla").appendChild(table);
+        }
+//se carga la pagina y luego me hace el javaScrip
+        window.onload = function () {
+            document.getElementById("boton").onclick = Generar_TablaV2;//llamo al button
+        }
+    </script>
+
+</head>
+
+<body>
+<br>
+<h2>Ejercicio Tablas. CREAR TABLAS</h2>
+<h3>Introducir el código javascript necesario, para que al pulsar sobre
+    el botón, se cree una tabla con un número fijo de filas y columnas.
+    <br>
+    Ahora generamos la tabla con formato thead y tbody
+</h3>
+<br/>
+
+<label for="numFila">Numero de filas</label>
+<input id="numFilas" name="input1" type="number" value="15">
+
+<br>
+<label for="numColumnas">Numero de columnas</label>
+Fila <input id="numColumnas" name="input2" type="number" value="5">
+
+<p>
+    <button id="boton">Generar Tabla</button>
+</p>
+<br>
+
+
+<div id="tabla">
+    Aquí se colocará la tabla que se cree dinámicamente con javascript
+</div>
+
+
+</body>
+</html>

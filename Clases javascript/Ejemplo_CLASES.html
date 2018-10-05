@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8"/>
+		<title>Ejercicio/Ejemplo CLASES en Javascript</title>
+		
+		<style type="text/css">
+			#salida {
+				margin-left: 4%;
+			}
+			
+		</style>
+		
+		<script type="text/javascript">
+		
+			//  Creamos la Clase Punto:
+			function Punto(f, c) {
+				//  Damos valor por defecto a los parámetros para el caso que NO hayan sido pasados:
+				this.y = f || 0;
+				this.x = c || 0;
+				//  Métodos:
+				this.mostrar = function() {
+					return ("(" + this.x + ", " + this.y + ")");
+				}
+			}
+				
+			
+			//  Creamos la clase Ciculo:
+			function Circulo(f, c, r) {
+				if (f instanceof Punto) {  //  Si se le pasa ya un punto, entonces NO hay que crearlo.
+					this.p = f;
+					this.r = c || 0;
+				} else {
+					this.p = new Punto(f, c);
+					this.r = r || 0;
+				}
+				//  Definimos (y NO REdefinimos) el método mostrar:
+				this.mostrar = function() {
+					return ("(" + this.p.x + ", " + this.p.y + ", " + this.r + ")");
+				}
+				this.LongCircunferencia = function() {
+					return (2 * Math.PI * this.r).toFixed(2);
+				}
+				this.Area = function() {
+					return (Math.PI * Math.pow(this.r, 2));
+				}
+			}
+
+			//		Circulo.prototype = new Punto;
+			
+			
+			//  Creamos la clase Cilindro:
+			function Cilindro(f, c, r, h) {
+				if (f instanceof Circulo) {  //  Si se le pasa ya un círculo, entonces NO hay que crearlo.
+					this.c = f;
+					this.h = c || 0;
+				} else {
+					if (f instanceof Punto) {  //  Si el primer parámetro NO es un círculo, puede que sea un punto.
+						this.c = new Circulo(f, c); 
+						this.h = r || 0;
+					} else {  //  Si no es ni un círculo ni un punto, estonces nos están dando las coordenadas y el radio. 
+						this.c = new Circulo(new Punto(f,c), r);
+						this.h = h || 0;
+					}
+				}
+				this.mostrar = function() {
+					return ("(" + this.c.p.x + ", " + this.c.p.y + ", " + this.c.r + ", " + this.h + ")");
+				}
+				this.Volumen = function() {
+					return (this.c.Area() * this.h);
+				}
+
+			}
+			
+			
+			//  Utilizamos las clases anteriormente definidas:
+			function probar(salida) {
+
+				var sal = "<p> Creamos un Punto p: <br>";
+				var p = new Punto(11,15);
+				p.x=22;
+				
+				sal += "p = " + p.mostrar() + "</p>";
+
+				
+
+				
+				sal += "<p>Creamos dos Circulos c1 y c2: <br>";
+				
+				var c1 = new Circulo(26, 42, 8);
+				var c2 = new Circulo(p, 4);
+				
+				sal += "c1 = " +  c1.mostrar() + "<br>";
+				sal += "c2 = " +  c2.mostrar() + "<br> </p>";
+				
+				
+				sal += "c2 (2 vez) = " +  c2.p.mostrar() + "<br> </p>";
+				
+				
+				
+				
+				sal += "Longitud Circunferencia c1 = " +  c1.LongCircunferencia() + "<br>";
+				sal += "Longitud Circunferencia c2 = " +  c2.LongCircunferencia() + "<br>";
+				
+				sal += "Área c1 = " +  c1.Area() + "<br>";
+				sal += "Área c2 = " +  c2.Area() + "<br> </p>";
+	
+				var cilindro1 = new Cilindro(c1, 10);
+				
+				var cilindro2 = new Cilindro(c2, 15);
+				sal += "<p>Creamos dos Cilindros cilindro1 y cilindro1: <br>";
+				sal += "cilindro1 = " + cilindro1.mostrar() + "<br>";
+				sal += "cilindro2 = " + cilindro2.mostrar() + "<br>";
+				sal += "Volumen cilindro1 = " + cilindro1.Volumen() + "<br>";
+				sal += "Volumen cilindro1 = " + cilindro2.Volumen() + "<br> </p>";
+				
+				
+				//  EJERCICIO:
+		//		sal += "<h3>Como Ejercicio crear las clases: RECTANGULO (que utiliza 2 puntos) y CAJA (que es un rectángulo con profundidad)</h3>";
+		//		sal += "(La clase RECTANGULO tendrá, además el método área que se calculará: base * altura ==> se calcularán a partir de los dos puntos)<br>";
+		//		sal += "(La clase CAJA tendrá, además el método volumen que se calculará a partir de la profundidad)<br>";
+				
+				document.getElementById(salida).innerHTML = sal;	
+			}
+
+		</script>
+
+	</head>
+
+	<body>
+		<br>
+		<h2>Ejercicio/Ejemplo CLASES en Javascript</h2>
+		<h3>Esto es un ejemplo de como crear e instanciar clases en javascript</h3>
+		<h5>En Javascript, cualquier función puede ser una clase.</h5>
+		<br/>
+		
+		<p>
+			<button onclick="probar('salida')">
+				Probar
+			</button>
+		</p>
+		<div id="salida">	
+		</div>
+		
+		
+
+	</body>
+</html>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <title>Ejercicio Tablas</title>
+
+
+
+    <script type="text/javascript">
+
+        function Generar_TablaV2() {
+
+            //alert("entro");
+            //return ;
+            var ifila = document.getElementById("numFilas").value;// //recogemos el valor de la fila y columnas o elvalor por defecto
+            var iCol = document.getElementById("numColumnas").value;
+            console.log(ifila,iCol); // lo mostramos
+
+            //Primero se crea el elemento <table>.
+            var table = document.createElement("table");
+            //me creo el elemnto cabecera
+            var thead = document.createElement("thead");
+            table.border = 2;
+            var tr, td, th;
+
+            for (i = 0; i < iCol; i++){
+                //me creo el elemento (nodo) th
+                th = document.createElement("th");
+//escribo en el elemnto lo que quiero mostrar en ese th
+                th.innerText = "Columna:"+i;
+                //cabecera abre el hijo th
+                thead.appendChild(th);
+            }
+            //padre(table) abre a hijo
+            table.appendChild(thead);
+
+            //posteriormente, creamos el elemento <tbody> , que es el hijo del elemento <table>
+            var tablaBody = document.createElement("tbody");
+
+            for (var i = 1; i <= ifila; i++) {
+                //creando filas de la tabla
+                tr = document.createElement("tr");
+                table.appendChild(tr);
+
+                for (var j = 1; j <= iCol; j++) {
+                    // Crea un elemento <td> columnas
+                    td = document.createElement("td");
+                    td.innerText = "filas:" + i + " Columnas:" + j;
+                    tr.appendChild(td);
+                }
+            }
+            // agrega la columna al final de la tabla (al final del elemento tablabody)
+            tablaBody.appendChild(tr);
+            table.appendChild(tablaBody);
+
+            //si no lo ponemos se crean las tablas debajo
+            //si lo ponemos se borran las tablas y aparecen la otra.Preguntar
+            document.getElementById("tabla").innerHTML ="";
+
+            //buscame el id tabla y dentro de ese padre abreme el element table
+            document.getElementById("tabla").appendChild(table);
+        }
+//se carga la pagina y luego me hace el javaScrip
+        window.onload = function () {
+            document.getElementById("boton").onclick = Generar_TablaV2;//llamo al button
+        }
+    </script>
+
+</head>
+
+<body>
+<br>
+<h2>Ejercicio Tablas. CREAR TABLAS</h2>
+<h3>Introducir el código javascript necesario, para que al pulsar sobre
+    el botón, se cree una tabla con un número fijo de filas y columnas.
+    <br>
+    Ahora generamos la tabla con formato thead y tbody
+</h3>
+<br/>
+
+<label for="numFila">Numero de filas</label>
+<input id="numFilas" name="input1" type="number" value="15">
+
+<br>
+<label for="numColumnas">Numero de columnas</label>
+Fila <input id="numColumnas" name="input2" type="number" value="5">
+
+<p>
+    <button id="boton">Generar Tabla</button>
+</p>
+<br>
+
+
+<div id="tabla">
+    Aquí se colocará la tabla que se cree dinámicamente con javascript
+</div>
+
+
+</body>
+</html>

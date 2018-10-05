@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <title>Ejercicio Tablas. CREAR TABLAS</title>
+
+    <script type="text/javascript">
+        function Generar_Tabla(ifila, iCol) {
+            var tabla = document.createElement("table");
+            tabla.border = 1;
+            var tr;
+            var td;
+
+            //  Generamos la tabla dinámicamente y la mentemos en el div "tabla".
+            for (var i = 0; i < ifila; i++){
+                tr = document.createElement("tr");
+                tabla.appendChild(tr);
+                for (var j = 0; j < iCol; j++){
+                    td = document.createElement("td");
+                    td.innerText = "Fila: "+i + " Col "+j;
+                    tr.appendChild(td);
+                }
+            }
+            document.getElementById("tabla").appendChild(tabla);
+        }
+
+
+        function crearFila(aFila) {
+            var fila = document.createElement("tr");
+            var td;
+
+            for (var i = 0; i < aFila.length; i++){
+                td = document.createElement("td");
+                td.innerText = aFila[i];
+                fila.appendChild(td);
+            }
+        }
+
+    </script>
+
+</head>
+
+<body>
+<br>
+<h2>Ejercicio Tablas. CREAR TABLAS</h2>
+<h3>Introducir el código javascript necesario, para que al pulsar sobre
+    el botón, se cree una tabla con un número fijo de filas y columnas.
+</h3>
+
+<br/>
+<p>
+    <button onclick="Generar_Tabla(4, 5)">Generar Tabla</button>
+</p>
+<br>
+
+
+<div id="tabla">
+    Aquí se colocará la tabla que se cree dinámicamente con javascript
+</div>
+
+
+</body>
+</html>
