@@ -1,0 +1,48 @@
+
+
+1. Dada la p�gina web (Examen_1.html) suministrada por el profesor. Agregar c�digo de programaci�n lado cliente 
+	para que al pulsar el bot�n CALCULAR. Se calculen las �reas y vol�menes de las figuras de la p�gina. 1 punto.
+
+2. A�adir c�digo de programaci�n lado cliente (a la p�gina Examen_1.html) para que al pulsar el bot�n Calcular Ec.� 
+	se calculen las dos posibles soluciones a la ecuaci�n de segundo grado, seg�n los datos introducidos en las cajas
+	de texto junto al bot�n.  Calcular Ec. 1 punto.
+
+3. Depurar la entrada de datos en las cajas de texto para que no se puedan meter datos de forma incorrecta, 
+	es decir, s�lo se permitir� n�meros reales positivos y negativos. 
+	No se podr�n introducir m�s de un punto o coma decimal, 
+	s�lo un signo negativo y en la primera posici�n (si lo hubiere), etc. 1 punto.
+
+
+
+4. Si adem�s de lo realizado en el ejercicio 4 (calcular las dos posibles soluciones a la ecuaci�n de segundo grado) 
+	se indica al usuario si una determinada ecuaci�n no tiene soluciones en el conjunto de los n�meros reales 
+	(no existe una soluci�n real a una raiz cuadrada de un n�mero negativo). 1 punto.
+
+
+
+5. Se ha de realizar la suma de dos fracciones, tal y como se puede apreciar en la parte de abajo de dicha p�gina web., 
+	al pulsar el bot�n Calcular Suma. Si el alumno no recuerda como en matem�ticas se realiza la suma de fracciones 
+	ser� explicada y expuesta en la pizarra. Adem�s de esta suma de las dos fracciones, 
+	se evaluar� la fracci�n resultante, es decir, se realizar� la divisi�n de la fracci�n resultante de la suma 
+	y su resultado se colocar� en la caja sita a continuaci�n. 1 punto.
+
+
+
+
+6. Dar funcionalidad al bot�n A�adir Fracci�n. Esto es, a�adir el c�digo javascript para que se a�adan m�s fracciones 
+	en la lista de fracciones a sumar en la parte inferior izquierda de la p�gina. 
+	Cada vez que se pulse el bot�n A�adir Fracci�n se a�adir� el s�mbolo m�s (+), 
+	tal y como est� en la p�gina y una nueva fracci�n, tal y como est� en la p�gina. 
+	Esto es, esto es, con sus mismos valores, estilos, etc. 
+	(usar: cloneNode, seg�n la info suministrada por el profesor ) 3 puntos. 
+
+
+
+
+7. Despu�s de haber desarrollado el punto anterior, el bot�n Calcular Suma V2 realizar� la suma de TODAS las fracciones 
+	que el usuario haya a�adido y muestre el resultado en las cajas correspondientes 
+	(tal y como se hizo en el punto 7, pero con 3 o m�s fracciones). 3 puntos.
+
+
+
+
