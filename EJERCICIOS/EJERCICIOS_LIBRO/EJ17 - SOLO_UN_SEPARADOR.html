@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<input id="text" title="text" type="text">
+
+</input>
+
+<script type="text/javascript">
+    window.onload = function () {
+        var input = document.getElementById("text");
+        input.onkeypress = soloUnSeparador;
+    };
+
+    function soloUnSeparador(event){
+    	var thisEvent = event || window.event;
+    	var codigoASCII = thisEvent.charCode || thisEvent.keyCode;
+    	var caracterASCII = String.fromCharCode(codigoASCII)
+    	console.log(codigoASCII + " -> " + caracterASCII);
+    	console.log(this.value);
+    }
+
+    function countCharacter(val, character){
+    	
+    }
+
+
+
+
+</script>
+
+</body>
+</html>
