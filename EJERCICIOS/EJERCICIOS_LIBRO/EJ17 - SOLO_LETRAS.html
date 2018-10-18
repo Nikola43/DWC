@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<input id="text" title="text" type="text">
+
+
+
+<script type="text/javascript">
+    window.onload = function () {
+        var input = document.getElementById("text");
+        input.onkeypress = soloLetras;
+    };
+
+    function soloLetras(event){
+    	var thisEvent = event || window.event;
+        var codigoASCII = thisEvent.charCode || thisEvent.keyCode;
+        var caracterASCII = String.fromCharCode(codigoASCII);
+        var resultado = (((codigoASCII >= 65) && (codigoASCII <= 90)) || ((codigoASCII >= 97) && (codigoASCII <= 122)));
+
+        console.log("---------------------------------");
+        console.log("Codigo ASCII: " + codigoASCII);
+        console.log("Caracter ASCII: " + caracterASCII);
+        console.log("Resultado: " + resultado);
+        console.log("---------------------------------");
+
+        return resultado;
+    }
+</script>
+
+</body>
+</html>
