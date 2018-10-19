@@ -13,69 +13,57 @@
 <script type="text/javascript">
     window.onload = function () {
         var input = document.getElementById("text");
-        input.onkeyup = soloNumerosRealesEnteros;
-
-        /*
-        console.log(validar(".1"));
-        console.log(validar("..1"));
-        console.log(validar(".-1"));
-        console.log(validar(".-"));
-        console.log(validar("-1.."));
-        console.log(validar("-1.2."));
-        console.log(validar("-1.2.-"));
-        console.log(validar("-1.2..--1"));
-        console.log(validar("-.1"));
-        console.log(validar("-.1"));
-        console.log(validar("-3."));
-
-        console.log("------");
-
-        console.log(validar("10"));
-        console.log(validar("10.5"));
-        console.log(validar("-10"));
-        console.log(validar("-10.5"));
-        */
-
-
-
-
-
-
+        input.onkeypress = soloNumerosRealesEnteros;
     };
 
-    function validar(contenido){
-        return ((contenido.length > 0) // Comprobamos que tiene contenido
-            // Comprobamos si no tiene el simbolo -
-            && (!Array.isArray(contenido.match(/-/gi))  ? true : // si no lo tiene devolvemos true
-                (contenido.match(/-/gi).length === 1 && contenido.indexOf("-") === 0)) // si lo tiene, comprobamos que tenga solo 1 y que esta en la primera posición
+    function soloNumerosRealesEnteros(event){
+        var codigoASCII = event.charCode || window.event.keyCode;
 
-            // Comprobamos si no tiene el simbolo .
-            && (!Array.isArray(contenido.match(/\./gi)) ? true : // si no lo tiene devolvemos true
-                (contenido.match(/\./gi).length === 1) // si lo tiene, comprobamos solo tenga 1 y le anteceda y preceda un numero
-                && (Number.isInteger(parseInt(contenido[contenido.indexOf(".") - 1], 10)))
-                && (Number.isInteger(parseInt(contenido[contenido.indexOf(".") + 1], 10)))));
+        var caracterASCII = String.fromCharCode(codigoASCII);
+
+        console.log("---------------------------------");
+        console.log("Codigo ASCII: " + codigoASCII);
+        console.log("Caracter ASCII: " + caracterASCII);
+        console.log("---------------------------------");
+
+
+        if (codigoASCII === 44){
+
+        } else {
+            return ((codigoASCII >= 48) && (codigoASCII <= 57));
+        }
     }
 
 
-    function soloNumerosRealesEnteros(){
+
+
+    /*
+        function soloNumerosRealesEnteros(){
         var contenido = this.value;
+        var thisEvent = event || window.event;
+        var codigoASCII = thisEvent.charCode || thisEvent.keyCode;
+        var noHayLetras = !(((codigoASCII >= 65) && (codigoASCII <= 90)) || ((codigoASCII >= 97) && (codigoASCII <= 122)));
+
         console.log(contenido);
-        var resultado = (contenido.length > 0) // Comprobamos que tiene contenido
+        var resultado = ((contenido.length > 0) // Comprobamos que tiene contenido
             // Comprobamos si no tiene el simbolo -
             && (!Array.isArray(contenido.match(/-/gi))  ? true : // si no lo tiene devolvemos true
                 (contenido.match(/-/gi).length === 1 && contenido.indexOf("-") === 0)) // si lo tiene, comprobamos que tenga solo 1 y que esta en la primera posición
+
+            && !(Number.isInteger(parseInt(contenido[contenido.indexOf("-") - 1], 10)))
 
             // Comprobamos si no tiene el simbolo .
             && (!Array.isArray(contenido.match(/\./gi)) ? true : // si no lo tiene devolvemos true
                 (contenido.match(/\./gi).length === 1) // si lo tiene, comprobamos solo tenga 1 y le anteceda numero
-                && (Number.isInteger(parseInt(contenido[contenido.indexOf(".") - 1], 10))));
+                && (Number.isInteger(parseInt(contenido[contenido.indexOf(".") - 1], 10))))
+            && noHayLetras);
 
             if (!resultado){
                 this.value = this.value.substring(0,this.value.length-1);
             }
             return (resultado);
-
     }
+     */
 </script>
 
 </body>
