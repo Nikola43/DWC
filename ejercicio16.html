@@ -1,0 +1,143 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Ejercicio 15 - Información sobre eventos</title>
+
+<style type="text/css">
+body {font-family: arial, helvetica;}
+#info {width:160px; border:thin solid silver; padding:.5em; position:fixed;}
+#info h1 {margin: 0;}
+</style>
+
+<script type="text/javascript">
+
+window.onload=function()
+{
+
+    /*document.onkeypress=function(event){
+        return numeroNegativo(event);
+    }*/
+
+    document.getElementById("texto").onkeyup=mayusculas;
+    
+
+	/*document.onkeypress=function(event){
+        return pulsaTecla(event);
+    }
+
+    document.onkeypress=function(event){
+        return pulsaCaracterEspecial(event);
+    }
+
+    document.onkeypress=function(event){
+        return limita(50);
+    }
+
+    document.onkeypress=function(event){
+        return pulsaSoloLetras(event);
+    }*/
+
+   /* document.onkeypress=function(event){
+        return pulsaSoloNumerosDeciles(event);*/
+   // }
+
+}
+
+function limita(maximoCaracteres) {
+  var elemento = document.getElementById("texto");
+  var i=maximoCaracteres;
+  if(elemento.value.length >= maximoCaracteres ) {
+    return false;
+    while(i>=0){
+        return i;
+        i--;
+        var mensaje="te quedan "+ i + "letras para escribir como maximo";
+    }
+  }
+  else {
+    return true;
+  }
+}
+
+function pulsaTecla(evento){
+    var even=evento || window.event;
+    var codigoCaracter=even.charCode || even.keyCode;
+    return (codigoCaracter>=48 && codigoCaracter<=57);
+}
+ 
+function pulsaCaracterEspecial(evento){
+    var even=evento || window.event;
+    var codigoCaracter=even.charCode || even.keyCode;
+    return ((codigoCaracter>=37 && codigoCaracter<=40) || codigoCaracter==127 || codigoCaracter==8);
+}
+
+function pulsaSoloLetras(evento){
+    var even=evento || window.event;
+    var codigoCaracter=even.charCode || even.keyCode;
+    return ((codigoCaracter>=65 && codigoCaracter<=122));
+}
+var contador=0;
+var   i=0;
+function pulsaSoloNumerosDeciles(evento){
+   
+    var even=evento || window.event;
+    var codigoCaracter=even.charCode || even.keyCode;
+    
+        if (i==0 && (codigoCaracter>=48 && codigoCaracter<=57)){
+            i++;
+            return codigoCaracter;
+        }
+        else if(i>0 && (codigoCaracter==44 || (codigoCaracter>=48 && codigoCaracter<=57))){
+            if (codigoCaracter==44  && contador==0){
+                contador++;
+                return codigoCaracter;
+            }
+            i++;
+          if (contador>=1 && (codigoCaracter==44)){
+                return false;
+                }
+            return codigoCaracter;
+                
+        }
+       else  return false;
+    }
+
+var posicion=0;
+function numeroNegativo(evento){
+    var even=evento || window.event;
+    var codigoCaracter=even.charCode || even.keyCode;
+    if (posicion==0 && codigoCaracter==45){
+        posicion++;
+        return codigoCaracter;    
+    }
+    else if (posicion>0 && (codigoCaracter>=48 && codigoCaracter<=57)){
+        posicion++;
+        return codigoCaracter;
+    if (this.value.onkeypress()){
+
+    }
+    }
+    else return false;
+}
+
+
+function mayusculas(){
+    this.value = this.value.toUpperCase();
+}
+
+</script>
+
+
+</head>
+
+<body>
+
+<input id="texto" type="text">
+
+<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+
+</body>
+</html>
