@@ -1,0 +1,113 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+	<!--
+		Ejercicio 15:
+		Completar el código JavaScript proporcionado para que:
+
+		1. Al mover el ratón en cualquier punto de la ventana del navegador, se muestre la 
+		posición del puntero respecto del navegador y respecto de la página:
+		2. Al pulsar cualquier tecla, el mensaje mostrado debe cambiar para indicar el nuevo 
+		evento y su información asociada:
+		3. Añadir la siguiente característica al script: cuando se pulsa un botón del ratón, 
+		el color de fondo del cuadro de mensaje debe ser amarillo (#FFFFCC) y cuando se pulsa 
+		una tecla, el color de fondo debe ser azul (#CCE6FF). Al volver a mover el ratón, el 
+		color de fondo vuelve a ser blanco.
+	-->
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Ejercicio 15 - Información sobre eventos</title>
+
+<style type="text/css">
+	body {
+		font-family: arial, helvetica;
+	}
+
+	#info {
+		width:160px; 
+		border:thin solid silver; 
+		padding:.5em; position:fixed;
+	}
+
+	#info h1 {
+		margin: 0;
+	}
+</style>
+
+<script type="text/javascript">
+
+	window.onload = function(){
+		//Para el ratón:
+		//document.onclick = cogeEvento;
+		document.onmousemove = cogeEvento;
+		//document.getElementById('info').style.backgroundColor = '#FFFFFF';
+		
+		//Para el teclado:
+		//document.onkeyup = eventoTeclado;
+		//document.onkeydown = eventoTeclado;
+  		document.onkeypress = eventoTeclado;
+  		
+	}
+
+	function cogeEvento(elEvento){
+		var evento = elEvento || window.event;
+		document.getElementById('info').style.backgroundColor = '#FFFFCC';
+		var ar = new Array();
+		//Navegador
+  		var coordenadaX = evento.clientX;
+  		var coordenadaY = evento.clientY;
+		//Scroll a la página
+		var paginaX = evento.pageX;
+		var paginaY = evento.pageY;
+		//Pantalla
+		var pantallaX = evento.screenX;
+		var pantallaY = evento.screenX;
+
+		ar.push("Ratón"); // push: mete información en el array.
+		ar.push("Navegador [" +coordenadaX+ "," +coordenadaY+ "]");
+		ar.push("Pagina [" +paginaX+ "," +paginaY+ "]")
+		ar.push("Pantalla ["+ pantallaX+","+pantallaY + "]")
+		muestraInformacion(ar);
+
+  		//alert("Has pulsado el ratón en la posición: " + coordenadaX + ", " + coordenadaY);
+		//si dejo el alert, con "document.onmousemove = cogeEvento;" cada vez que muevo el ratón saldrái el alert.
+	}
+
+	function eventoTeclado(elEvento){
+		var evento = elEvento || window.event;
+		var ar = new Array();
+		document.getElementById('info').style.backgroundColor = '#CCE6FF';
+		var caracter = evento.charCode || evento.keyCode;
+		var letra = String.fromCharCode(caracter);
+		var codigo = letra.charCodeAt(0);
+
+		ar.push("Teclado");
+		ar.push("Caracter [" + letra  +"]");
+		ar.push("Código [" + codigo +"]");
+		muestraInformacion(ar);
+	}
+	
+	function colorRaton() {
+        
+    }
+
+	function muestraInformacion(mensaje) {
+		document.getElementById("info").innerHTML = '<h1>'+mensaje[0]+'</h1>';
+		for(var i=1; i<mensaje.length; i++) {
+			document.getElementById("info").innerHTML += '<p>'+mensaje[i]+'</p>';
+		}
+	}
+
+
+</script>
+</head>
+
+<body>
+
+<div id="info"></div>
+
+<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+
+</body>
+</html>

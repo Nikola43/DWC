@@ -1,0 +1,106 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>Ejercicio 15 - Informaci�n sobre eventos</title>
+
+<style type="text/css">
+body {font-family: arial, helvetica;}
+#info {width:160px; border:thin solid silver; padding:.5em; position:fixed;}
+#info h1 {margin: 0; }
+</style>
+
+<script type="text/javascript">
+var mover=false;
+
+window.onload=function(){
+    document.onmousemove=informacion;
+    document.onkeypress=informacion;
+    document.onclick=cambiarColorRaton;
+    document.getElementById("info").onmousedown=function(){
+        mover=true;
+    };
+    document.getElementById("info").onmouseup=function(){
+        mover=false;
+    };
+    
+}
+
+
+function muestraInformacion(mensaje) {
+
+	document.getElementById("info").innerHTML = '<h1>'+mensaje[0]+'</h1>';
+	for(var i=1; i<mensaje.length; i++) {
+		document.getElementById("info").innerHTML += '<p>'+mensaje[i]+'</p>';
+	}
+}
+
+function informacion(elEvento){
+    caja=document.getElementById("info");
+    var evento = elEvento || window.event;
+    var array=new Array();
+  
+    if(evento.type=="mousedown"){
+        mover=true;
+    }
+    if(evento.type=="mouseup"){
+        mover=false;
+    }
+
+    switch(evento.type) {
+    case "mousemove":
+        
+        var coordenadaX = evento.clientX;
+        var coordenadaY = evento.clientY;
+        array.push("Raton");
+        array.push("Navegador[" + coordenadaX + ", " + coordenadaY + "]");
+        array.push("Pantalla [ " + evento.screenX + ", "+ evento.screenY+ "]")
+        array.push("Pagina [" + evento.pageX + ", " + evento.pageY + "]");
+        
+        caja.style.backgroundColor="white";
+        if(mover){
+            caja.style.left=coordenadaX+"px";
+            caja.style.top=coordenadaY +"px";
+            array.push("MENEANDO");
+            caja.style.backgroundColor="pink";
+        }
+        muestraInformacion(array);
+        break;
+    
+    case "keypress":
+        
+        var codigo = evento.CharCode || evento.keyCode;
+        var caracter = String.fromCharCode(codigo);
+        array.push("Teclado");
+        array.push("caracter [" + caracter + "]");
+        array.push("codigo [" + codigo + "]");
+        muestraInformacion(array);
+        caja.style.backgroundColor="rgb(200, 236, 247)";
+        
+    }
+    
+   
+}
+function cambiarColorRaton(){
+    caja=document.getElementById("info");
+    caja.style.backgroundColor="rgb(255, 246, 169)";
+}
+
+
+    
+
+
+</script>
+</head>
+
+<body>
+
+<div id="info"></div>
+
+<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+
+</body>
+</html>
