@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8"/>
+		<title>Validar Formularios</title>
+		<style type="text/css">
+			span {
+				color: red;
+			}
+		</style>
+		<script src="app.js"></script>
+        <script type="text/javascript">
+            window.onload = function () {
+                var formulario   = document.getElementById("formulario_1");
+                var nombre       = document.getElementById("nombre");
+                var botonSubmit  = document.getElementsByTagName("input")[document.getElementsByTagName("input").length - 2];
+                var botonLimpiar = document.getElementsByTagName("input")[document.getElementsByTagName("input").length - 1];
+
+               // nombre.focus();
+                var span = document.createElement("span");
+                span.setAttribute("color", "blue");
+                span.innerHTML = "sdsd";
+                nombre.appendChild(span);
+
+                if (nombre.value.length < 2){
+                   // var span = document.createElement("span");
+                   // span.setAttribute("color", "blue");
+                   // span.innerHTML = "sdsd";
+                   // nombre.appendChild(span);
+                }
+
+
+                formulario.onsubmit = function () {
+                    alert("asd");
+                    if (nombre.length < 2) {
+                        console.log(nombre.value);
+                    }
+                };
+            };
+
+            function validarFormulario() {
+                var formularioValido = false;
+
+
+
+                return formularioValido;
+            }
+        </script>
+	</head>
+
+	<body>
+
+		<h1>Ejercicio Validación de Formularios</h1>
+		<form id="formulario_1">
+		<p>
+			<h3>Formulario de Registro:</h3>
+			<label for="nombre">Nombre: </label>
+			<input type="text" name="nombre" id="nombre" maxlength="25" size="15" />
+			<span id="info_nombre"></span>
+			<div>(Mínimo 2 letras)</div>
+			<br><br>
+			
+			<label for="dni">NIF: </label>
+			<input type="text" name="dni" id="dni" maxlength="9" size="9" />
+			<span id="info_dni"></span>
+			<br><br><br>
+			
+      <label>Sexo: </label>
+			<select id="sexo">
+				<option value="">Selecciona una opción</option>
+				<option value="F">Femenino</option>
+				<option value="M">Masculino</option>
+				<option value="Y">Ya quisiera yo</option>
+			</select>
+			<span id="info_sexo"></span>
+      
+      <br><br><br>
+      <label for="sugerencia">Alguna sugerencia: </label>
+      <textarea id="sugerencia" name="sugerencia"></textarea>
+			<span id="info_sugerencia"></span>
+      <br><br>
+			<p><b>Todos los campos son obligatorios.</b></p>
+		<br>
+		<p>
+			<input type="submit" value="ENVIAR" >
+			<br><br>
+			<input type="reset" value="Limpiar">
+		</p>
+		</form>
+	</body>
+</html>
+
+
