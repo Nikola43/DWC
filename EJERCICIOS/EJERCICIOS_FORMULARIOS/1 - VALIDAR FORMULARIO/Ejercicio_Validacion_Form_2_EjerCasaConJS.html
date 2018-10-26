@@ -10,7 +10,95 @@
 		</style>
 		<script src="Utilidades.js"></script>
 		<script>
-            
+            window.onload = function () {
+                //Restricciones de entrada
+                document.getElementById("nombre").onkeypress     = permiteSoloLetraEspacios;
+                document.getElementById("f_ano").onkeypress      = soloSePermiteNumero;
+                document.getElementById("f_mes").onkeypress      = soloSePermiteNumero;
+                document.getElementById("f_dia").onkeypress      = soloSePermiteNumero;
+                document.getElementById("sugerencia").onkeypress = sugerir;
+                document.getElementById("formulario_1").onsubmit = ValidarFormularios;
+
+            };
+
+            function ValidarFormularios() {
+                //validamos nombre
+                if (document.getElementById("nombre").value.length < 2) {
+                    document.getElementById("info_nombre").innerHTML = "Minimo 2 letras";
+                    document.getElementById("nombre").focus();
+                }else{
+                    document.getElementById("info_nombre").innerHTML = "";
+                }
+
+                //validamos apellido
+                if (document.getElementById("apellidos").value.length < 4) {
+                    document.getElementById("info_apellidos").innerHTML = "Minimo 4 letras";
+                    document.getElementById("apellidos").focus();
+                }else{
+                    document.getElementById("info_apellidos").innerHTML = "";
+                }
+
+                //validar dni
+                var dni = document.getElementById("dni");
+                if (dni.value.length < 9) {
+                    document.getElementById("info_dni").innerHTML = "DNI esta incompleto ";
+                    dni.focus();
+                }else{
+                    document.getElementById("info_dni").innerHTML = "";
+                }
+
+                if (!ValidarDni(dni.value)) {
+                    document.getElementById("info_dni").innerHTML = "DNI incorrecto ";
+                    dni.focus();
+                }else{
+                    document.getElementById("info_dni").innerHTML = "";
+                }
+
+                //validar option
+                var opcion = document.getElementById("sexo");
+                if ((opcion.value !== "F") && (opcion.value !== "M") && (opcion.value !== "Y")) {
+                    document.getElementById("info_sexo").innerHTML = "¡¡Elija un sexo";
+                    opcion.focus();
+                }else{
+                    document.getElementById("info_sexo").innerHTML = "";
+
+                }
+
+                //validar fecha
+                var ano = document.getElementById("f_ano").value;
+                var mes = document.getElementById("f_mes").value;
+                var dia = document.getElementById("f_dia").value;
+
+
+                //llamando la funcion validarFecha
+                if (!validarFecha(ano,mes,dia)){
+                    document.getElementById("info_fecha").innerHTML = "¡¡No es el formato indicado";
+                } else{
+                    document.getElementById("info_fecha").innerHTML = "";
+                }
+
+
+                //validar texto
+                var texto = document.getElementById("sugerencia");
+                if (texto.value === "") {
+                    document.getElementById("info_sugerencia").innerHTML = "¡¡Campo Obligatorio";
+                    texto.focus();
+                }else{
+                    document.getElementById("info_sugerencia").innerHTML = "";
+                }
+                return false;
+            }
+
+            //funcion sugerir
+            var contGlobal = 0;
+            function sugerir() {
+
+                var cadena = "Todo esta muy bien. ";
+                contGlobal = contGlobal % cadena.length;
+                this.value = this.value + cadena[contGlobal];
+                contGlobal++;
+                return false;
+            }
 		
 			
 		</script>
