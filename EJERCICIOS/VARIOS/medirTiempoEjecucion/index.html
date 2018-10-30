@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript">
+
+
+
+
+        console.time('looper');
+
+        looper();
+
+        console.timeEnd('looper');
+
+        function looper(){
+
+            for (var i = 0; i < 600; i++){
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function() {
+                    if (this.readyState === 4 && this.status === 200) {
+                        console.log(this.responseText);
+                    }
+                };
+                xhttp.open('GET', 'https://www.cryptopia.co.nz/api/GetCurrencies');
+                xhttp.send();
+            }
+
+
+        }
+
+
+    </script>
+</head>
+<body>
+</body>
+</html>
