@@ -1,0 +1,300 @@
+<html>
+	<head>
+		<meta charset="UTF-8"/>
+		<title>Validar Formularios3</title>
+		<link rel="stylesheet" type="text/css" href="style.css">
+		<script src="Utilidades.js"></script>
+		<script>
+            window.onload = function (){
+                //Restricciones de entrada:
+				//NOMBRE
+               	document.getElementById("nombre").onkeypress = PermiteSoloLetrasEspacios;
+                document.getElementById("nombre").onkeyup = mayusculas;
+				//APELLIDO
+                document.getElementById("apellidos").onkeypress = PermiteSoloLetrasEspacios;
+               	document.getElementById("apellidos").onkeyup = mayusculas;
+				//ESTATURA
+                document.getElementById("estatura").onkeypress=soloNumerosDecimales;
+				// Alguna sugerencia /PARA QUE SE ESCRIBA ALGO CON SOLO PULSAR UNA LETRA
+                document.getElementById("sugerencia").onkeypress = sugerir;
+				//FECHA
+                document.getElementById("f_dia").onkeypress = HanSoloNumeros;
+				document.getElementById("f_mes").onkeypress = HanSoloNumeros;
+				document.getElementById("f_ano").onkeypress = HanSoloNumeros;
+                //cuenta
+                //document.getElementById("info_ccc").onkeypress = HanSoloNumeros;
+
+                //Validación de formulario:
+                document.getElementById("formulario_1").onsubmit = ValidarFormulario;
+
+            };
+
+            function ValidarFormulario(){
+                var correcto = true;
+                var foco = null; //null es false
+
+                //Validar Nombre:
+                if (document.getElementById("nombre").value.length < 2){
+                    document.getElementById("info_nombre").innerHTML="Se requiere al menos 2 caracteres.";
+                    if (!foco)
+                        foco = document.getElementById("nombre");
+                } else {
+                    document.getElementById("info_nombre").innerHTML="";
+                }
+
+
+                //Validar Apellidos:
+                if (document.getElementById("apellidos").value.length < 4){
+                    document.getElementById("info_apellidos").innerHTML="Se requiere al menos 4 caracteres.";
+                    if (!foco)
+                        foco = document.getElementById("apellidos");
+                }else{
+                    document.getElementById("info_apellidos").innerHTML="";
+
+                }
+
+                //Validamos el dni.
+                var dni = document.getElementById("dni");
+                if(!ValidarDni(dni.value)){
+                    document.getElementById("info_dni").innerHTML="El DNI es INCORRECTO.";
+                    if (!foco) {
+                        foco = dni;
+                    }
+                }else{
+                    document.getElementById("info_dni").innerHTML="";
+                }
+
+                //otra manera
+                var OpcionElegidaSexo = document.getElementsByName("sexo");
+
+                var opcionSeleccionada = validarRadio(OpcionElegidaSexo);
+
+				//si no hay opcion  elegida MUESTRAME EL MENSAJE SINO....
+                if(!opcionSeleccionada) {
+                    document.getElementById("info_sexo").innerHTML="¡¡Debe elegir una opcion!!";
+                    if (!foco)
+                        foco = document.getElementById("sexo");
+                }else{
+                    document.getElementById("info_sexo").innerHTML="";
+				}
+
+
+                //Validar Fecha:
+                //Cogemos los valores introducidos por el usuario en el input.
+                //validar fecha
+                var ano = document.getElementById("f_ano").value;
+                var mes = document.getElementById("f_mes").value;
+                var dia = document.getElementById("f_dia").value;
+
+                //llamando la funcion validarFecha
+                if (!validarFecha(ano,mes,dia)){
+                    document.getElementById("info_fecha").innerHTML = "¡¡Fecha invalida";
+                } else{
+                    document.getElementById("info_fecha").innerHTML = "";
+                }
+
+				//Validar estatura
+				var estatura = document.getElementById("estatura").value;
+                if (estatura === "" ){
+                    document.getElementById("info_estatura").innerHTML="Selecciona una estatura.";
+                    if (!foco)
+                        foco = document.getElementById("estatura");
+                    	correcto = false;
+                } else{
+                    document.getElementById("info_estatura").innerHTML="";
+                }
+
+				//Validar Estado Civil option
+                var opcion = document.getElementById("estado_civil");
+                if (opcion.value === -1){
+                    document.getElementById("info_estado_civil").innerHTML = "¡¡Elija un sexo";
+                    if (!foco)
+                        foco = document.getElementById("estatura");
+                    correcto = false;
+                }else{
+                    document.getElementById("info_estado_civil").innerHTML = "";
+
+                }
+
+                //Validar preferencia
+                var opcionPreferencias = document.getElementsByName("bebidas");
+                var contCkeck = 0;
+                for(var i=0; i<opcionPreferencias.length; i++) {
+                    if(opcionPreferencias[i].checked) {
+                        contCkeck++;
+                    }
+                }
+                //SI COMPRABAMOS que han elegido menos de 3 opciones muestrame /sino....
+                if(contCkeck < 3) {
+                    document.getElementById("info_bebidas").innerHTML="¡¡Debe elegir minimo tres opciones!!";
+                    if (!foco)
+                        foco = document.getElementById("bebidas");
+                }else{
+                    document.getElementById("info_bebidas").innerHTML="";
+                }
+
+
+
+                //Validar Sugerencia:
+                if (document.getElementById("sugerencia").value === ""){
+                    document.getElementById("info_sugerencia").innerHTML="Te sugiero que sugieras."
+                    if (!foco)
+                        foco = document.getElementById("sugerencia");
+                    	correcto = false;
+                }else{
+                    document.getElementById("info_sugerencia").innerHTML="";
+                }
+
+				//si es verdadero  //se pone donde esta error
+                if (foco) {
+                    foco.focus();
+                }
+                //return de la funcion validarFormulario
+                return false;
+            }
+
+            //funcion sugerir
+            var contGlobal = 0;
+            function sugerir() {
+
+                var cadena = "Escribir no es mi fuerte. ";
+                contGlobal = contGlobal % cadena.length;
+                this.value = this.value + cadena[contGlobal];
+                contGlobal++;
+                return false;
+            }
+			
+		</script>
+	</head>
+
+	<body>
+
+		<h1>Ejercicio Validación de Formularios</h1>
+		<form id="formulario_1">
+		<p>
+			<h3>Formulario de Registro:</h3>
+			<label for="nombre">Nombre: </label>
+			<input type="text" name="nombre" id="nombre" maxlength="25" size="15" />
+			<span id="info_nombre"></span>
+			<div>(Mínimo 2 letras)</div>
+			<br><br>
+			
+			<label for="apellidos">Apellidos: </label>
+			<input type="text" name="apellidos" id="apellidos" maxlength="50" size="25" />
+			<span id="info_apellidos"></span>
+			<div>(Mínimo 4 letras)</div>
+			<br><br>
+			
+			<label for="dni">NIF: </label>
+			<input type="text" name="dni" id="dni" maxlength="9" size="9" />
+			<span id="info_dni"></span>
+			<br><br><br>
+			
+      		
+			
+			<label>Sexo: </label>
+			<input type="radio" name="sexo" value="femenino" />
+			<label for="femenino">Femenino</label>
+			<input id="femenino" type="radio" name="sexo" value="masculino" />
+			<label for="masculino">Masculino</label>
+			<input id="masculino" type="radio" name="sexo" value="ni_me_acuerdo" />
+			<label for="info_sexo">hace tanto que ni me acuerdo</label>
+      		<span id="info_sexo"></span>
+			<br><br><br>
+			
+
+			<label for="f_dia">Fecha: </label>
+			<input type="text" id="f_dia" maxlength="2" size="1" /> /
+			<input type="text" id="f_mes" maxlength="2" size="1" /> /
+			<input type="text" id="f_ano" maxlength="4" size="3" /> (dd/mm/aaaa)
+      <span id="info_fecha"></span>
+      <br><br><br>
+			
+			
+			
+			<label for="estatura">Estatura (en metros): </label>
+			<input type="text" id="estatura" size="5" maxlength="7"> 
+			<span id="info_estatura"></span>
+			<br><br><br>
+
+	<label for="estado_civil">Estado Civil: </label>
+      <select id="estado_civil">
+      	<option value="-1">Selecciona una opción</option>
+      	<option value="1">Soltera/o</option>
+      	<option value="2">Casada/o</option>
+      	<option value="3">Separada/o</option>
+      	<option value="4">Divorciada/o</option>
+      	<option value="5">Pareja de hecho</option>
+      	<option value="6">En la gloria</option>
+      	<option value="7">Es complicado!!!!</option>
+      </select> 
+			<span id="info_estado_civil"></span>
+      <br><br><br>
+			
+			
+			<div>Preferencias en zumos de cebada: </div>
+			
+			<ul>
+				<li>
+					<input type="checkbox" name="bebidas" value="paulaner" />
+					<label>Paulaner</label>
+				</li>
+				<li>
+					<input type="checkbox" name="bebidas" value="coronita" />
+					<label>Coronita</label>
+				</li>
+				<li>
+					<input type="checkbox" name="bebidas" value="cruzcampo" />
+					<label>Cruzcampo</label>
+				</li>
+				<li>
+					<input type="checkbox" name="bebidas" value="desperados" />
+					<label>Desperados</label>
+				</li>
+				<li>
+					<input type="checkbox" name="bebidas" value="grimbergen" />
+					<label>Grimbergen optimo bruno</label>
+				</li>
+				<li>
+					<input type="checkbox" name="bebidas" value="judas" />
+					<label>Judas</label>
+				</li>
+				<li>
+					<input type="checkbox" name="bebidas" value="lucifer" />
+					<label>Lucifer</label>
+				</li>
+				<li>
+					<input type="checkbox" name="bebidas" value="ambar" />
+					<label>Ambar Export</label>
+				</li>
+			</ul>
+      <span id="info_bebidas"></span>
+			<div>(Mínimo 3 opciones)</div>
+      <br><br>
+			
+			
+			<label for="ccc">Número Cuenta Corriente: </label>
+			<input type="text" name="ccc" id="ccc" maxlength="20" size="22" /> 
+      <span id="info_ccc"></span>
+			<div>(20 dígitos sin blancos)</div>
+			<br><br><br>
+			
+      
+      <label for="sugerencia">Alguna sugerencia: </label>
+      <textarea id="sugerencia" name="sugerencia"></textarea>
+			<span id="info_sugerencia"></span>
+      <br><br>
+		</p>
+		<p><b>Todos los campos son obligatorios.</b></p>
+		<br>
+		<p>
+			<input type="submit" value="ENVIAR" >
+			<br><br>
+			<input type="reset" value="Limpiar">
+			
+		</p>
+		</form>
+	</body>
+</html>
+
+

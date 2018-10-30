@@ -1,4 +1,4 @@
-<html>
+<!DOCTYPE html>
 	<head>
 		<meta charset="UTF-8"/>
 		<title>Validar Formularios</title>
@@ -13,7 +13,7 @@
 
             window.onload = function () {
                 //Restricciones de entrada
-                document.getElementById("nombre").onkeypress = PermiteSoloLetraEspacios;
+                document.getElementById("nombre").onkeypress = PermiteSoloLetrasEspacios; //HACER EN CASA
                 document.getElementById("f_ano").onkeypress = soloSePermiteNumero;
                 document.getElementById("f_mes").onkeypress = soloSePermiteNumero;
                 document.getElementById("f_dia").onkeypress = soloSePermiteNumero;
@@ -24,7 +24,8 @@
                 //Validacion del formulario
                 document.getElementById("formulario_1").onsubmit = ValidarFormularios;
 
-            };
+            }
+
 
             function ValidarFormularios() {
                 //validamos nombre
@@ -77,6 +78,25 @@
                 var mes = document.getElementById("f_mes").value;
                 var dia = document.getElementById("f_dia").value;
 
+                /*if (((ano == "" || ano <= 0 || ano >= 2050)) && (mes == "" || mes >=0 || mes >=12) && ((dia == "" ||dia<= 1 && dia <=12))) {
+                    alert("entro");
+                    document.getElementById("info_fecha").innerHTML = "¡¡No es el formato indicado";
+                    opcion.focus();
+                }else {
+                    document.getElementById("info_fecha").innerHTML = "";
+                }*/
+
+                 //validar fecha correctamente ,codigo profe
+                /*var ano = document.getElementById("f_ano").value;
+                var mes = document.getElementById("f_mes").value;-1//se le resta uno al mes
+                var dia = document.getElementById("f_dia").value;
+                var valor = new Date(ano,mes,dia);
+
+				if (dia != valor.getDate() || mes != valor.getMonth() || ano != valor.getFullYear()){
+					document.getElementById("info_fecha").innerHTML = "¡¡No es el formato indicado";
+				} else{
+					document.getElementById("info_fecha").innerHTML = "";
+				}*/
 
 				//llamando la funcion validarFecha
 				if (!validarFecha(ano,mes,dia)){
@@ -88,7 +108,7 @@
 
                     //validar texto
                 var texto = document.getElementById("sugerencia");
-                if (texto.value === "") {
+                if (texto.value == "") {
                     document.getElementById("info_sugerencia").innerHTML = "¡¡Campo Obligatorio";
                     texto.focus();
                 }else{
@@ -107,6 +127,8 @@
                 contGlobal++;
                 return false;
             }
+
+
 		</script>
 	</head>
 
@@ -154,13 +176,17 @@
       <textarea id="sugerencia" name="sugerencia"></textarea>
 			<span id="info_sugerencia"></span>
       <br><br>
-			<p><b>Todos los campos son obligatorios.</b></p>
+		</p>
+		<p><b>Todos los campos son obligatorios.</b></p>
 		<br>
 		<p>
 			<input type="submit" value="ENVIAR" >
 			<br><br>
 			<input type="reset" value="Limpiar">
+			
 		</p>
 		</form>
 	</body>
 </html>
+
+

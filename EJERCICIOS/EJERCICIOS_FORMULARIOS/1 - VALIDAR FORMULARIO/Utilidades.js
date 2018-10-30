@@ -25,53 +25,127 @@ function ValidarDni(dni) {	// Retorna: true | false
     var numeroDni = dni.substr(0,dni.length-1);//desde cero hasta el tamaño de cad -1
     var let = dni.substr(dni.length-1,1).toUpperCase();
 
-    if (letra.charAt(numeroDni % 23) == let){
-
+    if (letra.charAt(numeroDni % 23) === let)
         return true;	// DNI correcto
-    }
+
 
     return false;	// DNI incorrecto
 }
 
 //validamos dni
-function validarDni(dni) {
+/*function ValidarDni(dni) {
+    //validamos dni
     var letras = "TRWAGMYFPDXBNJZSQVHLCKET";
-    return (dni.length !== 9);
-}
+    //primero la longitud
+    if (dni.length !=9) {
+        return false;
+    }
+   var dni = dni.substr(0,8);
+}*/
 
+//funcion para pasar a mayuscula
+function mayusculas() {
+    this.value = this.value.toUpperCase();
+}
 
 //var maximoCaracteres = 5;
 function limiteCadena(maximoCaracteres) {
     var cad = document.getElementById("text");
-    return (cad.value.length >= maximoCaracteres);
+
+    if (cad.value.length >= maximoCaracteres) {
+        return false;
+    }
 }
 
 //solo permito numeros (Restriccion)
-function soloSePermiteNumero(event) {
-    var codigoASCII = event.charCode || window.event.keyCode;
-    return ((codigoASCII >= 48) && (codigoASCII <= 57));
+function soloSePermiteNumero(elEvento) {
+
+    //para el chrome y mozilla
+    var evento = elEvento || window.event;
+    //para que funcione en todos los navegadores
+    var codigoCaracter = evento.charCode || evento.keyCode;
+    console.log(codigoCaracter);
+
+    /* if((codigoCaracter >= 48) && (codigoCaracter <=57)&& (this.value.length <= maximoCaracteres)){
+         return true;
+     }else {
+         return false;
+     }*/
+    return ((codigoCaracter >= 48) && (codigoCaracter <= 57));
 }
 
-function HanSoloNumeros(event) {
-    var codigoASCII = event.charCode || window.event.keyCode;
-    return new ((codigoASCII >= 48) && (codigoASCII <= 57) || (codigoASCII === 8) ||
-        (codigoASCII === 46) || (codigoASCII === 32) || (codigoASCII === 37) || (codigoASCII === 38) ||
-        (codigoASCII === 39) || (codigoASCII === 40));
+//Solo se permite introducir números y caracteres en la caja.
+function HanSoloNumeros(elEvento) {
+    //para el chrome y mozilla
+    var evento = elEvento || window.event;
+    //para que funcione en todos los navegadores
+    var codigoCaracter = evento.charCode || evento.keyCode;
+    console.log(codigoCaracter);
+
+    /*if((codigoCaracter >= 48) && (codigoCaracter <=57)&& (this.value.length <= 5)){
+        return true;
+    }else false;*/
+//para que funcione mozilla
+    return ((codigoCaracter >= 48) && (codigoCaracter <= 57) || (codigoCaracter === 8) ||
+        (codigoCaracter === 46) || (codigoCaracter === 32) || (codigoCaracter === 37) || (codigoCaracter === 38) ||
+        (codigoCaracter === 39) || (codigoCaracter === 40));
 }
 
-function soloLetra(event) {
-    var codigoASCII = event.charCode || window.event.keyCode;
-    return ((codigoASCII >= 65) && (codigoASCII <= 122))
+//8 = borrar
+//46= suprimir
+//32 = espacio
+//37 = flecha izquierda
+//38 = flecha arriba
+//39 = flecha derecha
+//40 = flecha abajo
+
+//Solo se permite introducir letras en la caja.
+function soloLetra(elEvento) {
+    var evento = elEvento || window.event;
+    var codigoCaracter = evento.charCode || evento.keyCode;
+    console.log(codigoCaracter);
+    /* if ((codigoCaracter >= 65) && (codigoCaracter <= 122))
+          return true;
+      else
+          return false;
+      */
+    return ((codigoCaracter >= 65) && (codigoCaracter <= 122));
 }
 
-function permiteSoloLetraEspacios(event) {
-    var codigoASCII = event.charCode || window.event.keyCode;
-    return ((codigoASCII >= 65) && (codigoASCII <= 122)) || (codigoASCII === 32);
+//################################################################
+//SOLO SE PERMITE INTRODUCIR LETRAS Y ESPACIOS.
+//################################################################
+function PermiteSoloLetrasEspacios(elEvento){
+    var evento = elEvento || window.event;
+    var codigoCaracter = evento.charCode || evento.keyCode;
 
+    console.log(codigoCaracter);
+
+    return ((codigoCaracter >= 65) && (codigoCaracter <= 122) || (codigoCaracter === 32));
 }
 
-// validar fecha
 function validarFecha(ano,mes,dia) {
     var valor = new Date(ano,mes-1,dia);
     return !(dia !== valor.getDate() || (mes - 1) !== valor.getMonth() || ano !== valor.getFullYear());
+}
+
+//validar un radioButton
+function validarRadio(OpcionElegidaSexo) {
+    var seleccionado = false;
+
+    for(var i=0; i<OpcionElegidaSexo.length && !OpcionElegidaSexo[i].checked; i++)
+        seleccionado = true;
+
+    return seleccionado;
+}
+
+// solo numeros decimales con coma
+function soloNumerosDecimales(e){
+    var c=e.charCode || window.event.keyCode;
+    if (c === 44){
+        return !((this.selectionStart === 0) || (this.value.indexOf(",") !== -1));
+    }
+    else{
+        return ((c>=48) && (c<=57));
+    }
 }
