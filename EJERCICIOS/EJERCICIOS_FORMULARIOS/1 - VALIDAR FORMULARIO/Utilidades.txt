@@ -106,56 +106,153 @@ function validarNifConGuion(NIF){
     Validar fecha
  */
 function validarFecha(dia, mes, anio) {
-    dia  = parseInt(dia);
-    mes  = parseInt(mes - 1);
-    anio = parseInt(anio);
-    var valor = new Date(anio, mes, dia);
-    return (anio > 0) && ((dia === valor.getDate()) && (mes === valor.getMonth()) && (anio === valor.getFullYear()));
+    var valor = new Date(anio, mes - 1, dia);
+    return (anio > 0) && ((dia === valor.getDate()) && ((mes -1) === valor.getMonth()) && (anio === valor.getFullYear()));
 }
 
 /*
     Calcula la edad
  */
 function calcularEdad(dia, mes, anio) {
-    dia  = parseInt(dia);
-    mes  = parseInt(mes - 1);
-    anio = parseInt(anio);
-    return  parseInt((new Date() - new Date(anio, mes, dia))/365/24/60/60/1000);
+    return  parseInt((new Date() - new Date(anio, mes - 1, dia))/365/24/60/60/1000);
 }
 
-/*
-    Comprueba si hay al menos un radio button seleccionado
- */
-function validarRadioButton(listaRadio){
-  var estaMarcado = false;
 
-  for (var i = 0; (i < listaRadio.length) && (estaMarcado === false); i++){
-    if (listaRadio[i].checked){
+
+//################################################################
+        //VALIDAR RADIOS
+//################################################################
+function ValidarRadios(valor){
+  estaMarcado = false;
+  
+  for (var i = 0; i < valor.length; i++){
+    if (valor[i].checked){
       estaMarcado = true;
+      break;
+    }
+    else{
+      estaMarcado = false;
     }
   }
 
-  return estaMarcado;
-}
-
-//funcion sugerir
-var contGlobal = 0;
-function sugerir() {
-    var cadena = "Escribir no es mi fuerte. ";
-    contGlobal = contGlobal % cadena.length;
-    this.value = this.value + cadena[contGlobal];
-    contGlobal++;
+  if (estaMarcado === true)
+    return true;
+  else
     return false;
 }
 
 /*
-document.getElementById("nombre").onpaste= function(){
-    alert ("acho que no pegues!!!");
+
+//################################################################
+        //VALIDAR  VARIOS RADIOS
+//################################################################
+function ValidarVariosRadios(valor){
+  alert("paso : entro en la funcion");
+  var estaMarcado = false;
+  var cont=0;
+
+  for (var i = 0; i < valor.length; i++){
+    if (valor[i].checked){
+      estaMarcado = true;
+      cont ++;
+      alert("paso: llevo  " +cont);
+    }
+    else{
+      estaMarcado = false;
+    }
+  }
+  //alert("paso: llevo 3 ");
+  if (estaMarcado && cont >= 3)
+    return true;
+  else
     return false;
+}
+
+
+
+//validamos que haya seleccionado una opción del sexo:
+var opSexo = document.getElementById("sexo");
+var selSexo = false;
+for (var i=0; i<opSexo.length; i++){
+  selSexo = selSexo || opSexo[i].checked;
+  if (!selSexo){
+    document.getElementById("info_sexo").innerHTML="Debes seleccionar una sexsualidad";
+    correcto = false;
+  }else{
+    document.getElementById("info_sexo").innerHTML="";
+  }
+}
+
+  
+//#############
+//otra manera
+//############
+//validamos que haya seleccionado una opción del sexo:
+*/
+/*
+var opSexo = document.getElementById("sexo");
+var selSexo = false;
+for (var i=0; (!opSexo[i].checked) && (i< opSexo.length); i++);
+  selSexo = selSexo || opSexo[i].checked;
+  var selSexo = (i != opSexo.length);
+  if (!selSexo){
+    document.getElementById("info_sexo").innerHTML="Debes seleccionar una sexsualidad";
+    correcto = false;
+  }else{
+    document.getElementById("info_sexo").innerHTML="";
+  }
+*/
+  /*
+//#############
+//zumos operador ternario en javaScript
+//############
+var opBebidas = document.getElementById("bebidas");
+var bebidasSel =0;
+var bebidasNoSel=0;
+for (var i=0; i< opBebidas.length; i++){
+  opBebidas[i].checked ? bebidasSel++ : bebidasNoSel++;
+}
+
+
+
+//###########
+//evitar copy-paste y drop(arrastar y soltar)
+//###########
+//en el wnidow.onload
+document.getElementById("nombre").onpaste= function(){
+  alert ("acho que no pegues!!!");
+  return false;
 };
 
 document.getElementById("nombre").ondrop= function(){
-    alert ("acho que no arrastres!!!");
-    return false;
+  alert ("acho que no arrastres!!!");
+  return false;
 };
+
+//##################
+//en utilidades
+function NoPermitirCopiarNiPegar (){
+
+}
+
+function sugerir (e){
+  var s = "Todo está muy bien";
+  this.value += s[this.value.length % s.length];
+  return false;
+}
+
+
+
+//en el wnidow.onload
+  //validar
+document.getElementById("btEnviar").onmouseenter = resaltar;
+document.getElementById("btEnviar").onmouseleave = resaltar;
+
+//en el script
+function resaltar(e){
+  var clase="";
+  if(e.type == "mouseenter") 
+    clase = "destacado";
+};
+
 */

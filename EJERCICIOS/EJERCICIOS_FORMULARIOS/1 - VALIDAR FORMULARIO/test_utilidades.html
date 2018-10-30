@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="Utilidades.js"></script>
+    <script type="text/javascript">
+        window.onload = function () {
+            document.getElementById("input").onkeyup = function () {
+                console.log(ej2(this.value));
+            };
+        };
+
+        console.log(calcularEdad(30, 5, 1994));
+        console.log(calcularEdad(15, 10, 1995));
+        console.log(calcularEdad(27, 5, 1995));
+        console.log(calcularEdad(2, 2, 1996));
+        console.log(calcularEdad(2, 2, 1995));
+        console.log(calcularEdad(2, 8, 1964));
+
+
+
+
+
+
+    </script>
+</head>
+<body>
+<label for="input"></label><input id="input" type="text">
+
+</body>
+</html>

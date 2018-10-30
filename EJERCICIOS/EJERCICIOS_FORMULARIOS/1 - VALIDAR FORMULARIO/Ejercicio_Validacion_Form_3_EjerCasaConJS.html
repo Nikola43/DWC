@@ -8,19 +8,21 @@
             window.onload = function (){
                 //Restricciones de entrada:
 				//NOMBRE
-               	document.getElementById("nombre").onkeypress = PermiteSoloLetrasEspacios;
-                document.getElementById("nombre").onkeyup = mayusculas;
+               	document.getElementById("nombre").onkeypress = soloLetrasEspacios;
+               // document.getElementById("nombre").onkeyup = mayusculas;
+
 				//APELLIDO
-                document.getElementById("apellidos").onkeypress = PermiteSoloLetrasEspacios;
-               	document.getElementById("apellidos").onkeyup = mayusculas;
-				//ESTATURA
-                document.getElementById("estatura").onkeypress=soloNumerosDecimales;
+                document.getElementById("apellidos").onkeypress = soloLetrasEspacios;
+               //	document.getElementById("apellidos").onkeyup = mayusculas;
+
+               	//ESTATURA
+                document.getElementById("estatura").onkeypress=soloNumerosDecimalesPositivosNegativosComaPunto;
 				// Alguna sugerencia /PARA QUE SE ESCRIBA ALGO CON SOLO PULSAR UNA LETRA
                 document.getElementById("sugerencia").onkeypress = sugerir;
 				//FECHA
-                document.getElementById("f_dia").onkeypress = HanSoloNumeros;
-				document.getElementById("f_mes").onkeypress = HanSoloNumeros;
-				document.getElementById("f_ano").onkeypress = HanSoloNumeros;
+                document.getElementById("f_dia").onkeypress = soloNumeros;
+				document.getElementById("f_mes").onkeypress = soloNumeros;
+				document.getElementById("f_ano").onkeypress = soloNumeros;
                 //cuenta
                 //document.getElementById("info_ccc").onkeypress = HanSoloNumeros;
 
@@ -55,7 +57,7 @@
 
                 //Validamos el dni.
                 var dni = document.getElementById("dni");
-                if(!ValidarDni(dni.value)){
+                if(!validarNifConGuion(dni.value)){
                     document.getElementById("info_dni").innerHTML="El DNI es INCORRECTO.";
                     if (!foco) {
                         foco = dni;
@@ -64,10 +66,11 @@
                     document.getElementById("info_dni").innerHTML="";
                 }
 
+
                 //otra manera
                 var OpcionElegidaSexo = document.getElementsByName("sexo");
 
-                var opcionSeleccionada = validarRadio(OpcionElegidaSexo);
+               var opcionSeleccionada = validarRadioButton(OpcionElegidaSexo);
 
 				//si no hay opcion  elegida MUESTRAME EL MENSAJE SINO....
                 if(!opcionSeleccionada) {
@@ -79,6 +82,7 @@
 				}
 
 
+
                 //Validar Fecha:
                 //Cogemos los valores introducidos por el usuario en el input.
                 //validar fecha
@@ -86,8 +90,10 @@
                 var mes = document.getElementById("f_mes").value;
                 var dia = document.getElementById("f_dia").value;
 
+
+
                 //llamando la funcion validarFecha
-                if (!validarFecha(ano,mes,dia)){
+                if (!validarFecha(dia,mes,ano)){
                     document.getElementById("info_fecha").innerHTML = "¡¡Fecha invalida";
                 } else{
                     document.getElementById("info_fecha").innerHTML = "";
@@ -106,8 +112,8 @@
 
 				//Validar Estado Civil option
                 var opcion = document.getElementById("estado_civil");
-                if (opcion.value === -1){
-                    document.getElementById("info_estado_civil").innerHTML = "¡¡Elija un sexo";
+                if (opcion.value === "-1"){
+                    document.getElementById("info_estado_civil").innerHTML = "¡¡Elija estado civil";
                     if (!foco)
                         foco = document.getElementById("estatura");
                     correcto = false;
@@ -153,16 +159,7 @@
                 return false;
             }
 
-            //funcion sugerir
-            var contGlobal = 0;
-            function sugerir() {
 
-                var cadena = "Escribir no es mi fuerte. ";
-                contGlobal = contGlobal % cadena.length;
-                this.value = this.value + cadena[contGlobal];
-                contGlobal++;
-                return false;
-            }
 			
 		</script>
 	</head>

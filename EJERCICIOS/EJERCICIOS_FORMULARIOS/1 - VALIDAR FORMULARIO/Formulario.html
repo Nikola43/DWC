@@ -19,7 +19,7 @@ REPETIR CLAVE:
 Deberá ser idéntica al contenido de CLAVE, además de cumplir con las mismas restricciones. (1 punto)
 	Permite enviar estando en vacío.
 
-FECHA DE NACIMIENTO:
+FECHA DE NACIMIENTO:<html>
 	Sólo serán válidas aquellas fechas CORRECTAS y además, sean 18 años anteriores a la fecha actual,
 	es decir, nos aseguraremos que el usuario, suponiendo que ha puesto su fecha real de nacimiento,
 	sea mayor de edad. (1 punto)
@@ -45,151 +45,15 @@ FECHA DE NACIMIENTO:
     <script type="text/javascript">
         window.onload = function () {
             document.getElementById("formulario").onsubmit = ValidarFormulario;
-            //Restricciones
-            //nombre
-            document.getElementById("nombre").onkeypress = pasarAmayuscula;
-            document.getElementById("nombre").onkeypress = function (e) {
-                return PermiteSoloLetrasEspaciosSuprYbackspacePuntosComas(e);
-            }
-            //apellidos
-            document.getElementById("apellidos").onkeypress = pasarAmayuscula;
-            document.getElementById("apellidos").onkeypress = function (e) {
-                return PermiteSoloLetrasEspaciosSuprYbackspacePuntosComas(e);
-            }
-            document.getElementById("dni").onkeypress = pasarAmayuscula;
-            //usuario
-            document.getElementById("usuario").onkeypress = function(e){
-                return usuarioLetrasNumeros(e,usuario);
-            }
-
-        }
+            document.getElementById("nombre").onkeypress = ej1;
+            document.getElementById("apellidos").onkeypress = ej1;
+            document.getElementById("dni").onkeypress = ej2;
+        };
 
         function ValidarFormulario() {
-            var correcto = true;
-            var foco = null; //null es false
 
-            var nombre = document.getElementById("nombre");
-            if (nombre.value.trim().length == "") {
-                document.getElementById("info_nombre").innerHTML = "El nombre no es valido.";
-                if (!foco) {
-                    foco = document.getElementById("nombre");
-                }
-                correcto = false;
-            } else {
-                document.getElementById("info_nombre").innerHTML = "";
-            }
-            //Validar Apellidos:
-            var apellidos = document.getElementById("apellidos");
-            if (apellidos.value.trim().length == "") {
-                document.getElementById("info_apellidos").innerHTML = "Apellido incorrecto.";
-                if (!foco) {
-                    foco = document.getElementById("apellidos");
-                }
-                correcto = false;
-            } else {
-                document.getElementById("info_apellidos").innerHTML = "";
-
-            }
-            /*NIF:Su longitud será 9. Sólo se podrán contener número en las 8 primeras posiciones*/
-            var dni = document.getElementById("dni");
-            //alert (isNaN(dni.value.substr(0, 8)));
-            if (dni.value.trim().length < 9 || isNaN(dni.value.substr(0, 8)) || //NO ES UN NUMERO
-                !isNaN(dni.value.substr(8, 1)) || !ValidarDni(dni.values)) {
-                document.getElementById("info_dni").innerHTML = "Dni incorrecto.";
-                if (!foco) {
-                    foco = document.getElementById("dni");
-                }
-                correcto = false;
-            } else {
-                document.getElementById("info_dni").innerHTML = "";
-
-            }
-            //USUARIO
-            /*USUARIO:
-	Deberá tener una longitud mínima de 5 caracteres y máxima de 20.
-	 Deberá contener al menos un número y una letra. (0,5 puntos)*/
-            var usuario = document.getElementById("usuario");
-            if ((usuario.value.trim().length < 5 || usuario.value.trim().length > 20) ||
-            (!confirmarLetra(usuario.value.trim())) || (!confirmarNumeros(usuario.value.trim()))){
-                document.getElementById("info_usuario").innerHTML = "Usuario es incorrecto.";
-                if (!foco) {
-                    foco = document.getElementById("usuario");
-                }
-                correcto = false;
-            } else {
-                document.getElementById("info_usuario").innerHTML = "";
-
-            }
-                //si es verdadero  //se pone donde esta error
-                if (foco) {
-                    foco.focus();
-                }
-                //return de la funcion validarFormulario
-                return false;
         }
 
-
-        //RESTRICCIONES
-        //mayúsculas
-        function pasarAmayuscula() {
-            this.value = this.value.toUpperCase();
-        }
-
-        // sólo podrá contener letras y espacios en blanco,
-        //se podrá permitirá el uso de supr y backspace.Permite introducir puntos y comas
-        function PermiteSoloLetrasEspaciosSuprYbackspacePuntosComas(elEvento) {
-            var evento = elEvento || window.event;
-            var codigoCaracter = evento.charCode || evento.keyCode;
-            console.log(codigoCaracter);
-
-            return ((codigoCaracter >= 65) && (codigoCaracter <= 122) ||     // letras
-                (codigoCaracter == 32) || (codigoCaracter == 8) ||         //espacio y retroceso
-                (codigoCaracter == 46) || (codigoCaracter == 44));       //coma y punto
-        }
-
-        //para ver si el dni  es correcto
-        function ValidarDni(dni) {	// Retorna: true | false
-            var letra = 'TRWAGMYFPDXBNJZSQVHLCKET';
-            var numeroDni = dni.substr(0, dni.length - 1);//desde cero hasta el tamaño de cad -1
-            var let = dni.substr(dni.length - 1, 1).toUpperCase();
-
-            if (letra.charAt(numeroDni % 23) == let) {
-                return true;	// DNI correcto
-            }
-            return false;	// DNI incorrecto
-        }
-        //para que solo contenga numeros y letras de usuario
-        function usuarioLetrasNumeros(elEvento, usuario) {
-            var evento = elEvento || window.event;
-            var codigoCaracter = evento.charCode || evento.keyCode;
-            if ((codigoCaracter >= 65 && codigoCaracter <= 122) ||
-                (codigoCaracter >= 48 && codigoCaracter <= 57)) {
-                return true;
-            } else {
-                return false;
-            }
-        }
-//funciones para confirmar que el usuario ponga letras y numeros
-        function confirmarNumeros(cadena) {
-            alert("entroNumero");
-            var num = "0123456789";
-            for(i=0; i<cadena.length; i++){
-                if (num.indexOf(cadena.charAt(i),0)!=-1){
-                    return true;
-                }
-            }
-            return false;
-        }
-        function confirmarLetra(cadena) {
-            alert("entroletra");
-            var letra = "abcdefghyjklmnñopqrstuvwxyz";
-            for(i=0; i<cadena.length; i++){
-                if (letra.indexOf(cadena.charAt(i))!=-1){
-                    return true;
-                }
-            }
-            return false;
-        }
 
 
     </script>
