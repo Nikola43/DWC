@@ -10,7 +10,8 @@
 <script type="text/javascript">
 
 
-    let userDNI = prompt("Introduce el numero de tu DNI", "12345678");
+    //let userDNI = prompt("Introduce el numero de tu DNI", "12345678");
+    let userDNI = 12345678;
     document.write(userDNI+calcularLetraDNI(userDNI));
 
 
@@ -18,6 +19,11 @@
         let letras = "TRWAGMYFPDXBNJZSQVHLCKET";
         return letras[dni % 23];
     }
+
+    var a = "bcd";
+    var b = "abcd";
+
+    console.log(a === b);
 
 
 

@@ -1,0 +1,48 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>Calcular letra dni</title>
+</head>
+
+<body>
+
+<script type="text/javascript">
+
+
+   console.log(Validar_Fecha("5/5/1994"));
+
+function Validar_Fecha(sfecha) {
+    var arrayFecha;
+    if (sfecha.indexOf("/") !== -1){
+        arrayFecha = sfecha.split("/");
+    }
+
+    if (sfecha.indexOf("-") !== -1){
+        arrayFecha = sfecha.split("-");
+    }
+
+    return validarFecha(arrayFecha[0], [1], [2]);
+}
+
+function validarFecha(dia, mes, anio) {
+    dia  = parseInt(dia);
+    mes  = parseInt(mes - 1);
+    anio = parseInt(anio);
+    var valor = new Date(anio, mes, dia);
+    return (anio > 0) && ((dia == valor.getDate()) && (mes == valor.getMonth()) && (anio == valor.getFullYear()));
+}
+
+   
+
+
+
+
+
+
+
+
+</script>
+
+</body>
+</html>

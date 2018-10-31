@@ -99,7 +99,7 @@ function validarNombre(event) {
  */
 function validarNifConGuion(NIF){
     var letras = 'TRWAGMYFPDXBNJZSQVHLCKET';
-    return (NIF.indexOf("-") !== 8) ? !(NIF.charAt(9) !== letras.charAt(NIF.substring(0, 8) % 23)) : !(NIF.charAt(8) !== letras.charAt(NIF.substring(0, 8) % 23))
+    return (NIF.indexOf("-") !== 8) ? !(NIF.charAt(8) !== letras.charAt(NIF.substring(0, 8) % 23)) : !(NIF.charAt(9) !== letras.charAt(NIF.substring(0, 8) % 23))
 }
 
 /*
