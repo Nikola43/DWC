@@ -9,32 +9,37 @@
 
 <script type="text/javascript">
 
+    
 
-   console.log(Validar_Fecha("5/5/1994"));
 
-function Validar_Fecha(sfecha) {
-    var arrayFecha;
-    if (sfecha.indexOf("/") !== -1){
-        arrayFecha = sfecha.split("/");
+   console.log(soloLetrasNumerosCaracteresEspeciales("5/5/1994"));
+
+function soloLetrasNumerosCaracteresEspeciales(event){
+    var codigoASCII = event.charCode || window.event.keyCode;
+    var caracterASCII = String.fromCharCode(codigoASCII);
+
+    if (   (cuentaCaracter(this.value, '*') > 1)
+        || (cuentaCaracter(this.value, '_') > 1)
+        || (cuentaCaracter(this.value, '@') > 1)
+        || (cuentaCaracter(this.value, '&') > 1)
+        || (cuentaCaracter(this.value, '$') > 1)
+        || (cuentaCaracter(this.value, '%') > 1)
+        || (cuentaCaracter(this.value, '?') > 1)
+        || (cuentaCaracter(this.value, '#') > 1)){
+        this.value = this.value.substring(0, this.value.length - 1);
     }
 
-    if (sfecha.indexOf("-") !== -1){
-        arrayFecha = sfecha.split("-");
-    }
-
-    return validarFecha(arrayFecha[0], [1], [2]);
+    return ((((codigoASCII >= 65) && (codigoASCII <= 90)) || ((codigoASCII >= 97) && (codigoASCII <= 122)))
+        || ((codigoASCII >= 48) && (codigoASCII <= 57))
+        || (caracterASCII === '*')
+        || (caracterASCII === '_')
+        || (caracterASCII === '@')
+        || (caracterASCII === '&')
+        || (caracterASCII === '$')
+        || (caracterASCII === '%')
+        || (caracterASCII === '?')
+        || (caracterASCII === '#'));
 }
-
-function validarFecha(dia, mes, anio) {
-    dia  = parseInt(dia);
-    mes  = parseInt(mes - 1);
-    anio = parseInt(anio);
-    var valor = new Date(anio, mes, dia);
-    return (anio > 0) && ((dia == valor.getDate()) && (mes == valor.getMonth()) && (anio == valor.getFullYear()));
-}
-
-   
-
 
 
 

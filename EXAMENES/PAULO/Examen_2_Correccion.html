@@ -1,0 +1,245 @@
+<html>
+  <head>   
+    <meta charset="UTF-8"/>
+    <title>Examen 2</title>
+		
+		<style type="text/css">
+			span {
+				color: red;
+			}
+			.separar{
+				margin-left: 3em;
+			}
+		</style>
+		
+		
+      <script type="text/javascript" src="soares_teixeira_paulo_EJ1.js"></script>
+      <script type="text/javascript">
+
+          window.onload = function () {
+              // Restricciones de entrada
+              // NOMBRE Y APELLIDOS
+              document.getElementById("nombre").onkeypress    = soloLetrasEspacios;
+              document.getElementById("apellidos").onkeypress = soloLetrasEspacios;
+
+              // USUARIO
+              document.getElementById("usuario").onkeyup = soloLetrasNumerosCaracteresEspeciales;
+
+              // VALIDAR FORMULARIO
+              document.getElementById("f1").onsubmit = validarFormulario;
+          };
+
+          function validarFormulario(){
+              var correcto = true;
+              var foco = null;
+
+              // VALIDAR NOMBRE
+              if (document.getElementById("nombre").value.length < 1){
+                  correcto = false;
+                  document.getElementById("spnombre").innerHTML="El nombre no puede estar vacío";
+                  if (!foco)
+                      foco = document.getElementById("nombre").focus();
+              } else {
+                  document.getElementById("spnombre").innerHTML="";
+              }
+
+              // VALIDAR APELLIDOS
+              if (document.getElementById("apellidos").value.length < 1){
+                  correcto = false;
+                  document.getElementById("spapellidos").innerHTML="Los apellidos no puede estar vacío";
+                  if (!foco)
+                      foco = document.getElementById("apellidos").focus();
+              } else {
+                  document.getElementById("spapellidos").innerHTML="";
+              }
+
+              // VALIDAR NIF
+              if (!validarNIF(document.getElementById("nif").value)){
+                  correcto = false;
+                  document.getElementById("spnif").innerHTML="El NIF no cumple el formato";
+                  if (!foco)
+                      foco = document.getElementById("nif").focus();
+              } else {
+                  document.getElementById("spnif").innerHTML="";
+              }
+
+              // VALIDAR USUARIO
+              if (document.getElementById("usuario").value.length < 5 ){
+                  correcto = false;
+                  document.getElementById("spusuario").innerHTML="El usuario debe tener mínimo 5 caracteres";
+                  if (!foco)
+                      foco = document.getElementById("usuario").focus();
+              } else {
+                  document.getElementById("spusuario").innerHTML="";
+              }
+
+              // VALIDAR CLAVE
+              if (document.getElementById("clave").value.length < 8){
+                  correcto = false;
+                  document.getElementById("spclave").innerHTML="La clave debe tener mínimo 8 caracteres";
+                  if (!foco)
+                      foco = document.getElementById("clave").focus();
+              } else if (!validarClave(document.getElementById("clave").value)){
+                  correcto = false;
+                  document.getElementById("spclave").innerHTML="La clave no cumple con el formato";
+                  if (!foco)
+                      foco = document.getElementById("clave").focus();
+              } else {
+                  document.getElementById("spclave").innerHTML="";
+              }
+
+              // VALIDAR REPETIR CLAVE
+              if (document.getElementById("rep_clave").value.length < 8 ){
+                  correcto = false;
+                  document.getElementById("sprep_clave").innerHTML="Repetir clave debe tener mínimo 8 caracteres";
+                  if (!foco)
+                      foco = document.getElementById("rep_clave").focus();
+              } else if (!validarClave(document.getElementById("rep_clave").value)) {
+                  correcto = false;
+                  document.getElementById("sprep_clave").innerHTML = "La clave no cumple con el formato";
+                  if (!foco)
+                      foco = document.getElementById("rep_clave").focus();
+              } else if (document.getElementById("rep_clave").value !== document.getElementById("clave").value ){
+                  correcto = false;
+                  document.getElementById("sprep_clave").innerHTML="La clave y repetir clave no coinciden";
+                  if (!foco)
+                      foco = document.getElementById("rep_clave").focus();
+              } else
+              {
+                  document.getElementById("sprep_clave").innerHTML="";
+              }
+
+              // VALIDAR FECHA
+              if (!validarFecha(document.getElementById("fn_dia").value, document.getElementById("fn_mes").value, document.getElementById("fn_ano").value) ){
+                  correcto = false;
+                  document.getElementById("spf_nacimiento").innerHTML="La fecha no es válida";
+                  if (!foco)
+                      foco = document.getElementById("fn_dia").focus();
+              } else if (calcularEdad(document.getElementById("fn_dia").value, document.getElementById("fn_mes").value, document.getElementById("fn_ano").value) < 18){
+                  correcto = false;
+                  document.getElementById("spf_nacimiento").innerHTML="No eres mayor de edad";
+                  if (!foco)
+                      foco = document.getElementById("fn_dia").focus();
+              }
+              else {
+                  document.getElementById("spf_nacimiento").innerHTML="";
+              }
+
+              // VALIDAR FECHA NACIMIENTO V2
+
+              // VALIDAR SEXO
+              var OpcionSexo = document.getElementsByName("sexo");
+              var opcionSeleccionada = validarRadioButton(OpcionSexo);
+
+              if(!opcionSeleccionada) {
+                  //correcto = false;
+                  // AQUI SE ME OLVIDO PONER correcto = false;
+                  // Y POR ESO ENVIA EL FORMULARIO, PERO VALIDAR EL SEXO FUNCIONA CORRECTAMENTE
+                  // POR ESO AL PONER LA FECHA VALIDA Y MAYOR DE EDAD "ENVIA EL FORMULARIO Y REFRESCA, PERO NO
+                  // HAY NINGUN ERROR DE JS"
+                  document.getElementById("spsexo").innerHTML="Debe seleccionar al menos una opción";
+                  if (!foco)
+                      foco = document.getElementById("sexo");
+              }else{
+                  document.getElementById("spsexo").innerHTML="";
+              }
+
+              // VALIDAR NUMERO CUENTA
+              if (!validarCuenta(document.getElementById("ccc").value)){
+                  //correcto = false;
+                  // AQUI NO LO PUSE, POR QUE NO TENIA NINGUN NUMERO DE CUENTA PARA PROBAR
+                  // COMO TE COMENTE EL EL CORREO DEL EXAMEN
+                  document.getElementById("spccc").innerHTML="El numero de cuenta no es válido";
+                  if (!foco)
+                      foco = document.getElementById("ccc").focus();
+              } else {
+                  document.getElementById("spccc").innerHTML="";
+              }
+
+              if (foco) {
+                  foco.focus();
+              }
+              return correcto;
+          }
+      </script>
+		
+		
+		
+  </head>
+
+  <body>
+  <center>FORMULARIO</center>
+  <form id="f1">
+    <p>
+      Nombre: <input type="text" id="nombre">
+      <span id="spnombre"></span>
+    </p>
+    <p>
+      Apellidos: <input type="text" id="apellidos">
+      <span id="spapellidos"></span>
+    </p>
+    <p>
+      NIF: <input type="text" id="nif">
+      <span id="spnif"></span>
+    </p>
+    <p>
+      Usuario: <input type="text" maxlength="15" id="usuario">
+      <span id="spusuario"></span>
+    </p>
+    <p>
+      Clave: <input type="text" id="clave">
+      <span id="spclave"></span>
+    </p>
+    <p>
+      Repetir Clave: <input type="password" id="rep_clave">
+      <span id="sprep_clave"></span>
+    </p>
+    <p>
+      Fecha Nacimiento:
+      <input type="text" id="fn_dia" maxlength="2" size="1" /> / 
+      <input type="text" id="fn_mes" maxlength="2" size="1"/> / 
+      <input type="text" id="fn_ano" maxlength="4" size="3"/> (dd/mm/aaaa) 
+      <span id="spf_nacimiento"></span>
+    </p>
+		
+		<p>
+      Fecha Nacimiento V2:
+			<select id="sel_fn_mes">
+				<option value="-1">mes</option>
+			</select>
+      / 
+			<select id="sel_fn_dia">
+				<option value="-1">dia</option>
+			</select>
+      / 
+			<select id="sel_fn_ano">
+				<option value="-1">año</option>
+			</select>
+      <span id="spSel_f_nacimiento"></span>
+    </p>
+		
+		<p>
+			<label>Sexo: </label>
+      <input type="radio" name="sexo" value="femenino" />
+      <label for="femenino">Femenino</label>
+			<input type="radio" name="sexo" value="masculino" />
+			<label for="masculino">Masculino</label>
+			<input type="radio" name="sexo" value="otro" />
+			<label for="ni_me_acuerdo">Otro</label>
+      <span id="spsexo"></span>
+		</p>
+		
+		<p>
+			<label for="cc">Cuenta Corriente: </label>
+			<input type="text" id="ccc" maxlength="20" size="22" /> 
+      <span id="spccc"></span>
+		</p>
+
+		<br>
+    <p>
+      <input type="submit" value="Enviar" id="btEnviar" /> 
+      <input class="separar" type="reset" value="Limpiar Campos"/>
+    </p>
+  </form>
+</body>
+</html>

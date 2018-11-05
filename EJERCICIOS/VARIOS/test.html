@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<input id="text" title="text" type="text">
+
+
+<script type="text/javascript">
+    window.onload = function () {
+        var input = document.getElementById("text");
+        input.onkeyup = soloLetrasNumerosCaracteresEspeciales;
+    };
+
+    function soloNumerosRealesEnteros(event){
+        var codigoASCII = event.charCode || window.event.keyCode;
+
+        var caracterASCII = String.fromCharCode(codigoASCII);
+
+        console.log("---------------------------------");
+        console.log("Codigo ASCII: " + codigoASCII);
+        console.log("Caracter ASCII: " + caracterASCII);
+        console.log("---------------------------------");
+
+
+        if (codigoASCII === 44){
+
+        } else {
+            return ((codigoASCII >= 48) && (codigoASCII <= 57));
+        }
+    }
+
+    function soloLetrasNumerosCaracteresEspeciales(event){
+    var codigoASCII = event.charCode || window.event.keyCode;
+    var caracterASCII = String.fromCharCode(codigoASCII);
+
+    if (   (cuentaCaracter(this.value, '*') > 1)
+        || (cuentaCaracter(this.value, '_') > 1)
+        || (cuentaCaracter(this.value, '@') > 1)
+        || (cuentaCaracter(this.value, '&') > 1)
+        || (cuentaCaracter(this.value, '$') > 1)
+        || (cuentaCaracter(this.value, '%') > 1)
+        || (cuentaCaracter(this.value, '?') > 1)
+        || (cuentaCaracter(this.value, '#') > 1)){
+        this.value = this.value.substring(0, this.value.length - 1);
+    }
+
+    return ((((codigoASCII >= 65) && (codigoASCII <= 90)) || ((codigoASCII >= 97) && (codigoASCII <= 122)))
+        || ((codigoASCII >= 48) && (codigoASCII <= 57))
+        || (caracterASCII === '*')
+        || (caracterASCII === '_')
+        || (caracterASCII === '@')
+        || (caracterASCII === '&')
+        || (caracterASCII === '$')
+        || (caracterASCII === '%')
+        || (caracterASCII === '?')
+        || (caracterASCII === '#'));
+}
+
+function cuentaCaracter(str, char) {
+    var contador = 0;
+
+    for (var i = 0; i < str.length; i++)
+        if (str[i] === char)
+            contador++;
+
+    return contador;
+}
+
+
+
+
+    /*
+        function soloNumerosRealesEnteros(){
+        var contenido = this.value;
+        var thisEvent = event || window.event;
+        var codigoASCII = thisEvent.charCode || thisEvent.keyCode;
+        var noHayLetras = !(((codigoASCII >= 65) && (codigoASCII <= 90)) || ((codigoASCII >= 97) && (codigoASCII <= 122)));
+
+        console.log(contenido);
+        var resultado = ((contenido.length > 0) // Comprobamos que tiene contenido
+            // Comprobamos si no tiene el simbolo -
+            && (!Array.isArray(contenido.match(/-/gi))  ? true : // si no lo tiene devolvemos true
+                (contenido.match(/-/gi).length === 1 && contenido.indexOf("-") === 0)) // si lo tiene, comprobamos que tenga solo 1 y que esta en la primera posición
+
+            && !(Number.isInteger(parseInt(contenido[contenido.indexOf("-") - 1], 10)))
+
+            // Comprobamos si no tiene el simbolo .
+            && (!Array.isArray(contenido.match(/\./gi)) ? true : // si no lo tiene devolvemos true
+                (contenido.match(/\./gi).length === 1) // si lo tiene, comprobamos solo tenga 1 y le anteceda numero
+                && (Number.isInteger(parseInt(contenido[contenido.indexOf(".") - 1], 10))))
+            && noHayLetras);
+
+            if (!resultado){
+                this.value = this.value.substring(0,this.value.length-1);
+            }
+            return (resultado);
+    }
+     */
+</script>
+
+</body>
+</html>
