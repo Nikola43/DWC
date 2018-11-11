@@ -1,0 +1,113 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>Ejercicio 11 - Estados de la petición AJAX</title>
+  <style type="text/css">
+
+  </style>
+
+  <script type="text/javascript">
+      //--1. Creo un objeto
+      //objeto que tienen todos lo navegadores//instanciar el objeto /tiene valores , atrivutos ,metodos
+      var peticion_http = new XMLHttpRequest();
+
+      function cargaContenido(metodo, url, callback){
+          //Asignar la función de respuesta.
+          peticion_http.onreadystatechange= callback;
+
+          //Preparar peticion HTTP
+          peticion_http.open(metodo,url);
+
+          //Realizar petición HTTP.
+          peticion_http.send();
+
+          ///vete a saber que devulve
+          // alert("primer alert"+ peticion_http.responseText);//viene sin datos
+      }
+
+      window.onload = function(){
+          cargaContenido("get","servidor.php?servicio=provincias",MuestraProvincias);//
+          document.getElementById("provincia").onchange = llamaLocalidad;
+      };
+
+      //Para la carga de las provincias./callback
+      function MuestraProvincias(){
+          if((peticion_http.readyState === 4) && (peticion_http.status === 200)){
+              console.log(peticion_http.responseText);
+
+              // alert("segundo alert"+ peticion_http.responseText);
+              //convierto a objetos java scritp(un array de objetos)
+              var datos=JSON.parse(peticion_http.responseText);
+              //JSON.parse();//DADO UN STRING CONVERTIRLO EN UN OBJETO JSON
+              //JSON.stringify()//DADO UN OBJETO JAVASCRITP CONVERTIRLO EN UN STRING JSON
+              console.log(datos);
+              //alert(datos);
+
+              //   alert("Nombre de alguna provincia: " + datos[11].NOMBRE);
+              LlenaSelect(document.getElementById("provincia"),datos);
+          }
+      }
+
+      //Para la carga de las localidades./callback
+      function MuestraLocalidades(){
+          if((peticion_http.readyState === 4) && (peticion_http.status === 200)){
+              console.log(peticion_http.responseText);
+
+              // alert("segundo alert"+ peticion_http.responseText);
+              //convierto a objetos java scritp(un array de objetos)
+              var datos=JSON.parse(peticion_http.responseText);
+              //JSON.parse();//DADO UN STRING CONVERTIRLO EN UN OBJETO JSON
+              //JSON.stringify()//DADO UN OBJETO JAVASCRITP CONVERTIRLO EN UN STRING JSON
+              console.log(datos);
+              //alert(datos);
+
+              //   alert("Nombre de alguna provincia: " + datos[11].NOMBRE);
+              //borro par k me recargue todo limpio
+              document.getElementById("localidad").value.length = 0;
+              LlenaSelect(document.getElementById("localidad"),datos);
+          }
+      }
+
+      function llamaLocalidad() {
+          cargaContenido("get", "servidor.php?servicio=localidades&codigop="+document.getElementById("provincia").value, MuestraLocalidades);//this.values
+      }
+
+
+      function LlenaSelect(sel,op){
+          sel.options.length= 1;  //limpiamos y borramos todo
+          var o;
+
+          for(var i in op){
+              o = document.createElement('option');
+              o.value = op[i].CODIGO;
+              o.innerHTML = op[i].NOMBRE;
+              sel.options.add(o);
+          }
+      }
+      //OTRA FORMA
+      /* function LlenaSelect(sel,op){
+           sel.options.length= 1;  //limpiamos y borramos todo
+           for(var i=1; i<op.length; i++){
+               sel.options[sel.options.length] = new Option(op[i].NOMBRE, op[i].CODIGO);
+           }
+       }*/
+
+
+  </script>
+</head>
+<body>
+<h2>Ejemplo Proyecto Web Con Java y Ajax.</h2>
+<label for="provincia">Provincia: </label>
+<select id="provincia">
+  <option value="-1">Seleccione Provincia</option>
+</select>
+
+<br><br>
+<label for="localidad">Localidad: </label>
+<select id="localidad">
+  <option value="-1">Seleccione Localidad</option>
+</select>
+</body>
+</html>
