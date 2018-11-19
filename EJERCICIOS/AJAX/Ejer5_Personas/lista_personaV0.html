@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Regustros de usuario</title>
+    <script type="text/javascript">
+
+        function creaFila(aCol, tipo) {
+            if (tipo === 'cabecera') {
+                tipo = "th";
+            } else {
+                tipo = "td"
+            }
+
+            var fila = document.createElement("tr");
+
+
+
+
+            var col;
+            var cont;
+            for (var i = 0; i < aCol; i++) {
+                col = document.createElement(tipo);
+                col.innerHTML = aCol[i];
+                fila.appendChild(col);
+            }
+            return fila;
+        }
+
+        window.onload = function () {
+            cargarTabla();
+        };
+
+
+        function cargarTabla() {
+            var tbody = document.getElementById("filas_tablas");
+        }
+    </script>
+
+    <form id="formulario_1">
+        <h3>REGISTRO DE USUARIO:</h3>
+
+        <label for="dni">NIF: </label>
+        <input type="text" name="dni" id="dni" maxlength="9" size="9"/>
+        <span id="info_dni"></span>
+        <br><br>
+
+        <label for="nombre">Nombre: </label>
+        <input type="text" name="nombre" id="nombre" maxlength="25" size="15"/>
+        <span id="info_nombre"></span>
+        <br><br>
+
+        <label for="apellidos">Apellidos: </label>
+        <input type="text" name="apellidos" id="apellidos" maxlength="50" size="25"/>
+        <span id="info_apellidos"></span>
+        <br><br>
+
+        <table id="tabla_personas" border="1px">
+            <tr>
+                <th>ID</th>
+                <th>DNI</th>
+                <th>NOMBRES</th>
+                <th>APELLIDOS</th>
+            </tr>
+
+            <tbody id="filas_tablas">
+
+            </tbody>
+        </table>
+
+        <br><br>
+        <input type="button" value="AÑADIR" id="btAÑADIR">
+
+    </form>
+</head>
+<body>
+
+</body>
+</html>
