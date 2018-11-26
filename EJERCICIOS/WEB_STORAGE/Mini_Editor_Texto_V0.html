@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Plantilla</title>
+
+    <style type="text/css">
+        #texto {
+            width: 700px;
+            height: 500px;
+            border: 1px solid blue;
+            padding: 0.4em;
+        }
+
+        span {
+            border: 2px solid red;
+            margin: 1.1em;
+            padding: .2em;
+            cursor: pointer;
+            background-color: pink;
+        }
+
+    </style>
+
+
+
+    <script type="text/javascript">
+
+        window.onload = function () {
+            leerWebStorage("texto", "contenido_texto");
+
+            var btnNegrita = document.getElementById("negrita");
+            var btnCursiva = document.getElementById("cursiva");
+            var btnSubrayado = document.getElementById("subrayado");
+            var btnColor = document.getElementById("color");
+            var texto = document.getElementById("texto");
+            var btnGuardar = document.getElementById("guardar");
+
+
+            btnNegrita.onmousedown = texto_negrita;
+            btnCursiva.onmousedown = texto_cursivo;
+            btnSubrayado.onmousedown = texto_subrayado;
+            btnColor.onmousedown = texto_color;
+            btnGuardar.onclick = function () {
+                guardarWebStorage(texto.id, "contenido_texto");
+                alert("Texto Guardado")
+            };
+        };
+
+        function leerWebStorage(htmlElement, storageItem) {
+            if (typeof(Storage) !== "undefined")
+                document.getElementById(htmlElement).innerHTML = localStorage.getItem(storageItem);
+        }
+
+        function guardarWebStorage(htmlElement, storageItem) {
+            if (typeof(Storage) !== "undefined")
+                localStorage.setItem(storageItem, document.getElementById(htmlElement).innerHTML);
+        }
+
+        function texto_negrita(e) {
+            document.execCommand("bold", false, null);
+            e.preventDefault();
+        }
+
+        function texto_cursivo(e) {
+            document.execCommand("italic", false, null);
+            e.preventDefault();
+        }
+
+        function texto_subrayado(e) {
+            document.execCommand("underline", false, null);
+            e.preventDefault();
+        }
+
+        function texto_color(e) {
+            document.execCommand("foreColor", false, getRandomColor());
+            e.preventDefault();
+        }
+
+        function getRandomColor() {
+            var letters = "0123456789ABCDEF";
+            var color = '#';
+            for (var i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+    </script>
+</head>
+
+<body>
+
+<h3>Procesador de Textos</h3>
+<label>
+    Introduzca el nombre del fichero: <input type="text" id="nombre_fichero" >
+</label>
+<p>
+    <span id="guardar">Guardar</span>
+    <span id="negrita">Negrita</span>
+    <span id="cursiva">Cursiva</span>
+    <span id="subrayado">Subrayado</span>
+    <span id="color">Color</span>
+</p>
+<div id="texto" contentEditable="true" spellcheck="true">
+    Esto es un texto de prueba para no tener que estar escribiendo.
+</div>
+<p id="sal"></p>
+
+</body>
+
+</html>
