@@ -1,7 +1,8 @@
 <?php
 header('Content-Type: application/json');
 include("conexion.php");
-$conn = Conectar2("personas", "root", "paulo1994");
+//$conn = Conectar2("personas", "root", "paulo1994");
+$conn = Conectar2("ajax", "root", "");
 
 $datos = file_get_contents('php://input');
 $objeto=json_decode($datos);
