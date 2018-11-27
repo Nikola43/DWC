@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Listar(mostrar) personas</title>
+    <script type="text/javascript">
+
+        var peticion_http = new XMLHttpRequest();
+
+        function cargaContenido(metodo, url, callback){
+            //Asignar la función de respuesta.
+            peticion_http.onreadystatechange= callback;
+
+            //Preparar peticion HTTP
+            peticion_http.open(metodo,url);
+
+            //Realizar petición HTTP.
+            peticion_http.send();
+
+        }
+
+        window.onload= function(){
+            cargaContenido("get","servidor.php?servicio=listar",obtieneDatosPersonas);
+        }
+
+        //Para la carga de los datos./callback
+        function obtieneDatosPersonas() {
+            if((peticion_http.readyState == 4) && (peticion_http.status == 200)){
+                console.log(peticion_http.responseText);
+
+                //convierto a objetos java scritp(un array de objetos)
+                //JSON.parse();//DADO UN STRING CONVERTIRLO EN UN OBJETO JSON
+                var datos=JSON.parse(peticion_http.responseText);
+                rellenarTabla(datos);
+
+            }
+        }
+
+        //function para generar filas de una tabla
+        function rellenarTabla(datos) {
+            var tablaBody = document.getElementById("filas_tablas");
+            //llamo a la funcion crear fila mientras recorro el array
+            for(var i=0; i<datos.length; i++){
+                tablaBody.appendChild(creaFila(datos[i]));
+            }
+        }
+
+        function creaFila(registro) {
+
+            var fila = document.createElement("tr")
+            for(var i=0; i<4; i++) {
+                td = document.createElement("td");
+                if (i == 0) {
+                    td.innerHTML = registro.ID;
+                    fila.appendChild(td);
+                }
+                if (i == 1) {
+                    td.innerHTML = registro.DNI;
+                    fila.appendChild(td);
+                }
+                if (i == 2) {
+                    td.innerHTML = registro.NOMBRE;
+                    fila.appendChild(td);
+                }
+                if (i == 3) {
+                    td.innerHTML = registro.APELLIDOS;
+                    fila.appendChild(td);
+                }
+            }
+            fila.appendChild(td);
+
+            return fila;
+        }
+
+
+    </script>
+
+    <form id="formulario_1">
+
+        <h3>REGISTRO DE USUARIO:</h3>
+
+        <label for="dni">NIF: </label>
+        <input type="text" name="dni" id="dni" maxlength="9" size="9" />
+        <span id="info_dni"></span>
+        <br><br>
+
+        <label for="nombre">Nombre: </label>
+        <input type="text" name="nombre" id="nombre" maxlength="25" size="15" />
+        <span id="info_nombre"></span>
+        <br><br>
+
+        <label for="apellidos">Apellidos: </label>
+        <input type="text" name="apellidos" id="apellidos" maxlength="50" size="25" />
+        <span id="info_apellidos"></span>
+        <br><br>
+
+        <table id="tabla_personas" border="1px">
+            <tr>
+                <th>ID</th>
+                <th>DNI</th>
+                <th>NOMBRES</th>
+                <th>APELLIDOS</th>
+            </tr>
+
+            <tbody id="filas_tablas">
+
+            </tbody>
+        </table>
+
+        <br><br>
+        <input type="button" value="AÑADIR" id="btAnadir">
+
+    </form>
+</head>
+<body>
+
+</body>
+</html>

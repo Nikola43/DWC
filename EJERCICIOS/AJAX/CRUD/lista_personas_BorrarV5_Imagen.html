@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>V5BorrarConImagen</title>
+	<style>
+	
+		.delete{
+		width: 40px;
+		height: 40px;
+		}
+
+        .update{
+            width: 40px;
+            height: 40px;
+        }
+	</style>
+	
+    <script type="text/javascript">
+
+        var peticion_http = new XMLHttpRequest();
+
+        window.onload= function(){
+            leerPersona();
+            document.getElementById("btAnadir").onclick = insertarPersona;
+        };
+
+        // Crea un objeto con el servicio que se solicita y con los datos introducidos en el formulario
+        // lo convierte a json, y realiza la petición al servidor
+        // usando ese objeto como parametro de la peticion post
+        // una vez insertado, muestra todas las personas de la base de datos
+        function insertarPersona(event){
+            // Cancela el evento si es cancelable, no detiene el resto del evento
+            event.preventDefault();
+
+            // Creamos un objeto con el tipo de servicio y con los datos del usuario
+            var parametro = {
+                servicio: "insertar",
+                NOMBRE:document.getElementById("nombre").value,
+                APELLIDOS:document.getElementById("apellidos").value,
+                DNI:document.getElementById("dni").value,
+            };
+
+            // Convertimos el objeto js en json
+            parametro = JSON.stringify(parametro);
+
+            // Realizamos la petición con esos datos
+            realizaPeticion("servidorJSON.php", "POST", muestraPersonas, parametro);
+        }
+
+        // Crea un objeto js con el servicio que se solicitam lo convierte a json y realiza la peticion al servidor
+        // usando ese objeto como parametro de la peticion post
+        function leerPersona() {
+            realizaPeticion("servidorJSON.php", "post", muestraPersonas, JSON.stringify({servicio: "listar"}));
+        }
+
+
+        // Pregunta al usuario si esta seguro de querer borrar a esa persona
+        // Crea un objeto con el servicio que se solicita y con el id del usuario que quiere eliminar
+        // lo convierte a json y lo manda en la peticion
+		function borrarPersonas(event){
+           event.preventDefault();//para salir se pone cuando el boton esta en sumbir
+		   if(confirm("Esta seguro que desea borrar a '"+this.dataset.nameUsuario+ " " +this.dataset.lastNameUsuario +"'")){
+               var parametro = {servicio:"borrar", ID:this.dataset.idUsuario};
+			   realizaPeticion("servidorJSON.php","POST",muestraPersonas, JSON.stringify(parametro));
+			}
+        }
+
+        // Pregunta al usuario si esta seguro de querer borrar a esa persona
+        // Crea un objeto con el servicio que se solicita y con el id del usuario que quiere eliminar
+        // lo convierte a json y lo manda en la peticion
+        function actualizaPersona(event){
+            event.preventDefault();//para salir se pone cuando el boton esta en sumbir
+
+            if(confirm("Esta seguro que desea actualizar los datos del usuario con id  '"+this.dataset.idUsuario)){
+                var parametro = {
+                    DNI:document.getElementById("dni").value,
+                    NOMBRE:document.getElementById("nombre").value,
+                    APELLIDOS:document.getElementById("apellidos").value,
+                    ID:this.dataset.idUsuario,
+                    servicio:"modificar"
+                };
+
+                console.log(parametro);
+                realizaPeticion("servidorJSON.php","POST",muestraPersonas, JSON.stringify(parametro));
+            }
+
+        }
+		
+        // Funcion callback
+        // comprueba si el resultado de la petición es valido
+        // si lo es, convierte el json devuelto en objeto js
+        // y rellena la tabla con todas las personas de la base de datos
+        function muestraPersonas() {
+            if((peticion_http.readyState === 4) && (peticion_http.status === 200)){
+                rellenarTabla(JSON.parse(peticion_http.responseText));
+            }
+        }
+
+        // Recibe un array objetos persona y crea una fila con los datos de
+        // cada una de ellas
+        function rellenarTabla(datos) {
+            var tablaBody = document.getElementById("filas_tablas");
+            tablaBody.innerHTML = "";
+            for (var i = 0; i < datos.length; i++){
+                tablaBody.appendChild(creaFila(datos[i]));
+            }
+            limpiarInputs();
+        }
+
+        function creaFila(persona) {
+            var fila = document.createElement("tr");
+            fila.onclick = function () {
+                document.getElementById("dni").value = persona.DNI;
+                document.getElementById("nombre").value =  persona.NOMBRE;
+                document.getElementById("apellidos").value = persona.APELLIDOS;
+            };
+          
+             var td = document.createElement("td");
+                    td.innerHTML = persona.ID;
+                    fila.appendChild(td);
+              
+               td = document.createElement("td");
+                    td.innerHTML = persona.DNI;
+                    fila.appendChild(td);
+               
+                td = document.createElement("td");
+                    td.innerHTML = persona.NOMBRE;
+                    fila.appendChild(td);
+               
+              td = document.createElement("td");
+                    td.innerHTML = persona.APELLIDOS;
+                    fila.appendChild(td);
+                
+				td = document.createElement("td");
+					var boton = document.createElement("button");
+					boton.innerHTML="<img class='delete' src='imagenBorrar.png'>";
+					td.appendChild(boton);
+					boton.dataset.idUsuario = persona.ID;
+					boton.dataset.nameUsuario = persona.NOMBRE;
+					boton.dataset.lastNameUsuario = persona.APELLIDOS;
+					boton.onclick = borrarPersonas;
+                    fila.appendChild(td);
+
+                td = document.createElement("td");
+                    var boton = document.createElement("button");
+                    boton.innerHTML="<img class='update' src='imagenActualizar.png'>";
+                    td.appendChild(boton);
+                    boton.dataset.idUsuario = persona.ID;
+                    boton.dataset.dniUsuario = persona.DNI;
+                    boton.dataset.nameUsuario = persona.NOMBRE;
+                    boton.dataset.lastNameUsuario = persona.APELLIDOS;
+                    boton.onclick = actualizaPersona;
+                    fila.appendChild(td);
+            return fila;
+		}
+
+        function realizaPeticion(url,metodo,funcionCallback,parametro) {
+            if(peticion_http) {
+                peticion_http.open(metodo, url);
+                peticion_http.onreadystatechange = funcionCallback;
+                peticion_http.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                peticion_http.send(parametro);
+            }
+        }
+
+        function limpiarInputs() {
+            document.getElementById("dni").value = "";
+            document.getElementById("nombre").value = "";
+            document.getElementById("apellidos").value = "";
+        }
+
+    </script>
+
+    <form id="formulario_1">
+
+        <h3>REGISTRO DE USUARIO rwfsfsfd:</h3>
+
+        <label for="dni">NIF: </label>
+        <input type="text" name="dni" id="dni" maxlength="9" size="9" />
+        <span id="info_dni"></span>
+        <br><br>
+
+        <label for="nombre">Nombre: </label>
+        <input type="text" name="nombre" id="nombre" maxlength="25" size="15" />
+        <span id="info_nombre"></span>
+        <br><br>
+
+        <label for="apellidos">Apellidos: </label>
+        <input type="text" name="apellidos" id="apellidos" maxlength="50" size="25" />
+        <span id="info_apellidos"></span>
+        <br><br>
+
+        <table id="tabla_personas" border="1px">
+            <tr>
+                <th>ID</th>
+                <th>DNI</th>
+                <th>NOMBRES</th>
+                <th>APELLIDOS</th>
+				<th>BORRAR</th>
+                <th>ACTUALIZAR</th>
+            </tr>
+
+            <tbody id="filas_tablas">
+
+            </tbody>
+        </table>
+
+        <br><br>
+        <input type="button" value="AÑADIR" id="btAnadir">
+    </form>
+</head>
+<body>
+
+</body>
+</html>
