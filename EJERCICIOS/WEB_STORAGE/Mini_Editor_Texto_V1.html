@@ -25,7 +25,9 @@
     <script type="text/javascript">
 
         window.onload = function () {
-            leerWebStorage("texto", "contenido_texto");
+            rellenaSelect();
+            leerWebStorage("texto", document.getElementById("select_storage").value);
+
 
             var btnNegrita = document.getElementById("negrita");
             var btnCursiva = document.getElementById("cursiva");
@@ -40,10 +42,25 @@
             btnSubrayado.onmousedown = texto_subrayado;
             btnColor.onmousedown = texto_color;
             btnGuardar.onclick = function () {
-                guardarWebStorage(texto.id, "contenido_texto");
-                alert("Texto Guardado")
+                guardarWebStorage(texto.id, document.getElementById("nombre_fichero").value);
+                alert("Texto Guardado");
+                rellenaSelect();
             };
+
+
+            document.getElementById("select_storage").onchange = function () {
+                leerWebStorage("texto", this.value);
+
+            }
         };
+
+
+        function rellenaSelect() {
+            var select = document.getElementById("select_storage");
+            for (let i = 0; i < localStorage.length; i++)
+                select.options[i] = new Option(localStorage.key(i), localStorage.key(i));
+        }
+
 
         function leerWebStorage(htmlElement, storageItem) {
             if (typeof(Storage) !== "undefined")
@@ -90,7 +107,10 @@
 
 <h3>Procesador de Textos</h3>
 <label>
-    Introduzca el nombre del fichero: <input type="text" id="nombre_fichero" >
+    Introduzca el nombre del fichero: <input type="text" id="nombre_fichero">
+</label>
+<label>
+    Selecciona un fichero: <select id="select_storage"></select>
 </label>
 <p>
     <span id="guardar">Guardar</span>
