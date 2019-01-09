@@ -1,0 +1,156 @@
+
+			FORMULARIOS:
+
+
+1. Dada la página web suministrada por el profesor, se deberán añadir las siguientes 
+	restricciones y validaciones:
+
+
+	PRODUCE UN ERROR JAVASCRIPT CUANDO SE INTRODUCE LA CLAVE Y REPETIR 
+	CLAVE BIEN. NO SE HA PODIDO EVALUAR A PARTIR DE DICHO CAMPO.
+
+
+NOMBRE y APELLIDOS: 
+	Son dos campos. No podrán estar vacíos, 
+	siempre se escribirá en mayúsculas y sólo podrá contener letras 
+	(mayúsculas y minúsculas) y espacios en blanco. (0,5 puntos)
+
+	Permite escribir: ::;;;;,,.--- y también: """%%%
+	Y lo da por bueno, además.
+
+	NO Lo hace: 0
+
+
+
+
+NIF:
+	Se validará que el usuario 
+	ha escrito el NIF de forma correcta. (0,5 puntos)
+
+
+
+	Lo hace: 0,5
+
+
+
+
+USUARIO:
+	Deberá tener una longitud mínima de 5 caracteres. 
+	Sólo podrá contener caracteres de los 
+	siguientes grupos (1,5 puntos):
+
+	Da por buena la entrada: Marco_119*---  la cual tiene varios
+	signos menos. Incorrecto!!!
+	Y también 1 espacio en blanco.
+
+	NO Lo hace: 0
+
+
+
+
+CLAVE: (el ejercicio es CLAVE Y REPETIR CLAVE)
+	Deberá contener una longitud mínima de 8 caracteres, al menos una 
+	letra en minúscula y otra en mayúscula, 
+	un número y uno de los siguientes caracteres: * _ @ & $ % ? # 
+ 
+REPETIR CLAVE:
+	Deberá ser idéntica al contenido de CLAVE, 
+	además de cumplir con las mismas restricciones. (2 puntos)
+
+
+
+	Lo hace: 2
+
+
+
+
+FECHA DE NACIMIENTO:
+	Sólo serán válidas aquellas fechas CORRECTAS y además, 
+	sean 18 años anteriores a la fecha actual, es decir, 
+	nos aseguraremos que el usuario, suponiendo que ha puesto su 
+	fecha real de nacimiento, sea mayor de edad. (0,5 puntos)
+
+	Produce un error javascript cuando se introduce la clave bien y
+	se envía el formulario, o sea, se recarga la página.
+
+	No ha podido evaluarse dado el error javascript.
+
+	No lo hace: 0
+
+
+
+
+FECHA NACIMIENTO V2: (2 puntos)
+
+
+	No lo hace: 0
+
+
+
+SEXO:
+	Se deberá haber escogido una opción. (0,5 puntos)
+
+	Produce un error javascript cuando se introduce la clave bien y
+	se envía el formulario, o sea, se recarga la página.
+
+	No ha podido evaluarse dado el error javascript.
+
+	NO Lo hace: 0
+
+
+
+
+
+CUNETA CORRIENTE:
+	Se deberá verificar que el número de cuenta corriente 
+	introducido es válido. (0,5 puntos)
+
+	Produce un error javascript cuando se introduce la clave bien y
+	se envía el formulario, o sea, se recarga la página.
+
+	No ha podido evaluarse dado el error javascript.
+	
+	NO Lo hace: 0
+
+
+
+
+
+
+2. Desarrollar una función javascript que valide un DNI/NIF 
+	de la siguiente forma (1 punto):
+
+
+	Tienes un error de javascript, corrigiendo ese error la salida es incorrecta
+	para el caso de pasar el NIF CON GUION.
+
+	NO Lo hace: 0
+
+
+
+
+3. Desarrollar una función javascript que devuelva un
+	string numérico con el formato moneda, 
+	con las siguientes características: (1 punto)
+
+
+	No lo hace: 0
+
+
+
+
+4. Desarrollar una función javascript que valide una fecha 
+	con las siguientes características: (1 punto)
+
+
+	No lo hace: 0
+
+
+
+
+	NOTA: 2,5
+
+
+
+
+

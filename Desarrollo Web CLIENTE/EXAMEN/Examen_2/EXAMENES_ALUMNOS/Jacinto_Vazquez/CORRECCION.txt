@@ -1,0 +1,143 @@
+
+			FORMULARIOS:
+
+
+1. Dada la página web suministrada por el profesor, se deberán añadir las siguientes 
+	restricciones y validaciones:
+
+
+NOMBRE y APELLIDOS: 
+	Son dos campos. No podrán estar vacíos, 
+	siempre se escribirá en mayúsculas y sólo podrá contener letras 
+	(mayúsculas y minúsculas) y espacios en blanco. (0,5 puntos)
+
+
+
+	Lo hace: 0,5
+
+
+
+
+NIF:
+	Se validará que el usuario 
+	ha escrito el NIF de forma correcta. (0,5 puntos)
+
+
+
+	Lo hace: 0,5
+
+
+
+
+USUARIO:
+	Deberá tener una longitud mínima de 5 caracteres. 
+	Sólo podrá contener caracteres de los 
+	siguientes grupos (1,5 puntos):
+
+	Permite: Marco_119*---   con varios signos menos. Los cual es incorrecto.
+
+
+	NO Lo hace: 0
+
+
+
+
+CLAVE: (el ejercicio es CLAVE Y REPETIR CLAVE)
+	Deberá contener una longitud mínima de 8 caracteres, al menos una 
+	letra en minúscula y otra en mayúscula, 
+	un número y uno de los siguientes caracteres: * _ @ & $ % ? # 
+ 
+REPETIR CLAVE:
+	Deberá ser idéntica al contenido de CLAVE, 
+	además de cumplir con las mismas restricciones. (2 puntos)
+
+	
+
+	Lo hace: 2
+
+
+
+
+FECHA DE NACIMIENTO:
+	Sólo serán válidas aquellas fechas CORRECTAS y además, 
+	sean 18 años anteriores a la fecha actual, es decir, 
+	nos aseguraremos que el usuario, suponiendo que ha puesto su 
+	fecha real de nacimiento, sea mayor de edad. (0,5 puntos)
+
+
+
+	Lo hace: 0,5
+
+
+
+
+FECHA NACIMIENTO V2: (2 puntos)
+
+	Lo hace con el error de en el select dia añadir siempre los números, los 
+	días del mes. Esto es, si seleccionas enero, y luego febrero, te pone 
+	todos los días de enero MAS los días de febrero, lo cual está mal.
+	Pero algo hace.
+
+	Algo hace: 1,5
+
+
+
+SEXO:
+	Se deberá haber escogido una opción. (0,5 puntos)
+
+	NO informa que se debe seleccionar. NO dice nada.
+
+	NO Lo hace: 0
+
+
+
+
+
+CUNETA CORRIENTE:
+	Se deberá verificar que el número de cuenta corriente 
+	introducido es válido. (0,5 puntos)
+
+	NO informa que se debe seleccionar. NO dice nada.
+	
+	Lo hace: 0
+
+
+
+
+
+
+2. Desarrollar una función javascript que valide un DNI/NIF 
+	de la siguiente forma (1 punto):
+
+
+
+	Lo hace: 0
+
+
+
+
+3. Desarrollar una función javascript que devuelva un
+	string numérico con el formato moneda, 
+	con las siguientes características: (1 punto)
+
+
+	No lo hace: 0
+
+
+
+
+4. Desarrollar una función javascript que valide una fecha 
+	con las siguientes características: (1 punto)
+
+
+	No lo hace: 0
+
+
+
+
+	NOTA: 5
+
+
+
+
+

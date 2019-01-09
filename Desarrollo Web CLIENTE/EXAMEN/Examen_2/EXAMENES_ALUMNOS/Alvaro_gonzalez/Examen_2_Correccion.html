@@ -1,0 +1,330 @@
+<html>
+  <head>   
+    <meta charset="UTF-8"/>
+    <title>Examen 2</title>
+		
+		<style type="text/css">
+			span {
+				color: red;
+			}
+			.separar{
+				margin-left: 3em;
+			}
+		</style>
+		
+		
+  <script src="Utilidades.js"></script>
+
+  <script>
+
+    window.onload = function() {
+ 
+      var foco = null;
+
+      var formf1 = document.getElementById("f1");
+
+      var formNom = document.getElementById("nombre");
+      var formApe = document.getElementById("apellidos");
+      var formNif = document.getElementById("nif");
+      var formUser = document.getElementById("usuario");
+      var formClave = document.getElementById("clave");
+      var formRClave = document.getElementById("rep_clave");
+      var formFechDia = document.getElementById("fn_dia");
+      var formFechMes = document.getElementById("fn_mes");
+      var formFechAno = document.getElementById("fn_ano");
+      var formFechSelecDia = document.getElementById("sel_fn_dia");
+      var formFechSelecMes = document.getElementById("sel_fn_mes");
+      var formFechSelecAno = document.getElementById("sel_fn_ano");
+      var formSexo = document.getElementsByName("sexo");
+      var formCcc = document.getElementById("ccc");
+
+      var spnNom = document.getElementById("spnombre");
+      var spnApe = document.getElementById("spapellidos");
+      var spnNif = document.getElementById("spnif");
+      var spnUser = document.getElementById("spusuario");
+      var spnClave = document.getElementById("spclave");
+      var spnRClave = document.getElementById("sprep_clave");
+      var spnFech = document.getElementById("spf_nacimiento");
+      var spnFechSel = document.getElementById("spSel_f_nacimiento");
+      var spnSexo = document.getElementById("spsexo");
+      var spnCcc = document.getElementById("spccc");
+
+      formf1.onsubmit = check;
+      
+      // NOMBRES
+      formNom.onkeypress = soloMayusculas;
+      formNom.onkeyup = soloMayusculas;
+
+      // APELLIDOS
+      formApe.onkeypress = soloMayusculas;
+      formApe.onkeyup = soloMayusculas;
+      
+      // NIF
+      formNif.onkeypress = soloLetrasyNumeros;
+
+      // USUARIO
+      formUser.ondrop = returnFalse;
+      formUser.onpaste = returnFalse;
+      formUser.onkeypress = function (eve) {
+
+        var e = eve || window.event;
+        var key = e.charCode || e.keyCode;
+        var l = String.fromCharCode(key);
+        
+        
+        if (soloLetrasyNumeros(eve)) {
+          return true;
+        }else if (l.match(/[*_@&$%?#]/) && !this.value.includes(l)) {
+          return true;
+        }else{
+          return false;
+        }
+      }
+
+      // FECHA
+      formFechDia.onkeypress = soloNumeros;
+      formFechMes.onkeypress = soloNumeros;
+      formFechAno.onkeypress = soloNumeros;
+
+
+      function check() {
+        
+        // NOMBRE
+        if (formNom.value.length > 0  && isLettersOnly(formNom.value)) { 
+              spnNom.innerHTML = "";
+        }else {
+              spnNom.innerHTML = "Campo no valido";
+              if (!foco) {
+                foco = formNom;
+              }
+        }
+        
+        // APELLIDO
+        if (formApe.value.length > 0  && isLettersOnly(formApe.value)) { 
+              spnApe.innerHTML = "";
+        }else {
+              spnApe.innerHTML = "Campo no valido";
+              if (!foco) {
+                foco = formApe;
+              }
+        }
+
+        // NIF
+        if (validateNIF(formNif.value)) {
+          spnNif.innerHTML = "";
+        } else {
+          spnNif.innerHTML = "NIF no válido";
+          if (!foco) {
+            foco = formNif;
+          }
+        }
+
+        // USUARIO
+        if (formUser.value.length >= 5) {
+          spnUser.innerHTML = "";
+        } else {
+          spnUser.innerHTML = "Usuario no válido";
+          if (!foco) {
+            foco = formUser;
+          }
+        }
+
+        // CLAVE
+        var cLower = /[a-z]/;
+        var cUpper = /[A-Z]/;
+        var cNum = /[0-9]/;
+        var cSpecial = /[*_@&$%?#]/;
+
+        if ((formClave.value.match(cLower) && formClave.value.match(cUpper) 
+            && formClave.value.match(cSpecial) && formClave.value.match(cNum))) {
+          spnClave = "";
+        } else {
+          spnClave.innerHTML = "Clave no válida";
+          if (!foco) {
+            foco = formClave;
+          }
+        }
+       // console.log(formClave.value.length);
+
+        // CLAVER
+        if (formRClave.value === formClave.value && (formRClave.value.length >= 8 && formRClave.value.match(cLower) && formRClave.value.match(cUpper) 
+            && formRClave.value.match(cSpecial) && formRClave.value.match(cNum))) {
+          spnRClave = "";
+        } else {
+          spnRClave.innerHTML = "Clave no válida o no coincide";
+          if (!foco) {
+            foco = formRClave;
+          }
+        }
+
+        //FECHA
+        var parseDia = parseInt(formFechDia.value);
+        var parseMes = parseInt(formFechMes.value);
+        var parseAno = parseInt(formFechAno.value);
+        var fechaActual = new Date();
+
+        
+
+        if (validateDate(parseDia, parseMes, parseAno)) {
+          //console.log("VALIDO");
+          spnFech.innerHTML = "";
+        }else {
+          //console.log("No valido");
+          spnFech.innerHTML = "Fecha no válida";
+          if (!foco) {
+            foco = formFechDia;
+          }
+        }
+       
+
+        // SEXO
+        var validoSexo = false;
+        for (let i = 0; i < formSexo.length; i++) {
+          if (formSexo[i].checked) {
+            validoSexo = true;
+          }
+        }
+
+        if (validoSexo) {
+          spnSexo.innerHTML = "";
+        }else {
+          spnSexo.innerHTML = "Debe seleccionar algun sexo";
+          if (!foco) {
+            foco = formSexo;
+          }
+        }
+
+
+        // CCC
+
+        if (validarCCC(formCcc.value)) {
+          spnCcc.innerHTML = ""
+        } else {
+          spnCcc.innerHTML = "CCC no válido"
+          if (!foco) {
+            foco = formCcc;
+          }
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+        
+
+        if (foco) {
+          foco.focus();
+          foco = null;
+        }else {
+          alert("FORMULARIO VALIDO!");
+        }
+
+
+        return false;
+      } // FIN CHECK
+
+      function returnFalse() {
+        return false;
+      }
+      
+        
+      
+
+      
+
+      } // FIN ONLOAD
+
+
+    
+    
+    
+    //return false;
+    </script>
+
+
+		
+  </head>
+
+  <body>
+  <center>FORMULARIO</center>
+  <form id="f1">
+    <p>
+      Nombre: <input type="text" id="nombre">
+      <span id="spnombre"></span>
+    </p>
+    <p>
+      Apellidos: <input type="text" id="apellidos">
+      <span id="spapellidos"></span>
+    </p>
+    <p>
+      NIF: <input type="text" id="nif">
+      <span id="spnif"></span>
+    </p>
+    <p>
+      Usuario: <input type="text" maxlength="15" id="usuario">
+      <span id="spusuario"></span>
+    </p>
+    <p>
+      Clave: <input type="text" id="clave">
+      <span id="spclave"></span>
+    </p>
+    <p>
+      Repetir Clave: <input type="password" id="rep_clave">
+      <span id="sprep_clave"></span>
+    </p>
+    <p>
+      Fecha Nacimiento:
+      <input type="text" id="fn_dia" maxlength="2" size="1" /> / 
+      <input type="text" id="fn_mes" maxlength="2" size="1"/> / 
+      <input type="text" id="fn_ano" maxlength="4" size="3"/> (dd/mm/aaaa) 
+      <span id="spf_nacimiento"></span>
+    </p>
+		
+		<p>
+      Fecha Nacimiento V2:
+			<select id="sel_fn_mes">
+				<option value="-1">mes</option>
+			</select>
+      / 
+			<select id="sel_fn_dia">
+				<option value="-1">dia</option>
+			</select>
+      / 
+			<select id="sel_fn_ano">
+				<option value="-1">año</option>
+			</select>
+      <span id="spSel_f_nacimiento"></span>
+    </p>
+		
+		<p>
+			<label>Sexo: </label>
+      <input type="radio" name="sexo" value="femenino" />
+      <label for="femenino">Femenino</label>
+			<input type="radio" name="sexo" value="masculino" />
+			<label for="masculino">Masculino</label>
+			<input type="radio" name="sexo" value="otro" />
+			<label for="ni_me_acuerdo">Otro</label>
+      <span id="spsexo"></span>
+		</p>
+		
+		<p>
+			<label for="cc">Cuenta Corriente: </label>
+			<input type="text" id="ccc" maxlength="20" size="22" /> 
+      <span id="spccc"></span>
+		</p>
+
+		<br>
+    <p>
+      <input type="submit" value="Enviar" id="btEnviar" /> 
+      <input class="separar" type="reset" value="Limpiar Campos"/>
+    </p>
+  </form>
+</body>
+</html>

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+  <head>   
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
+    <title>Plantilla</title>
+    
+    <style type="text/css">
+    	span {
+    		display: block;
+    		margin: 0.8em;
+    		border: 1px solid blue;
+    		box-shadow: 2px 2px 4px blue;
+    		max-width: 300px;
+    		width: auto;
+    	}
+    	span label {
+    		float: left;
+    		width: 120px;
+    		padding: 0.25em;
+    	}
+    </style>
+		
+		
+    
+    <script type="text/javascript">
+      
+
+      
+      window.onload = function() {
+
+
+
+
+function creaTablaTotal(aTabla, iCol) {
+    // variable para almacenar la suma de la columna
+    var suma = 0;
+
+    // dimensiones de la tabla
+    var filas = aTabla.length;
+    var columnas = aTabla[0].length;
+
+    // creamos una tabla
+    var table = document.createElement("table");
+    table.border = 2;
+
+    // variables para almacenar filas y columas
+    var tr, td;
+
+    // recorremos la matriz
+    for (var i = 0; i < filas; i++) {
+        tr = document.createElement("tr");
+        table.appendChild(tr);
+
+        for (var j = 0; j < columnas; j++) {
+            td = document.createElement("td");
+            td.innerText = aTabla[i][j].toString();
+            tr.appendChild(td);
+        }
+        suma += aTabla[i][iCol];
+    }
+
+    // creamos una fila donde se almacena el resultado
+    tr = document.createElement("tr");
+    table.appendChild(tr);
+
+    // recorremos todas las columas
+    for (var k = 0; k < aTabla.length; k++){
+        td = document.createElement("td");
+        // si k esta en la posicion de la columa seleccionada le metemos la suma
+        k === iCol ? td.innerText = suma.toString() : td.innerText = " ";
+        tr.appendChild(td);
+    }
+    return table;
+}
+
+
+				document.getElementById("btTotaliza").onclick = function() {
+					var a = [ [ "27473339T", "Marco Elio", "García Gomariz", 5],
+							  [ "4334343T", "Mortadelo", "MorDelo", 7],
+							  [ "54545339T", "Filemón", "Pi", 3]
+									];
+
+			        //var tablita = creaTablaTotal(m, 4);
+
+			        //    document.getElementById("resultado").appendChild(tablita);
+
+					document.getElementById("resultado").appendChild(creaTablaTotal(a, 3));
+					return false;
+				}
+			
+      	document.getElementById("btAdeTabla").onclick = function(){
+					console.log(aDeTabla("tablaPersonas"));
+					return false;
+				} 
+   			
+				
+   			document.getElementById("btInsertaFila").onclick = function() {
+					var tabla = document.getElementById("tablaPersonas");
+					var a = ["1111111T", "Marty", "McFly", 
+										"26-10-1985", "nuevaFila@gmail.com", 11];
+					Inserta_Fila(tabla, a, 3);
+					return false;
+   			};
+      }
+      
+      var t;  //  Será la referencia a la tabla.
+      
+    </script>
+  </head>
+  
+  <body>
+  	
+  	<h2>Ejercicio examen</h2>
+		<form id="f1" >
+    	
+    	<p>
+    		<button id="btTotaliza">Totaliza Tabla</button>
+    		<button id="btAdeTabla">Array de Tabla</button>
+    		<button id="btInsertaFila">Inserta Fila</button>
+    	</p>
+
+		</form>
+    
+    <div id="listado">
+    	<p>
+    		Lista de personas
+    	</p>
+    	<table id="tablaPersonas" border="1">
+    		<tr>
+    			<th>DNI</th>
+    			<th>NOMBRE</th>
+    			<th>APELLIDOS</th>
+    			<th>Fecha Nacimiento</th>
+					<th>Correo</th>
+					<th>Edad</th>
+    		</tr>
+				<tr>
+					<td>27473339T</td>
+					<td>Marco Elio</td>
+					<td>García Gomariz</td>
+					<td>11-11-1992</td>
+					<td>marcoelio11@gmail.com</td>
+					<td>26</td>
+				</tr>
+				<tr>
+					<td>4334343T</td>
+					<td>Mortadelo</td>
+					<td>MorDelo</td>
+					<td>11-11-1952</td>
+					<td>mortadelo@gmail.com</td>
+					<td>50</td>
+				</tr>
+				<tr>
+					<td>54545339T</td>
+					<td>Filemón</td>
+					<td>Pi</td>
+					<td>11-11-1942</td>
+					<td>filemon@gmail.com</td>
+					<td>60</td>
+				</tr>
+				
+    	</table>
+    </div>
+		
+		<h3>
+			Resultado:
+		</h3>
+		<p id="resultado"></p>
+    
+  </body>
+  
+</html>

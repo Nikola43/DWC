@@ -1,0 +1,351 @@
+<html>
+  <head>   
+    <meta charset="UTF-8"/>
+    <title>Examen 2</title>
+		
+		<style type="text/css">
+			span {
+				color: red;
+			}
+			.separar{
+				margin-left: 3em;
+			}
+		</style>
+		
+		
+    <script src="Utilidades.js"></script>
+    <script>
+      
+      window.onload = function(){
+
+        //Restrincciones de entrada al nombre
+        document.getElementById("nombre").onkeypress = limitaALetrasYEspacios;
+        document.getElementById("nombre").onkeyup = aMayusculas;  
+
+        //Restrincciones de entrada al nombre
+        document.getElementById("apellidos").onkeypress = limitaALetrasYEspacios;
+        document.getElementById("apellidos").onkeyup = aMayusculas;
+
+        document.getElementById("usuario").onkeypress = limitaALetrasMayusMinYNum;
+        //document.getElementById("usuario").onkeypress = PermitirCaracteres;
+
+
+/*
+        //Restrincciones de estatura
+        document.getElementById("estatura").onkeypress = PermiteSoloNumerosDecimalesComaNoPrimeraPosSigno;
+
+        //Restrincciones de fecha
+        document.getElementById("f_dia").onkeypress = limitaANum;
+        document.getElementById("f_mes").onkeypress = limitaANum;
+        document.getElementById("f_ano").onkeypress = limitaANum;
+
+        //Restrincciones de cuenta corriente
+        document.getElementById("ccc").onkeypress = limitaANum;
+        
+
+*/
+        //Validacion del formulario
+        document.getElementById("f1").onsubmit = ValidarFormulario;
+    
+      }
+
+      function ValidarFormulario(){
+/*
+        var caracter1 = 0;//# --> 35          
+        var caracter2 = 0;//$ --> 36
+        var caracter3 = 0;//% --> 37 
+        var caracter4 = 0;//& --> 38
+        var caracter5 = 0;//* --> 42
+        var caracter6 = 0;//? --> 63
+        var caracter7 = 0;//@ --> 64
+        var caracter8 = 0;//_ --> 95
+*/
+        /*====================================
+          Validación del nombre
+        ====================================*/
+          
+          if(document.getElementById("nombre").value == ""){
+            document.getElementById("spnombre").innerHTML = "El campo nombre no puede estar vacío";
+            //document.getElementById("nombre").focus();
+            
+            //if(!foco) foco = document.getElementById("nombre");
+            //correcto = false;
+
+          }else if(document.getElementById("spnombre").innerHTML != ""){
+            document.getElementById("spnombre").innerHTML = "";
+          }
+
+        /*====================================
+          Validación de los apellidos
+        ====================================*/
+          
+          if(document.getElementById("apellidos").value == ""){
+            document.getElementById("spapellidos").innerHTML = "El campo nombre no puede estar vacío";
+
+            //if(!foco) foco = document.getElementById("apellidos");
+            //correcto = false;
+
+          }else if(document.getElementById("spapellidos").innerHTML != ""){
+            document.getElementById("spapellidos").innerHTML = "";
+          }
+
+        /*====================================
+          Validación del nif
+        ====================================*/
+
+          if(validarDNI(document.getElementById("nif").value) == false){
+            document.getElementById("spnif").innerHTML = "NIF no valido";
+
+            //if(!foco) foco = document.getElementById("nif");
+            //correcto = false;
+            //return false;
+          }else if(document.getElementById("spnif").innerHTML != ""){
+            document.getElementById("spnif").innerHTML = "";
+          }
+
+        /*====================================
+          Validación del Usuario
+        ====================================*/
+
+          if(document.getElementById("usuario").value.length < 5){
+            document.getElementById("spusuario").innerHTML = "El usuario debe tener mínimo 5 caracteres";
+
+            //if(!foco) foco = document.getElementById("nif");
+            //correcto = false;
+            //return false;
+          }else if(document.getElementById("spusuario").innerHTML != ""){
+            document.getElementById("spusuario").innerHTML = "";
+          }
+/*
+          var uss = document.getElementById("usuario").value;
+          console.log(uss);
+
+          for(var i = 0; i < uss.length; i++){
+
+            if (uss[i] == 35){
+              caracter1++;
+            }
+            if (uss[i] == 36){
+              caracter2++;
+            }
+            if (uss[i] == 37){
+              caracter3++;
+            }
+            if (uss[i] == 38){
+              caracter4++;
+            }
+            if (uss[i] == 42){
+              caracter5++;
+            }
+            if (uss[i] == 63){
+              caracter6++;
+            }
+            if (uss[i] == 64){
+              caracter7++;
+            }
+            if (uss[i] == 95){
+              caracter8++;
+            }
+
+          }
+
+          if ((caracter1 > 0) || (caracter2 > 0) || (caracter3 > 0) || (caracter4 > 0) || (caracter5 > 0) || (caracter6 > 0) || (caracter7 > 0) || (caracter8 > 0)){
+              document.getElementById("spusuario").innerHTML = "Solo se permite uno de cada caracter especial (* _ @ & $ % ? #)";
+
+            //if(!foco) foco = document.getElementById("nif");
+            //correcto = false;
+            //return false;
+          }else if(document.getElementById("spusuario").innerHTML != ""){
+            document.getElementById("spusuario").innerHTML = "";
+          }
+
+
+          //# --> 35          
+          //$ --> 36
+          //% --> 37 
+          //& --> 38
+          //* --> 42
+          //? --> 63
+          //@ --> 64
+          //_ --> 95
+
+*/
+
+        /*====================================
+          Validación de Clave
+        ====================================*/
+          var clave = document.getElementById("clave").value;
+
+          var numClave = 0;
+          var letrMinClave = 0;
+          var letrMayClave = 0;
+          var caractE = 0;
+
+          for (var i = 0; i < clave.length; i++) {
+
+            if ((clave[i] >= '0') && (clave[i] <= '9')) {
+              numClave++;
+            }
+            if ((clave[i] >= 'a') && (clave[i] <= 'z')) {
+              letrMinClave++;
+            }
+            if ((clave[i] >= 'A') && (clave[i] <= 'Z')) {
+              letrMayClave++;
+            }
+            if ((clave[i] == '*') || (clave[i] == '_') || (clave[i] == '@') || (clave[i] == '&') || (clave[i] == '$') || (clave[i] == '%') || (clave[i] == '?') || (clave[i] == '#')) {
+              caractE++;
+            }
+          }
+          
+          if (numClave == 0) {
+            document.getElementById("spclave").innerHTML = "Se requiere al menos un numero.";
+            
+          }else if (letrMinClave == 0) {
+            document.getElementById("spclave").innerHTML = "Se requiere al menos una letra minuscula.";
+  
+          }else if (letrMayClave == 0) {
+            document.getElementById("spclave").innerHTML = "Se requiere al menos una letra mayuscula.";
+  
+          }else if (caractE == 0) {
+            document.getElementById("spclave").innerHTML = "Se requiere al menos un caracter especial * _ @ & $ % ? #";
+
+          }else if(document.getElementById("spclave").innerHTML != ""){
+            document.getElementById("spclave").innerHTML = "";
+          }
+
+        /*====================================
+          Validación de Repetir Clave
+        ====================================*/
+          var claveRep = document.getElementById("rep_clave").value;
+
+          var numClaveRep = 0;
+          var letrMinClaveRep = 0;
+          var letrMayClaveRep = 0;
+          var caractERep = 0;
+
+          for (var i = 0; i < clave.length; i++) {
+
+            if ((claveRep[i] >= '0') && (claveRep[i] <= '9')) {
+              numClaveRep++;
+            }
+            if ((claveRep[i] >= 'a') && (claveRep[i] <= 'z')) {
+              letrMinClaveRep++;
+            }
+            if ((claveRep[i] >= 'A') && (claveRep[i] <= 'Z')) {
+              letrMayClaveRep++;
+            }
+            if ((claveRep[i] == '*') || (claveRep[i] == '_') || (claveRep[i] == '@') || (claveRep[i] == '&') || (claveRep[i] == '$') || (claveRep[i] == '%') || (claveRep[i] == '?') || (claveRep[i] == '#')) {
+              caractERep++;
+            }
+          }
+
+          if (numClaveRep == 0) {
+            document.getElementById("sprep_clave").innerHTML = "Se requiere al menos un numero.";
+            
+          }else if (letrMinClaveRep == 0) {
+            document.getElementById("sprep_clave").innerHTML = "Se requiere al menos una letra minuscula.";
+  
+          }else if (letrMayClaveRep == 0) {
+            document.getElementById("sprep_clave").innerHTML = "Se requiere al menos una letra mayuscula.";
+  
+          }else if (caractERep == 0) {
+            document.getElementById("sprep_clave").innerHTML = "Se requiere al menos un caracter especial * _ @ & $ % ? #";
+
+          }else if(clave != claveRep){
+            document.getElementById("sprep_clave").innerHTML = "Las claves no son iguales";
+
+          }else if(document.getElementById("sprep_clave").innerHTML != ""){
+            document.getElementById("sprep_clave").innerHTML = "";
+          }
+
+
+
+
+
+
+          return false;
+
+      }
+
+    </script>		
+		
+		
+		
+  </head>
+
+  <body>
+  <center>FORMULARIO</center>
+  <form id="f1">
+    <p>
+      Nombre: <input type="text" id="nombre">
+      <span id="spnombre"></span>
+    </p>
+    <p>
+      Apellidos: <input type="text" id="apellidos">
+      <span id="spapellidos"></span>
+    </p>
+    <p>
+      NIF: <input type="text" id="nif">
+      <span id="spnif"></span>
+    </p>
+    <p>
+      Usuario: <input type="text" maxlength="15" id="usuario">
+      <span id="spusuario"></span>
+    </p>
+    <p>
+      Clave: <input type="text" id="clave">
+      <span id="spclave"></span>
+    </p>
+    <p>
+      Repetir Clave: <input type="password" id="rep_clave">
+      <span id="sprep_clave"></span>
+    </p>
+    <p>
+      Fecha Nacimiento:
+      <input type="text" id="fn_dia" maxlength="2" size="1" /> / 
+      <input type="text" id="fn_mes" maxlength="2" size="1"/> / 
+      <input type="text" id="fn_ano" maxlength="4" size="3"/> (dd/mm/aaaa) 
+      <span id="spf_nacimiento"></span>
+    </p>
+		
+		<p>
+      Fecha Nacimiento V2:
+			<select id="sel_fn_mes">
+				<option value="-1">mes</option>
+			</select>
+      / 
+			<select id="sel_fn_dia">
+				<option value="-1">dia</option>
+			</select>
+      / 
+			<select id="sel_fn_ano">
+				<option value="-1">año</option>
+			</select>
+      <span id="spSel_f_nacimiento"></span>
+    </p>
+		
+		<p>
+			<label>Sexo: </label>
+      <input type="radio" name="sexo" value="femenino" />
+      <label for="femenino">Femenino</label>
+			<input type="radio" name="sexo" value="masculino" />
+			<label for="masculino">Masculino</label>
+			<input type="radio" name="sexo" value="otro" />
+			<label for="ni_me_acuerdo">Otro</label>
+      <span id="spsexo"></span>
+		</p>
+		
+		<p>
+			<label for="cc">Cuenta Corriente: </label>
+			<input type="text" id="ccc" maxlength="20" size="22" /> 
+      <span id="spccc"></span>
+		</p>
+
+		<br>
+    <p>
+      <input type="submit" value="Enviar" id="btEnviar" /> 
+      <input class="separar" type="reset" value="Limpiar Campos"/>
+    </p>
+  </form>
+</body>
+</html>

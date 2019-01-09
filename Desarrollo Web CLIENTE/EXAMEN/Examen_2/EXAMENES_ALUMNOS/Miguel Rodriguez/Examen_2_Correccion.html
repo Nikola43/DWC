@@ -1,0 +1,317 @@
+<html>
+  <head>   
+    <meta charset="UTF-8"/>
+    <title>Examen 2</title>
+		
+		<style type="text/css">
+			span {
+				color: red;
+			}
+			.separar{
+				margin-left: 3em;
+			}
+		</style>
+		
+		
+		
+		<script src="Utilidades.js"></script>
+    <script>
+
+    window.onload = function() {
+
+      //Restricciones de entrada
+      //document.getElementById("nombre").onkeypress = PermiteSoloLetrasEspacios; 
+      document.getElementById("nombre").onkeyup = aMayusculas;
+      document.getElementById("apellidos").onkeyup = aMayusculas;
+      //como en el campo del nombre NO QUIERO NUMEROS, pongo mi funcion para que no permita poner numeros.
+      document.getElementById("nombre").onkeypress = function(eve){
+        return soloLetrasESPECIAL(eve);
+      }
+      //como en el campo del apellido NO QUIERO NUMEROS, pongo mi funcion para que no permita poner numeros.
+      document.getElementById("apellidos").onkeypress = function(eve){
+        return soloLetrasESPECIAL(eve);
+      }
+      document.getElementById("nif").onkeyup = aMayusculas;
+      /*document.getElementById("dni").onsubmit = validarNIF;*/
+
+      //no se pueden poner LETRAS en estos tres campos de fecha.
+      document.getElementById("sel_fn_dia").onkeypress = function(eve){
+        return soloNumeros(eve);
+      }
+      document.getElementById("sel_fn_mes").onkeypress = function(eve){
+        return soloNumeros(eve);
+      }
+      document.getElementById("sel_fn_ano").onkeypress = function(eve){
+        return soloNumeros(eve);
+      }
+      
+      //cuenta corriente
+      document.getElementById("ccc").onkeypress = soloNumeros;
+        
+      //Validacion del formulario:
+      document.getElementById("f1").onsubmit = validarFormulario;
+      }
+      
+
+      function validarFormulario(){
+
+      var correcto = true;
+      var foco = null;
+
+        // ===============================    VALIDAR EL NOMBRE    ================================
+        var nombre = document.getElementById("nombre");
+
+        if (nombre.value == ""){
+          document.getElementById("spnombre").innerHTML = "No puedes dejar el campo nombre vacío.";
+          if(!foco){
+            foco = document.getElementById("nombre");
+            correcto = false;
+          }
+        }
+        
+        else if (document.getElementById("spnombre").innerHTML != ""){
+          document.getElementById("spnombre").innerHTML = "";
+        }
+
+          
+
+
+        // ===============================    VALIDAR EL APELLIDO    ===============================
+        var apellidos = document.getElementById("apellidos");
+
+        if (apellidos.value == ""){
+          document.getElementById("spapellidos").innerHTML = "No puedes dejar el campo apellidos vacío.";
+          if(!foco){
+            foco = document.getElementById("apellidos");
+            correcto = false;
+          }
+        }
+        
+        else if (document.getElementById("spapellidos").innerHTML != ""){
+          document.getElementById("spapellidos").innerHTML = "";
+        }
+
+          
+        
+        // ===============================   VALIDAR EL DNI   =====================================
+        if(document.getElementById("nif").value.length < 9 ){
+            document.getElementById("spnif").innerHTML = "El DNI no está completo";
+
+            if(!foco) foco = document.getElementById("nif");
+            correcto = false;
+            //return false;
+          }else if(document.getElementById("spnif").innerHTML != ""){
+            document.getElementById("spnif").innerHTML = "";
+          }
+
+          if(validarDNI(document.getElementById("nif").value) == false){
+            document.getElementById("spnif").innerHTML = "Letra de DNI no valida o DNI no valido";
+
+            if(!foco) foco = document.getElementById("nif");
+            correcto = false;
+            //return false;
+          }else if(document.getElementById("spnif").innerHTML != ""){
+            document.getElementById("spnif").innerHTML = "";
+          }
+        // =========================    VALIDAR EL RADIO BUTTOM SEXO   ============================
+
+          var sexo = document.getElementsByName("sexo");
+          var checked = false;
+
+          for (var i = 0 ; i < sexo.length; i++) {
+                  if (sexo[i].checked) {
+                    checked = true;
+                    break;
+                  }  
+          }
+          if (!checked){
+            document.getElementById("spsexo").innerHTML = "Debe seleccionar el sexo.";
+          }
+
+          else if (document.getElementById("spsexo").innerHTML != ""){
+            document.getElementById("spsexo").innerHTML = "";
+          }
+             
+
+
+        // ==============================   VALIDAR LA FECHA   ====================================
+
+        var dia = document.getElementById("sel_fn_dia").value;
+        var mes = document.getElementById("sel_fn_mes").value;
+        var ano = document.getElementById("sel_fn_ano").value;
+
+        var valor = new Date(dia, mes, ano);
+
+        if ((dia || mes || ano) == ""){
+          document.getElementById("spf_nacimiento").innerHTML = "No has escrito la fecha.";
+          if(!foco){
+            foco = document.getElementById("sel_fn_dia");
+            correcto = false;
+          }
+        }
+        else if (dia == ""){
+          document.getElementById("spf_nacimiento").innerHTML = "No has escrito el día.";
+          if(!foco){
+            foco = document.getElementById("sel_fn_dia");
+            correcto = false;
+          }
+        }
+        else if (mes == ""){
+          document.getElementById("spf_nacimiento").innerHTML = "No has escrito el mes.";
+          if(!foco){
+            foco = document.getElementById("sel_fn_mes");
+            correcto = false;
+          }
+        }
+        else if (ano == ""){
+        document.getElementById("spf_nacimiento").innerHTML = "No has escrito el año.";
+          if(!foco){
+            foco = document.getElementById("sel_fn_ano");
+            correcto = false;
+          } 
+        }
+        else if ((dia.length || mes.length) >2 || (ano.length) !=4){
+          document.getElementById("spf_nacimiento").innerHTML = "Parece que no estás escribiendo los valores que corresponden.";
+          if(!foco){
+                          //NOTA: estoy poniendo el foco en sel_fn_ano porque es el único campo al que no tiene lógica ponerle menos de 4 números.
+            foco = document.getElementById("sel_fn_ano");
+            correcto = false;
+          } 
+        }   
+        else if((validarFECHA(dia, mes, ano) == false)){
+          document.getElementById("spf_nacimiento").innerHTML = "No has escrito una fecha válida.";
+          if(!foco){
+            foco = document.getElementById("sel_fn_dia");
+            correcto = false;
+          }
+        }
+        else if (document.getElementById("spf_nacimiento").innerHTML != ""){
+          document.getElementById("spf_nacimiento").innerHTML = "";
+        }
+
+
+
+        // ==========================     VALIDAR CUENTA CORRIENTE     ============================
+
+        
+          if(document.getElementById("ccc").value.length != 20){
+            document.getElementById("spccc").innerHTML = "Tiene que introducir los 20 dígitos";
+            
+            if(!foco) foco = document.getElementById("ccc");
+            correcto = false;
+            //return false;
+
+          }else if( !validarCuentaCorriente(document.getElementById("ccc").value) ){
+            document.getElementById("spccc").innerHTML = "La cuenta bancaria no es válida";
+            
+            if(!foco) foco = document.getElementById("ccc");
+            correcto = false;
+
+          }else if( (document.getElementById("spccc").innerHTML != "" ) && ( validarCuentaCorriente(document.getElementById("ccc").value) ) ){
+
+            document.getElementById("spccc").innerHTML = "";
+
+          }
+
+
+
+
+        if(foco)
+          foco.focus();
+        
+
+        //!!!!!!!!return de la función validarFormulario!!!!!!!!
+        
+        
+
+
+        return false;
+        //al acabar el return false, llamo a los SPAN para borrar el error que puse antes con las comillas.
+        
+      }
+
+    
+      
+    </script>
+		
+		
+		
+		
+  </head>
+
+  <body>
+  <center>FORMULARIO</center>
+  <form id="f1">
+    <p>
+      Nombre: <input type="text" id="nombre">
+      <span id="spnombre"></span>
+    </p>
+    <p>
+      Apellidos: <input type="text" id="apellidos">
+      <span id="spapellidos"></span>
+    </p>
+    <p>
+      NIF: <input type="text" id="nif">
+      <span id="spnif"></span>
+    </p>
+    <p>
+      Usuario: <input type="text" maxlength="15" id="usuario">
+      <span id="spusuario"></span>
+    </p>
+    <p>
+      Clave: <input type="text" id="clave">
+      <span id="spclave"></span>
+    </p>
+    <p>
+      Repetir Clave: <input type="password" id="rep_clave">
+      <span id="sprep_clave"></span>
+    </p>
+    <p>
+      Fecha Nacimiento:
+      <input type="text" id="fn_dia" maxlength="2" size="1" /> / 
+      <input type="text" id="fn_mes" maxlength="2" size="1"/> / 
+      <input type="text" id="fn_ano" maxlength="4" size="3"/> (dd/mm/aaaa) 
+      <span id="spf_nacimiento"></span>
+    </p>
+		
+		<p>
+      Fecha Nacimiento V2:
+			<select id="sel_fn_mes">
+				<option value="-1">mes</option>
+			</select>
+      / 
+			<select id="sel_fn_dia">
+				<option value="-1">dia</option>
+			</select>
+      / 
+			<select id="sel_fn_ano">
+				<option value="-1">año</option>
+			</select>
+      <span id="spSel_f_nacimiento"></span>
+    </p>
+		
+		<p>
+			<label>Sexo: </label>
+      <input type="radio" name="sexo" value="femenino" />
+      <label for="femenino">Femenino</label>
+			<input type="radio" name="sexo" value="masculino" />
+			<label for="masculino">Masculino</label>
+			<input type="radio" name="sexo" value="otro" />
+			<label for="ni_me_acuerdo">Otro</label>
+      <span id="spsexo"></span>
+		</p>
+		
+		<p>
+			<label for="cc">Cuenta Corriente: </label>
+			<input type="text" id="ccc" maxlength="20" size="22" /> 
+      <span id="spccc"></span>
+		</p>
+
+		<br>
+    <p>
+      <input type="submit" value="Enviar" id="btEnviar" /> 
+      <input class="separar" type="reset" value="Limpiar Campos"/>
+    </p>
+  </form>
+</body>
+</html>

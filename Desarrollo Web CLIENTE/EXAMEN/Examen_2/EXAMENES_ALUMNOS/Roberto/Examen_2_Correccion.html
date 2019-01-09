@@ -1,0 +1,197 @@
+<html>
+  <head>   
+    <meta charset="UTF-8"/>
+    <title>Examen 2</title>
+		
+		<style type="text/css">
+			span {
+				color: red;
+			}
+			.separar{
+				margin-left: 3em;
+			}
+		</style>
+		
+		
+		
+    <script src="Utilidades.js"></script>
+    <script>
+        window.onload= function(){
+          document.getElementById("nombre").onkeypress = letrasYEspaciosEnMayusc;
+          document.getElementById("apellidos").onkeypress = letrasYEspaciosEnMayusc;
+          document.getElementById("usuario").onkeypress = permiteCaracteresEspeciales;
+         
+
+          document.getElementById("f1").onsubmit = ValidarFormulario;
+          var todoOk= true;
+          var foco= "";
+          var dia=document.getElementById("fn_dia");
+          var mes=document.getElementById("fn_mes");
+          var ano=document.getElementById("fn_ano");
+          var arraySexo = document.getElementsByName("sexo");
+          var sexo = false;
+          function ValidarFormulario(){
+
+              //Validar Nombre
+            if(document.getElementById("nombre").value.length < 2){
+              document.getElementById("spnombre").innerHTML = "Introduce un nombre válido";
+              if(todoOk)
+                foco="nombre";
+              todoOk= false;
+				  	}else{
+					  	document.getElementById("spnombre").innerHTML = "";
+            }
+
+             //Validar Apellidos
+            if(document.getElementById("apellidos").value.length < 2){
+              document.getElementById("spapellidos").innerHTML = "Introduce apellidos";
+              if(todoOk)
+                foco="apellidos";
+              todoOk= false;
+				  	}else{
+					  	document.getElementById("spapellidos").innerHTML = "";
+            }
+
+              //Validar NIF
+            if(!validarDNI(document.getElementById("nif").value)){
+              document.getElementById("spnif").innerHTML = "El NIF no es correcto";
+              if(todoOk)
+                  foco="nif";
+              todoOk= false;
+            }else{
+              document.getElementById("spnif").innerHTML = "";
+            }
+          
+            //Validar Usuario
+          if(document.getElementById("usuario").value.length <5){
+            document.getElementById("spusuario").innerHTML = "El usuario introducido no es válido";
+            if(todoOk)
+                foco="usuario";
+            todoOk=false;
+					}else{
+						document.getElementById("spusuario").innerHTML = "";
+          }
+
+            //Validar Clave
+          /*if(!validarClave(document.getElementById("clave")) || document.getElementById("clave").value.length < 8){
+            document.getElementById("spclave").innerHTML = "La clave debe tener 8 valores";
+            if(todoOk)
+                foco="clave";
+            todoOk= false;
+          }else{
+						document.getElementById("spclave").innerHTML = "";
+          }*/
+
+           /* //Validar Fecha
+          if(!validaFecha(dia,mes,ano)){
+            document.getElementById("spf_nacimiento").innerHTML = "Introduce una fecha válida";
+            if(todoOk)
+              foco="fn_dia";
+            todoOk= false;
+          }else{
+						document.getElementById("spf_nacimiento").innerHTML = "";
+          }*/
+
+            //Validar Sexo
+          for(var i=0; i<arraySexo.length;i++){
+				  	if(arraySexo[i].checked)
+					  	sexo = true;
+					}
+					
+					if(!sexo){
+						document.getElementById("spsexo").innerHTML = "Selecciona una opcion"; 
+            todoOk = false;
+					}else
+            document.getElementById("spsexo").innerHTML = ""; 
+            
+
+
+          if(!todoOk){
+            document.getElementById(foco).focus();
+            return false;
+          }else
+           alert("Todo ok está en true, así que supongo que todo bien.");
+           return true;
+          }
+        }
+    </script>
+		
+		
+  </head>
+
+  <body>
+  <center>FORMULARIO</center>
+  <form id="f1">
+    <p>
+      Nombre: <input type="text" id="nombre">
+      <span id="spnombre"></span>
+    </p>
+    <p>
+      Apellidos: <input type="text" id="apellidos">
+      <span id="spapellidos"></span>
+    </p>
+    <p>
+      NIF: <input type="text" id="nif">
+      <span id="spnif"></span>
+    </p>
+    <p>
+      Usuario: <input type="text" maxlength="15" id="usuario">
+      <span id="spusuario"></span>
+    </p>
+    <p>
+      Clave: <input type="text" id="clave">
+      <span id="spclave"></span>
+    </p>
+    <p>
+      Repetir Clave: <input type="password" id="rep_clave">
+      <span id="sprep_clave"></span>
+    </p>
+    <p>
+      Fecha Nacimiento:
+      <input type="text" id="fn_dia" maxlength="2" size="1" /> / 
+      <input type="text" id="fn_mes" maxlength="2" size="1"/> / 
+      <input type="text" id="fn_ano" maxlength="4" size="3"/> (dd/mm/aaaa) 
+      <span id="spf_nacimiento"></span>
+    </p>
+		
+		<p>
+      Fecha Nacimiento V2:
+			<select id="sel_fn_mes">
+				<option value="-1">mes</option>
+			</select>
+      / 
+			<select id="sel_fn_dia">
+				<option value="-1">dia</option>
+			</select>
+      / 
+			<select id="sel_fn_ano">
+				<option value="-1">año</option>
+			</select>
+      <span id="spSel_f_nacimiento"></span>
+    </p>
+		
+		<p>
+			<label>Sexo: </label>
+      <input type="radio" name="sexo" value="femenino" />
+      <label for="femenino">Femenino</label>
+			<input type="radio" name="sexo" value="masculino" />
+			<label for="masculino">Masculino</label>
+			<input type="radio" name="sexo" value="otro" />
+			<label for="ni_me_acuerdo">Otro</label>
+      <span id="spsexo"></span>
+		</p>
+		
+		<p>
+			<label for="cc">Cuenta Corriente: </label>
+			<input type="text" id="ccc" maxlength="20" size="22" /> 
+      <span id="spccc"></span>
+		</p>
+
+		<br>
+    <p>
+      <input type="submit" value="Enviar" id="btEnviar" /> 
+      <input class="separar" type="reset" value="Limpiar Campos"/>
+    </p>
+  </form>
+</body>
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8"/>
+    <title>Examen 2</title>
+
+		<script src="Utilidades.js"></script>
+		<script src="funciones.js"></script>
+		
+    <script type="text/javascript">
+      			
+			
+			function comprobarDNI(){
+				var dni = document.querySelector("#dni").value;
+				document.getElementById("salDNI").innerHTML = JSON.stringify(ValidarNIF_V2(dni));
+			}
+			
+			function comprobarDNI2(){
+				var dni = document.querySelector("#dni2").value;
+				document.getElementById("salDNI_2").innerHTML = JSON.stringify(ValidarNIF_V2(dni));
+			}
+			
+			function comprobarNumero(){
+				var numero = document.querySelector("#numero").value;
+				document.getElementById("salNumero").innerHTML = formatear(numero, "€");
+			}
+			
+			function comprobarFecha(){
+				var sfecha = document.querySelector("#fecha").value;
+				document.getElementById("salFecha").innerHTML = Validar_Fecha(sfecha);
+			}
+			
+			
+      window.onload=function(){
+				document.querySelector("#btDNI").onclick=comprobarDNI;
+				document.querySelector("#btDNI2").onclick=comprobarDNI2;
+				document.querySelector("#btNumero").onclick=comprobarNumero;
+				document.querySelector("#btFecha").onclick=comprobarFecha;
+			}
+			
+    </script>
+
+  </head>
+
+  <body>
+  
+	<h3>Corrección del DNI</h3>
+	
+	<p>
+	<label for="dni">DNI: </label>
+	<input type="text" id="dni" value="27473339T">
+	<br><br>
+	<label>Salida: </label><br>
+	<div id="salDNI"></div>
+	<br><br>
+	<button id="btDNI">Comprobar ValidarNIF_V2</button>
+	</p>
+	<br><br>
+	<p>
+	<label for="dni2">DNI: </label>
+	<input type="text" id="dni2" value="27473339-T">
+	<br><br>
+	<label>Salida: </label><br>
+	<div id="salDNI_2"></div>
+	<br><br>
+	<button id="btDNI2">Comprobar ValidarNIF_V2 Guión</button>
+	</p>
+	
+	<br><br>
+	<p>
+	<label for="numero">Número: </label>
+	<input type="text" id="numero" value="123456789,345">
+	<br><br>
+	<label>Salida formateada: </label> <b><span id="salNumero"></span></b>
+	<br><br>
+	<button id="btNumero">Comprobar formato número</button>
+	</p>
+	
+	<p>
+	<label for="fecha">Fecha: </label>
+	<input type="text" id="fecha" value="29021991">
+	<br><br>
+	<label>Fecha correcta: </label> <b><span id="salFecha"></span></b>
+	<br><br>
+	<button id="btFecha">Comprobar fecha</button>
+	</p>
+	
+	
+</body>
+</html>

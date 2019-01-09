@@ -1,0 +1,91 @@
+
+<html>
+<script>
+
+	//  El objeto arguments:
+	
+	function miFuncion(p1, p2, p3){
+		console.log(arguments);
+		console.log(arguments[0]);
+		console.log(arguments[2]);
+	}
+
+	miFuncion("hola", 11, "adios");
+	
+	
+	//  Parámetros Rest:
+	
+	function otraFuncion(p1, p2, ...pn){
+		console.log("p1 = " + p1);
+		console.log("p2 = " + p2);
+		console.log("pn = " + pn);
+		
+	}
+	
+	otraFuncion("pan", 14, "camino", 15, new Date(), "destino");
+	
+	console.log("------------------------");
+	
+	//  VER:
+	
+	//  https://developer.mozilla.org/es/docs/Web/JavaScript/Referencia/Funciones/parametros_rest
+	
+	
+	
+	
+	
+
+	//  Vamos a ver el uso del operador arrow (  =>  ) :
+	
+
+		let prueba = datos =>{
+			console.log("datos = " + datos);
+		};
+	
+		let prueba2 = () =>{
+			console.log("Esto es prueba 2");
+		};
+	
+		(function(num) {
+			console.log("Toy en la función anónima!!!!");
+		}(11));
+
+		((num)=>{
+			console.log("Esta es la función anónima con arrow!!!\n num = " + num);
+		})(5);
+
+		(()=>{
+			console.log("Esta es la función anónima con arrow DOS!!!\n D O S");
+			prueba("Mis datos");
+			prueba2();
+		})();
+		
+		window.onload = ()=>{
+			var cont = 0;
+			var boton = document.getElementById('boton');
+			
+			boton.addEventListener('click', () => console.log("botón pulsado"));
+		}
+		
+		(()=>{
+			console.log("Esta es la función anónima con arrow DOS!!!\n TRES");
+			var date1 = new Date();
+			console.log(date1.toJSON());
+			console.log(date1);
+		})();
+		
+		
+
+</script>
+
+<body>
+
+<button id ="boton">Botón</button>
+
+<div id="div">Este es mi divi.</div>
+
+
+</body>
+
+
+</html>

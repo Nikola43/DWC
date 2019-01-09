@@ -1,0 +1,347 @@
+<html>
+  <head>   
+    <meta charset="UTF-8"/>
+    <title>Examen 2</title>
+		
+		<style type="text/css">
+			span {
+				color: red;
+			}
+			.separar{
+				margin-left: 3em;
+			}
+		</style>
+		
+    <script src="Utilidades.js"></script>
+    <script>
+    window.onload = function () {
+      document.getElementById("nombre").onkeypress = PermiteSoloLetrasEspacios;
+			document.getElementById("nombre").onkeyup = aMayusculas;
+			document.getElementById("apellidos").onkeypress = PermiteSoloLetrasEspacios;
+      document.getElementById("apellidos").onkeyup = aMayusculas;
+      hacerFecha(document.getElementById("sel_fn_dia"),document.getElementById("sel_fn_mes"),document.getElementById("sel_fn_ano"));
+      document.getElementById("sel_fn_mes").onchange = terminarFecha;
+
+
+      //Control de onpaste y ondrop
+			var arrayInputs = document.querySelectorAll("input[type='text']");
+			for (let i=0; i<arrayInputs.length; i++) {
+				arrayInputs[i].onpaste = function (e) {e.preventDefault();};
+				arrayInputs[i].ondrop = function (e) {e.preventDefault();};
+			}
+
+
+      //Validación del formulario
+      document.getElementById("f1").onsubmit = validarFormulario; 
+    }
+
+    function terminarFecha () {
+      var diasMes = 0;
+      var opciones;
+      dia = document.getElementById("sel_fn_dia");
+      mes = document.getElementById("sel_fn_mes").value;
+
+      if (mes != -1){
+        if (mes == "Enero" || mes == "Marzo" || mes == "Mayo" || mes == "Julio" || mes == "Agosto" || mes == "Octubre" || mes == "Diciembre") diasMes = 31;
+        if (mes == "Abril" || mes == "Junio" || mes == "septiembre" || mes == "Noviembre") diasMes = 30;
+        if (mes == "Febrero") diasMes = 29;
+      }
+
+      for (let i=1; i<=diasMes; i++) {
+        opciones = document.createElement("option");
+        opciones.innerText = i;
+        dia.appendChild(opciones);
+      }
+    }
+
+    function hacerFecha (dia, mes, anio) {
+      var opciones;
+      var arrayMeses = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
+      
+      for (let i=1911; i<(new Date().getFullYear()-18); i++) {
+        opciones = document.createElement("option");
+        opciones.innerText = i;
+        anio.appendChild(opciones);
+      }
+
+      for (let i=0; i<12; i++) {
+        opciones = document.createElement("option");
+        opciones.innerText = arrayMeses[i];
+        mes.appendChild(opciones);
+      }
+    }
+
+    function validoUsuario (string) {
+      var tieneLetra = false;
+      var tieneNum = false;
+      var tieneSim = false;
+      var haySimRepe = false;
+      var repetirSim = null;
+      var codigo=0;
+
+      for (let i=0; i<string.length; i++) {
+        codigo = string.charCodeAt(i);
+
+        if (codigo>=48 && codigo<=57) tieneNum=true;
+        if ((codigo>=65 && codigo<=90) || (codigo>=97 && codigo<=122)) tieneLetra=true;        
+
+        if (codigo == 42 || codigo == 95 || codigo == 64 || codigo == 38 || codigo == 36 || codigo == 37 || codigo == 63 || codigo == 35) {
+          if (string.substr(i+1,string.length).indexOf(string[i]) == -1)
+            tieneSim=true;
+          else 
+            return false;
+        }
+      }
+
+      if (tieneLetra || tieneNum || tieneSim) return true;
+
+      return false;
+    }
+
+    function esClave (string) {
+      var tieneLetraMay = false;
+      var tieneLetraMin = false;
+      var tieneNum = false;
+      var tieneSim = false;
+      var codigo=0;
+
+      for (let i=0; i<string.length; i++) {
+        codigo = string.charCodeAt(i);
+
+        if (codigo>=48 && codigo<=57) tieneNum=true;
+        if (codigo>=65 && codigo<=90) tieneLetraMay = true;
+        if (codigo>=97 && codigo<=122) tieneLetraMin = true;
+        if (codigo == 42 || codigo == 95 || codigo == 64 || codigo == 38 || codigo == 36 || codigo == 37 || codigo == 63 || codigo == 35) tieneSim=true;
+
+        if (tieneLetraMay && tieneLetraMin && tieneNum && tieneSim) return true;
+      }
+
+      return false;
+    }    
+
+    function validarFormulario() {
+
+      // Variables del formulario
+      var nombre = document.getElementById("nombre");
+      var apellidos = document.getElementById("apellidos");
+      var nif = document.getElementById("nif");
+      var usuario = document.getElementById("usuario");
+      var clave = document.getElementById("clave");
+      var repetir = document.getElementById("rep_clave");
+      var f_dia = document.getElementById("fn_dia");
+      var f_mes = document.getElementById("fn_mes");
+      var f_anio = document.getElementById("fn_ano");
+      var arraySexo = document.getElementsByName("sexo");
+      var ccc = document.getElementById("ccc");
+
+      var info_nombre = document.getElementById("spnombre");
+      var info_apellidos = document.getElementById("spapellidos");
+      var info_nif = document.getElementById("spnif");
+      var info_usuario = document.getElementById("spusuario");
+      var info_clave = document.getElementById("spclave");
+      var info_repetir = document.getElementById("sprep_clave");            
+      var info_fecha = document.getElementById("spf_nacimiento");
+      var info_sexo = document.getElementById("spsexo");
+      var info_ccc = document.getElementById("spccc");
+
+
+      // Limpiamos todos los span antes de entrar en las condiciones
+      info_nombre.innerHTML = "";
+      info_apellidos.innerHTML = "";
+      info_nif.innerHTML = "";
+      info_usuario.innerHTML = "";
+      info_clave.innerHTML = "";
+      info_repetir.innerHTML = "";
+      info_fecha.innerHTML = "";
+      info_sexo = "";
+      info_ccc = "";
+
+
+      // Variables para controlar el envío del formulario y para que el foco se quede en el primer campo incorrecto
+      var foco = null; 
+      var fallo = false; 
+
+
+      //Validación del nombre
+      if(nombre.value.trim().length == 0) {
+        nombre.value = nombre.value.trim();
+        info_nombre.innerHTML = "Su nombre es incorrecto.";
+        fallo = true;
+
+        if(!foco) foco = nombre;
+      }
+
+
+      //Validación del apellido
+      if(apellidos.value.trim().length == 0) {
+        apellidos.value = apellidos.value.trim();
+        info_apellidos.innerHTML = "Sus apellidos son incorrectos.";
+        fallo = true;
+
+        if(!foco) foco = apellidos;
+      }
+
+
+      //Validación del nif
+      if (!validarNIF(nif.value.trim())) {
+        nif.value = nif.value.trim();
+        info_nif.innerHTML = "Su nif es incorrecto.";
+        fallo = true;
+
+        if (!foco) foco = nif;
+      }
+
+
+      //Validación del usuario
+      if(usuario.value.trim().length < 5 || !validoUsuario(usuario.value.trim())) {
+        usuario.value = usuario.value.trim();
+        info_usuario.innerHTML = "Su usuario es incorrecto.";
+        fallo = true;
+
+        if(!foco) foco = usuario;
+      } 
+
+
+      //Validación de la clave
+      if (clave.value.trim().length < 8 || !esClave(clave.value.trim())) {
+        clave.value = clave.value.trim();
+        info_clave.innerHTML = "La clave es incorrecta debe contener al menos 1 número, 1 letra mayúscula y minúscula, y 1 símbolo (* _ @ & $ % ? #).";
+        fallo = true;
+
+        if (!foco) foco = clave;
+      }
+      
+
+      //Validación de repetir clave
+      if (repetir.value.trim().length < 8 || !esClave(repetir.value.trim()) || clave.value.trim() !== repetir.value.trim()) {
+        repetir.value = repetir.value.trim();
+        info_repetir.innerHTML = "Las claves no coinciden.";
+        fallo = true;
+
+        if (!foco) foco = repetir;
+      }
+
+
+      //Validación fecha nacimiento
+      //No le quitamos 1 al mes porque lo controlamos en la propia funcion en el otro caso si tenemos que quitarselo
+      if(!validarFecha(f_anio.value, f_mes.value, f_dia.value) || (new Date(parseInt(f_anio.value,10)+18,parseInt(f_mes.value,10)-1,f_dia.value)) > new Date()){
+        info_fecha.innerHTML = "La fecha no es correcta o es menor de 18 años.";
+        fallo =  true;
+
+        if(!foco) foco = f_dia;
+      }
+
+
+      //Validación de sexo
+			var valor = null;
+
+			for (let i=0; i<arraySexo.length; i++) {
+				if (arraySexo[i].checked) {
+					valor = arraySexo[i].value;
+				}
+      }
+      
+			if(!valor){
+				info_sexo.innerHTML = "Debes elegir una opción de sexualidad.";
+				fallo = true;
+			}
+
+
+      //Validación de cuenta corriente
+			if (!validarCCC(ccc.value)) {
+				info_ccc.innerHTML = "Debes poner correctamente tu cuenta bancaria";
+				fallo = true;
+
+				if (!foco) foco = ccc;
+			}      
+
+      if (foco) foco.focus();			
+
+      if(fallo){
+        return false;
+      }
+      else {
+        console.log("Se enviara por AJAX!!!");
+      }
+
+      return false;
+    }
+    </script>
+  </head>
+
+  <body>
+  <center>FORMULARIO</center>
+  <form id="f1">
+    <p>
+      Nombre: <input type="text" id="nombre">
+      <span id="spnombre"></span>
+    </p>
+    <p>
+      Apellidos: <input type="text" id="apellidos">
+      <span id="spapellidos"></span>
+    </p>
+    <p>
+      NIF: <input type="text" id="nif">
+      <span id="spnif"></span>
+    </p>
+    <p>
+      Usuario: <input type="text" maxlength="15" id="usuario">
+      <span id="spusuario"></span>
+    </p>
+    <p>
+      Clave: <input type="text" id="clave">
+      <span id="spclave"></span>
+    </p>
+    <p>
+      Repetir Clave: <input type="password" id="rep_clave">
+      <span id="sprep_clave"></span>
+    </p>
+    <p>
+      Fecha Nacimiento:
+      <input type="text" id="fn_dia" maxlength="2" size="1" /> / 
+      <input type="text" id="fn_mes" maxlength="2" size="1"/> / 
+      <input type="text" id="fn_ano" maxlength="4" size="3"/> (dd/mm/aaaa) 
+      <span id="spf_nacimiento"></span>
+    </p>
+		
+		<p>
+      Fecha Nacimiento V2:
+			<select id="sel_fn_mes">
+				<option value="-1">mes</option>
+			</select>
+      / 
+			<select id="sel_fn_dia">
+				<option value="-1">dia</option>
+			</select>
+      / 
+			<select id="sel_fn_ano">
+				<option value="-1">año</option>
+			</select>
+      <span id="spSel_f_nacimiento"></span>
+    </p>
+		
+		<p>
+			<label>Sexo: </label>
+      <input type="radio" name="sexo" value="femenino" />
+      <label for="femenino">Femenino</label>
+			<input type="radio" name="sexo" value="masculino" />
+			<label for="masculino">Masculino</label>
+			<input type="radio" name="sexo" value="otro" />
+			<label for="ni_me_acuerdo">Otro</label>
+      <span id="spsexo"></span>
+		</p>
+		
+		<p>
+			<label for="cc">Cuenta Corriente: </label>
+			<input type="text" id="ccc" maxlength="20" size="22" /> 
+      <span id="spccc"></span>
+		</p>
+
+		<br>
+    <p>
+      <input type="submit" value="Enviar" id="btEnviar" /> 
+      <input class="separar" type="reset" value="Limpiar Campos"/>
+    </p>
+  </form>
+</body>
+</html>

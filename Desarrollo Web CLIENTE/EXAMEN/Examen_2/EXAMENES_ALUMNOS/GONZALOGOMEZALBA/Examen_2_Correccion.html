@@ -1,0 +1,410 @@
+<html>
+  <head>   
+    <meta charset="UTF-8"/>
+    <title>Examen 2</title>
+		
+		<style type="text/css">
+			span {
+				color: red;
+			}
+			.separar{
+				margin-left: 3em;
+			}
+		</style>
+		
+		
+		<script src="Utilidades.js"></script>
+		<script>
+		window.onload=function(){
+			document.getElementById('nombre').onkeypress=PermiteSoloLetrasEspacios;
+            document.getElementById('nombre').onkeyup=aMayusculas;
+			
+			document.getElementById('apellidos').onkeypress=PermiteSoloLetrasEspacios;
+            document.getElementById('apellidos').onkeyup=aMayusculas;
+			
+			document.getElementById('ccc').onkeypress=soloNumero;
+			
+			document.getElementById('f1').onsubmit=ValidarFormulario;
+			
+		}
+		 function ValidarFormulario(e){
+			var nomb=document.getElementById("nombre");
+			var apellido=document.getElementById("apellidos");
+			var dni=document.getElementById("nif");
+			var sexo = document.getElementsByName("sexo");
+			var cuenta=document.getElementById("ccc").value;
+			var foco=null;
+			var valido=true;
+			
+			//esto es para el nombre
+			if(nomb.value.length < 1)
+			{
+				document.getElementById("spnombre").innerHTML="Introduce un nombre";
+				if (!foco) foco = document.getElementById("nombre");
+				valido=false;	
+			}else{		
+				document.getElementById("spnombre").innerHTML="";
+			}
+			//esto es para el apellido
+			if(apellido.value.length < 1)
+			{
+				document.getElementById("spapellidos").innerHTML="Introduce un apellido";
+				if (!foco) foco = document.getElementById("apellidos");
+				valido=false;				
+			}else{		
+				document.getElementById("spapellidos").innerHTML="";
+			}
+			
+			
+			//esto es para validar el dni
+			if(document.getElementById("nif").value.length<9)
+			{
+				
+				document.getElementById("spnif").innerHTML="DNI incompleto";
+				if (!foco){ foco = document.getElementById("nif");
+				valido=false;
+				}
+			}
+			else if(isNaN(dni.value.substr(0,8))){
+				document.getElementById("spnif").innerHTML="los primeros 8 digitos deben ser numeros";
+				if (!foco){ foco = document.getElementById("nif");
+				valido=false;
+				}
+			}
+			else if(dni.value.substr(8) != dni.value.substr(8).toUpperCase()){
+				document.getElementById("spnif").innerHTML="la letra debe estar en mayuscula ";
+				if (!foco){ foco = document.getElementById("nif");
+				valido=false;
+				}
+			}
+			else if(!(ValidarNIF(dni.value)))
+			{
+				document.getElementById("spnif").innerHTML="DNI erroneo";
+				if (!foco){ foco = document.getElementById("nif");
+				valido=false;
+				}
+			}
+			else{
+				document.getElementById("spnif").innerHTML="";
+			}
+			//esto es para el usuario
+			var usu=document.getElementById("usuario").value;
+			var usuMayus=0;
+			var usuMin=0;
+			var usunumero=0;
+			var contAS=0;
+			var contBB=0;
+			var contAR=0;
+			var contAM=0;
+			var contDO=0;
+			var contPO=0;
+			var contIN=0;
+			var contAL=0;
+			for (var i = 0; i < usu.length; i++) {
+                if ((usu[i] >= '0') && (usu[i]<='9')) {
+                    numero++;
+                }
+				if((usu[i] >= 'a') && (usu[i] <= 'z')){
+					Min++;
+				}
+				if((usu[i] >= 'A') && (usu[i] <= 'Z')){
+					Mayus++;
+				}
+				if(usu[i] == '*'){  
+                    contAS++;
+				}
+				if(usu[i] == '_'){
+					contBB++;
+				}
+				if(usu[i] == '@'){
+					contAR++;
+				}
+				if(usu[i] == '&'){
+					contAM++;
+				}
+				if(usu[i] == '$'){
+					contDO++;
+				}
+				if(usu[i] == '%'){
+					contPO++;
+				}
+				if(usu[i] == '?'){
+					contIN++;
+				}
+				if(usu[i] == '#'){
+					contAL++;
+				}
+			}
+			if(usuario.value.length<5){
+				document.getElementById("spusuario").innerHTML="Debe tener un tamaño minimo de 5 caracteres";
+				if (!foco){ foco = document.getElementById("usuario");
+				valido=false;
+				}
+				}
+			else if(numero==0){
+				document.getElementById("spusuario").innerHTML="Debe tener al menos un numero";
+				if (!foco){ foco = document.getElementById("usuario");
+				valido=false;
+				}
+			}
+			else if (Min==0){
+				document.getElementById("spusuario").innerHTML="Debe contener al menos una letra minuscula";
+				if (!foco){ foco = document.getElementById("usuario");
+				valido=false;
+				}
+				}
+			else if (Mayus==0){
+				document.getElementById("spusuario").innerHTML="Debe contener al menos una letra mayuscula";
+				if (!foco){ foco = document.getElementById("usuario");
+				valido=false;
+				}
+				}
+			else if (contAS>1){
+				document.getElementById("spusuario").innerHTML="Debe contener maximo un  * ";
+				if (!foco){ foco = document.getElementById("usuario");
+				valido=false;
+				}
+			}else if (contBB>1){
+				document.getElementById("spusuario").innerHTML="Debe contener maximo un  _  ";
+				if (!foco){ foco = document.getElementById("usuario");
+				valido=false;
+				}
+			}
+			else if (contAR>1){
+				document.getElementById("spusuario").innerHTML="Debe contener maximo un  @  ";
+				if (!foco){ foco = document.getElementById("usuario");
+				valido=false;
+				}
+			}
+			else if (contAM>1){
+				document.getElementById("spusuario").innerHTML="Debe contener maximo un  &  ";
+				if (!foco){ foco = document.getElementById("usuario");
+				valido=false;
+				}
+			}
+			else if (contDO>1){
+				document.getElementById("spusuario").innerHTML="Debe contener maximo un   $  ";
+				if (!foco){ foco = document.getElementById("usuario");
+				valido=false;
+				}
+			}
+			else if (contPO>1){
+				document.getElementById("spusuario").innerHTML="Debe contener maximo un  %  ";
+				if (!foco){ foco = document.getElementById("usuario");
+				valido=false;
+				}
+			}
+			else if (contIN>1){
+				document.getElementById("spusuario").innerHTML="Debe contener maximo un  ? ";
+				if (!foco){ foco = document.getElementById("usuario");
+				valido=false;
+				}
+			}
+			else if (contAL>1){
+				document.getElementById("spusuario").innerHTML="Debe contener maximo un   # ";
+				if (!foco){ foco = document.getElementById("usuario");
+				valido=false;
+				}
+			}
+			else {
+				document.getElementById("spusuario").innerHTML="";
+			}
+			//esto es para la clave
+			var clave=document.getElementById("clave").value;
+			var Correcta=false;
+			var Mayus=0;
+			var Min=0;
+			var numero=0;
+			var cont=0;
+			for (var i = 0; i < clave.length; i++) {
+                if ((clave[i] >= '0') && (clave[i]<='9')) {
+                    numero++;
+                }
+				if((clave[i] >= 'a') && (clave[i] <= 'z')){
+					Min++;
+				}
+				if((clave[i] >= 'A') && (clave[i] <= 'Z'))
+					Mayus++;
+				if((clave[i] == '*') || (clave[i] == '_') || (clave[i] == '@') || (clave[i] == '&') || (clave[i] == '$') || (clave[i] == '%') || (clave[i] == '?') || (clave[i] == '#')) {
+                    cont++;
+				}
+			}
+			if(clave.length<8){
+				document.getElementById("spclave").innerHTML="Debe tener un tamaño minimo de 8 caracteres";
+				if (!foco){ foco = document.getElementById("clave");
+				valido=false;
+				}
+				}
+			else if(numero==0){
+				document.getElementById("spclave").innerHTML="Debe tener al menos un numero";
+				if (!foco){ foco = document.getElementById("clave");
+				valido=false;
+				}
+			}
+			else if (Min==0){
+				document.getElementById("spclave").innerHTML="Debe contener al menos una letra minuscula";
+				if (!foco){ foco = document.getElementById("clave");
+				valido=false;
+				}
+				}
+			else if (Mayus==0){
+				document.getElementById("spclave").innerHTML="Debe contener al menos una letra mayuscula";
+				if (!foco){ foco = document.getElementById("clave");
+				valido=false;
+				}
+				}
+			else if (cont==0){
+				document.getElementById("spclave").innerHTML="Debe contener uno de los siguientes simbolos:  * _ @ & $ % ? # ";
+				if (!foco){ foco = document.getElementById("clave");
+				valido=false;
+				}
+			}
+			else {
+				document.getElementById("spclave").innerHTML="";
+				Correcta=true;
+			}
+			
+			//aqui es para repetir la clave
+			 var repetir=document.getElementById("rep_clave").value;
+			
+			if(repetir.length<8){
+				document.getElementById("sprep_clave").innerHTML="Debe tener minimo 8 caracteres";
+				if (!foco){ foco = document.getElementById("clave");
+				valido=false;
+				}
+			}
+			else if(!Correcta){
+				document.getElementById("sprep_clave").innerHTML="Introduce la clave de nuevo";
+				if (!foco){ foco = document.getElementById("clave");
+				valido=false;
+				}
+				}
+			else if(Correcta && (repetir!=clave)){
+				document.getElementById("sprep_clave").innerHTML="Repetiste mal la clave";
+				if (!foco){ foco = document.getElementById("clave");
+				valido=false;
+				}
+				}
+			else {
+				document.getElementById("sprep_clave").innerHTML="";
+			}
+			//esto es para el sex :)
+			if(!(ValidaRadio(sexo)))
+			{
+				document.getElementById("spsexo").innerHTML="Debes señalar un sexo";
+				if (!foco){ foco = document.getElementsByName("sexo");
+				valido=false;
+				}
+			}else{		
+				document.getElementById("spsexo").innerHTML="";
+			}
+			
+			
+			
+			//esto es para la cuenta corriente
+			if(document.getElementById("ccc").value.length<20)
+			{
+				document.getElementById("spccc").innerHTML="faltan numeros";
+				if (!foco){foco = document.getElementById("ccc");
+				valido=false;
+				}
+			}
+			 if(!(ValidaCuentaCorriente(cuenta)))
+			{
+				document.getElementById("spccc").innerHTML="cuenta corriente erroneaa";
+				if (!foco){ foco = document.getElementById("ccc");
+				valido=false;
+				}
+			}
+			else{
+				document.getElementById("spccc").innerHTML="";
+			}
+			if(foco){
+				foco.focus();
+			}
+			return false;
+		 
+		 }
+		</script>
+		
+		
+		
+		
+  </head>
+
+  <body>
+  <center>FORMULARIO</center>
+  <form id="f1">
+    <p>
+      Nombre: <input type="text" id="nombre">
+      <span id="spnombre"></span>
+    </p>
+    <p>
+      Apellidos: <input type="text" id="apellidos">
+      <span id="spapellidos"></span>
+    </p>
+    <p>
+      NIF: <input type="text" id="nif">
+      <span id="spnif"></span>
+    </p>
+    <p>
+      Usuario: <input type="text" maxlength="15" id="usuario">
+      <span id="spusuario"></span>
+    </p>
+    <p>
+      Clave: <input type="text" id="clave">
+      <span id="spclave"></span>
+    </p>
+    <p>
+      Repetir Clave: <input type="password" id="rep_clave">
+      <span id="sprep_clave"></span>
+    </p>
+    <p>
+      Fecha Nacimiento:
+      <input type="text" id="fn_dia" maxlength="2" size="1" /> / 
+      <input type="text" id="fn_mes" maxlength="2" size="1"/> / 
+      <input type="text" id="fn_ano" maxlength="4" size="3"/> (dd/mm/aaaa) 
+      <span id="spf_nacimiento"></span>
+    </p>
+		
+		<p>
+      Fecha Nacimiento V2:
+			<select id="sel_fn_mes">
+				<option value="-1">mes</option>
+			</select>
+      / 
+			<select id="sel_fn_dia">
+				<option value="-1">dia</option>
+			</select>
+      / 
+			<select id="sel_fn_ano">
+				<option value="-1">año</option>
+			</select>
+      <span id="spSel_f_nacimiento"></span>
+    </p>
+		
+		<p>
+			<label>Sexo: </label>
+      <input type="radio" name="sexo" value="femenino" />
+      <label for="femenino">Femenino</label>
+			<input type="radio" name="sexo" value="masculino" />
+			<label for="masculino">Masculino</label>
+			<input type="radio" name="sexo" value="otro" />
+			<label for="ni_me_acuerdo">Otro</label>
+      <span id="spsexo"></span>
+		</p>
+		
+		<p>
+			<label for="cc">Cuenta Corriente: </label>
+			<input type="text" id="ccc" maxlength="20" size="22" /> 
+      <span id="spccc"></span>
+		</p>
+
+		<br>
+    <p>
+      <input type="submit" value="Enviar" id="btEnviar" /> 
+      <input class="separar" type="reset" value="Limpiar Campos"/>
+    </p>
+  </form>
+</body>
+</html>

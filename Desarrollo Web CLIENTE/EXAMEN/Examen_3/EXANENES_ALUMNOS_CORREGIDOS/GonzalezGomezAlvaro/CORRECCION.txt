@@ -1,0 +1,79 @@
+
+
+1. Al cargar la página se llenará el select con id="factura". Con la siguiente información (2 puntos):
+
+
+	LO HACE: 2 puntos
+
+
+
+
+
+2. Llenar la tabla existente en la página web index.html con los campos correspondientes 
+	pero SIN incluir las columnas IVA y TOTAL, es decir, con las columnas: ID, CANTIDAD, CONCEPTO y PRECIO 
+	con los datos de las líneas de detalle de la factura seleccionada por el usuario (2 puntos).
+
+
+	LO HACE: 2 puntos
+
+
+
+
+
+3. Una vez hecho el ejercicio anterior, calcular y pintar el contenido de las columnas IVA y TOTAL 
+	correspondiente a las líneas de detalle de la factura seleccionada por el usuario (1 puntos).
+
+
+	LO HACE: 1 punto
+
+
+
+
+
+4. Una vez hecho el ejercicio anterior, calcular y pintar la fila final de la tabla (TOTALES), 
+	en la cual se puedan ver los totales de las columnas IVA y TOTAL, es decir su acumulado 
+	para todas las líneas de detalle de la factura seleccionada por el usuario (1 puntos).
+
+
+	LO HACE: 1 punto
+
+
+
+
+
+5. Dar funcionalidad al botón "Añadir línea de detalle" (btAnade). 
+	Para que cuando se haga click sobre el se recojan los datos del recuadro "Añadir detalle" y, 
+	junto con el tipo de servicio (añadir detalle) y el id de la factura (OJO, FACTURA), 
+	se envíen al servidor (3 puntos).
+
+
+	LO HACE: 3 puntos
+
+
+
+
+
+6. Añadir una nueva columna (al final o al principio) de la tabla, la cual se titule: 
+	Borrar (es decir, en el thead pondrá Borrar). 
+	El contenido de cada fila en dicha columna será un botón, 
+	con la funcionalidad de, al hacer click, se preguntará al usuario si desea borrar, 
+	y si la respuesta es afirmativa, se hará una petición al servidor 
+	haciendo uso del servicio correspondiente para borrar 
+	la línea de detalle correspondiente (2 puntos). 
+
+
+
+
+	LO HACE: 2 puntos
+
+
+
+
+	NOTA: 11  que se queda en un 10.
+
+
+
+
+
+
+

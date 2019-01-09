@@ -1,0 +1,78 @@
+
+
+
+    1. Crear una función la cual reciba 2 parámetros y devuelva UNA TABLA (objeto DOM table). 1 punto. 
+
+	La función NO devuelve nada.
+	No lo hace. 0 puntos.
+	
+
+
+    2. Desarrollar una función que devuelve un array con el contenido de las celdas. 1,5 puntos.
+       function aDeTabla(tabla) { }
+
+	Función incompleta.
+	No lo hace. 0 puntos.
+
+
+
+    3. Desarrollar una función que AÑADE/INSERTA una fila (como objeto DOM). 1,5 puntos.      
+       	function Inserta_Fila(tabla, aFila, npos) { }
+
+	No desarrollada.
+	No lo hace. 0 puntos.
+
+
+
+
+
+    4. Dada la página web (Examen_1.html) botón CALCULAR. 1 punto.
+
+	Calcula mal las el área del círculo y los volúmenes de la caja, el cilindro y la esfera.
+	De hecho sólo hace bien el a´rea del rectangulo y el triángulo.
+	Lo hace sólo en una parte. 0,34 puntos.
+
+
+
+
+    5. Añadir código botón Calcular Ec. 1 punto.
+
+
+	NO Lo hace. 0 puntos.
+
+
+
+
+    6.  se indica al usuario si una determinada ecuación no tiene soluciones, 1 punto.
+
+
+	NO Lo hace. 0 puntos.
+
+
+
+
+    7. suma de dos fracciones, botón Calcular Suma. 1 punto.
+
+
+	Lo hace. 1 punto.
+
+
+
+
+    8. botón Añadir Fracción. 2 puntos.
+
+
+	Lo hace. 2 puntos.
+
+
+
+
+    9.  botón Calcular Suma V2 realizará la suma de TODAS las fracciones. 3 puntos.
+
+
+	No lo hace. 0 puntos.
+
+
+
+	NOTA: 3,34
+

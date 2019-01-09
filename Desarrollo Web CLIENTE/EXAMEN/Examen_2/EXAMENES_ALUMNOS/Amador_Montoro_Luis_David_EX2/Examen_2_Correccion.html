@@ -1,0 +1,205 @@
+<html>
+  <head>   
+    <meta charset="UTF-8"/>
+    <title>Examen 2</title>
+		
+		<style type="text/css">
+			span {
+				color: red;
+			}
+			.separar{
+				margin-left: 3em;
+			}
+		</style>
+		
+		
+		<script src="Utilidades.js"></script>
+    <script type="text/javascript">
+      
+    window.onload = function(){
+
+    document.getElementById("f1").onsubmit = validarFormulario;
+    document.getElementById("usuario").onkeypress = restringirInputUsuario;
+    document.getElementById("apellidos").onkeypress = averiguar;
+
+    }
+
+
+    function validarFormulario(){
+      
+
+      var nombre = document.getElementById("nombre");
+      var apellidos = document.getElementById("apellidos");
+      var dni = document.getElementById("nif");
+      var usuario = document.getElementById("usuario");
+      var clave = document.getElementById("clave");
+      var rClave = document.getElementById("rep_clave");
+      var sexo = document.getElementsByName("sexo");
+      var cuentaBancaria = document.getElementById("ccc");
+
+      var dia = document.getElementById("fn_dia");
+      var mes = document.getElementById("fn_mes");
+      var ano = document.getElementById("fn_ano")
+
+      var infonombre = document.getElementById("spnombre");
+      var infoapellidos = document.getElementById("spapellidos");
+      var infodni = document.getElementById("spnif");
+      var infousuario = document.getElementById("spusuario");
+      var infoclave = document.getElementById("spclave");
+      var infoclave2 = document.getElementById("sprep_clave");
+      var infosexo = document.getElementById("spsexo");
+      var infocuenta = document.getElementById("spccc");
+      var infofecha = document.getElementById("spf_nacimiento");
+      var infofecha2 = document.getElementById("spSel_f_nacimiento");
+
+      var foco = false;
+      var sexoC = false;
+      var validado = true;
+
+     
+
+
+       
+
+         
+
+
+          if(!comprobarDNI(dni.value)){
+          infodni.innerHTML = "El DNI no es válido";
+          if(!foco){ dni.focus(); foco = true ;}
+          validado =  false;}else{infodni.innerHTML = "";}
+
+
+          if(usuario.value.length < 5 ){
+            infousuario.innerHTML = "Introduce un nombre de usuario valido";
+          if(!foco){ usuario.focus(); foco = true ;}
+          validado = false ;}else{infousuario.innerHTML = "";}
+
+
+          if(!validaClave(clave.value)){
+            infoclave.innerHTML = "Introduce una clave valida";
+            if(!foco){clave.focus(); foco = true;}
+            validado = false;}else{infoclave.innerHTML = "";}
+
+
+
+
+            if(!validaClave(rClave.value) || clave.value != rClave.value){
+            infoclave2.innerHTML = "Debes introduir tu clave exactamente igual de nuevo";
+            if(!foco){rClave.focus(); foco = true;}
+            validado = false;}else{infoclave2.innerHTML = "";}
+
+            
+            
+            for(var i=0;i<sexo.length; i++){
+                       if(sexo[i].checked){
+                         sexoC = true;
+                         break;
+                       }
+                     }
+
+
+            if(!sexoC){
+            infosexo.innerHTML = "Debes seleccionar un sexo";
+            if(!foco){ sexo[0].focus(); foco = true ;}
+            validado = false;}else{infosexo.innerHTML = "";
+            }
+
+
+   if(!validaCuentaBancaria(cuentaBancaria.value)){
+              infocuenta.innerHTML = "Debes de introducir una cuenta bancaria valida";
+              if(!foco){cuentaBancaria.focus(); foco = true;}
+              validado = false;}else{infocuenta.innerHTML = "";}
+
+
+          if(validado){alert("El formulario esta correcto");}
+
+          return false;
+    }
+
+
+
+    </script>
+
+		
+		
+		
+		
+  </head>
+
+  <body>
+  <center>FORMULARIO</center>
+  <form id="f1">
+    <p>
+      Nombre: <input type="text" id="nombre">
+      <span id="spnombre"></span>
+    </p>
+    <p>
+      Apellidos: <input type="text" id="apellidos">
+      <span id="spapellidos"></span>
+    </p>
+    <p>
+      NIF: <input type="text" id="nif">
+      <span id="spnif"></span>
+    </p>
+    <p>
+      Usuario: <input type="text" maxlength="15" id="usuario">
+      <span id="spusuario"></span>
+    </p>
+    <p>
+      Clave: <input type="text" id="clave">
+      <span id="spclave"></span>
+    </p>
+    <p>
+      Repetir Clave: <input type="password" id="rep_clave">
+      <span id="sprep_clave"></span>
+    </p>
+    <p>
+      Fecha Nacimiento:
+      <input type="text" id="fn_dia" maxlength="2" size="1" /> / 
+      <input type="text" id="fn_mes" maxlength="2" size="1"/> / 
+      <input type="text" id="fn_ano" maxlength="4" size="3"/> (dd/mm/aaaa) 
+      <span id="spf_nacimiento"></span>
+    </p>
+		
+		<p>
+      Fecha Nacimiento V2:
+			<select id="sel_fn_mes">
+				<option value="-1">mes</option>
+			</select>
+      / 
+			<select id="sel_fn_dia">
+				<option value="-1">dia</option>
+			</select>
+      / 
+			<select id="sel_fn_ano">
+				<option value="-1">año</option>
+			</select>
+      <span id="spSel_f_nacimiento"></span>
+    </p>
+		
+		<p>
+			<label>Sexo: </label>
+      <input type="radio" name="sexo" value="femenino" />
+      <label for="femenino">Femenino</label>
+			<input type="radio" name="sexo" value="masculino" />
+			<label for="masculino">Masculino</label>
+			<input type="radio" name="sexo" value="otro" />
+			<label for="ni_me_acuerdo">Otro</label>
+      <span id="spsexo"></span>
+		</p>
+		
+		<p>
+			<label for="cc">Cuenta Corriente: </label>
+			<input type="text" id="ccc" maxlength="20" size="22" /> 
+      <span id="spccc"></span>
+		</p>
+
+		<br>
+    <p>
+      <input type="submit" value="Enviar" id="btEnviar" /> 
+      <input class="separar" type="reset" value="Limpiar Campos"/>
+    </p>
+  </form>
+</body>
+</html>

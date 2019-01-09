@@ -1,0 +1,334 @@
+<html>
+  <head>   
+    <meta charset="UTF-8"/>
+    <title>Examen 2</title>
+		
+		<style type="text/css">
+			span {
+				color: red;
+			}
+			.separar{
+				margin-left: 3em;
+			}
+		</style>
+		
+		
+        <script src="Utilidades.js"></script> 
+        <script src="Funciones.js"></script> 
+    <script type="text/javascript">
+
+        window.onload = function(){
+
+            document.getElementById("f1").onsubmit = validarForm;
+            document.getElementById("nombre").onkeyup = AMayusculas;
+            document.getElementById("nombre").onkeypress = HanSoloLetrasConEspacios;    
+            document.getElementById("apellidos").onkeyup = AMayusculas;
+            document.getElementById("apellidos").onkeypress = HanSoloLetrasConEspacios;
+            document.getElementById("nif").onkeyup = AMayusculas;
+            document.getElementById("ccc").onkeypress = SoloNumeros; 
+            
+                               
+
+            // Recogemos todos los input para después asignarles los eventos onpaste y ondrop
+            var inputs = document.querySelectorAll("input");
+            
+            for(var j = 0; j < inputs.length; j++){
+                inputs[j].onpaste = function(eve){
+                    var datos = eve.clipboardData.getData("Text");
+                    return false;
+                }						
+            }
+
+            for(var k = 0; k < inputs.length; k++){
+                inputs[k].ondrop = function(eve){
+                    var datos = eve.dataTransfer.getData("Text");
+                    return false;
+                }						
+            }            
+            //AÑOS
+            var hoy = new Date();
+            
+            for(var i=1911; i <= hoy.getFullYear()-18; i++){
+
+            var opcion = document.createElement("option");
+            
+            opcion.innerHTML = i;
+            document.getElementById("sel_fn_ano").appendChild(opcion);
+            }
+            //MESES
+            var meses = new Array("Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre");
+            
+            for(var i=0; i <= 11; i++){
+
+            var opcionMes = document.createElement("option");
+     
+            opcionMes.innerHTML = meses[i];
+            opcionMes.setAttribute.value = i;
+            
+            document.getElementById("sel_fn_mes").appendChild(opcionMes);
+            }
+            //DIAS
+
+            var dias = document.getElementById("sel_fn_mes").value.getMonth();
+
+            for(var i=1; i <= dias; i++){
+
+            var opcion = document.createElement("option");
+    
+            opcion.innerHTML = i;
+
+            document.getElementById("sel_fn_dia").appendChild(opcion);
+            }
+
+        }
+
+
+        function validarForm(){
+
+            // Variables del formulario
+
+            var nombre = document.getElementById("nombre");
+            var apellidos = document.getElementById("apellidos");
+            var dni = document.getElementById("nif");
+            var usuario = document.getElementById("usuario");
+            var clave = document.getElementById("clave");
+            var repetir = document.getElementById("rep_clave");            
+            var fn_dia = document.getElementById("fn_dia");
+            var fn_mes = document.getElementById("fn_mes");
+            var fn_ano = document.getElementById("fn_ano");
+            var sexo = document.getElementsByName("sexo");
+            var ccc = document.getElementById("ccc");
+            var sel_fn_dia = document.getElementById("sel_fn_dia");
+            var sel_fn_mes = document.getElementById("sel_fn_mes");
+            var sel_fn_ano = document.getElementById("sel_fn_ano");
+
+
+            var info_nombre = document.getElementById("spnombre");
+            var info_apellidos = document.getElementById("spapellidos");
+            var info_dni = document.getElementById("spnif");
+            var info_usuario = document.getElementById("spusuario");
+            var info_clave = document.getElementById("spclave");
+            var info_repetir = document.getElementById("sprep_clave");            
+            var info_fecha = document.getElementById("spf_nacimiento");
+            var info_ccc = document.getElementById("spccc");
+            var info_sexo = document.getElementById("spsexo");
+            var info_fechaV2 = document.getElementById("spSel_f_nacimiento");
+
+            // Limpiamos todos los span antes de entrar en las condiciones
+            info_nombre.innerHTML = "";
+            info_apellidos.innerHTML = "";
+            info_dni.innerHTML = "";
+            info_usuario.innerHTML = "";
+            info_clave.innerHTML = "";
+            info_repetir.innerHTML = "";
+            info_fecha.innerHTML = "";
+            info_ccc.innerHTML = "";
+            info_sexo.innerHTML = "";
+            info_fechaV2.innerHTML = "";
+
+            // Variables para controlar el envío del formulario y para que el foco se quede en el primer campo incorrecto
+            var salida = true;
+            var foco = null;  
+
+            //VALIDACION DE NOMBRE
+            if(nombre.value.trim().length == 0 || !isNaN(nombre.value.trim())){
+                nombre.value = nombre.value.trim();
+                info_nombre.innerHTML = "Su nombre es incorrecto.";
+                salida = false;
+                if(foco == null){
+                    foco = nombre;
+                }
+            } 
+            //VALIDACION DE APELLIDOS
+            if(apellidos.value.trim().length == 0 || !isNaN(apellidos.value.trim())){
+                apellidos.value = apellidos.value.trim();
+                info_apellidos.innerHTML = "Sus apellidos son incorrectos.";
+                salida = false;
+                if(foco == null){
+                    foco = apellidos;
+                }
+            } 
+            //VALIDACION DE DNI
+            if(dni.value.trim().length < 9 || isNaN(dni.value.substr(0, 8)) || !isNaN(dni.value.substr(8, 1)) || validarDni(dni) == false){
+                dni.value = dni.value.trim();
+                info_dni.innerHTML = "Su dni es incorrecto.";
+                salida = false;
+                if(foco == null){
+                    foco = dni;
+                }                
+            }
+            //VALIDACION DE USUARIO
+            if(usuario.value.trim().length < 5 || !validacion_usuario(usuario.value)) {
+                
+                usuario.value = usuario.value.trim();
+                info_usuario.innerHTML = "Su usuario es incorrecto.";
+                salida = false;
+                if(foco == null){
+                    foco = usuario;
+                }                  
+            } 
+            //VALIDACION DE CLAVE
+            if(clave.value.trim().length < 8 || !tiene_numeros(clave.value) || !tiene_letras_min(clave.value) || !tiene_letras_may(clave.value) || !caracter(clave.value)){
+                
+                clave.value = clave.value.trim();
+                info_clave.innerHTML = "Su clave es erronea.";
+                salida = false;
+                if(foco == null){
+                    foco = clave;
+                }   
+            }
+            //VALIDACION DE CLAVE REPETIR
+            if(clave.value.trim() != repetir.value.trim() || repetir.value.trim() == ""){
+                
+                repetir.value = repetir.value.trim();
+                info_repetir.innerHTML = "Su repetir es erronea.";
+                salida = false;
+                if(foco == null){
+                    foco = repetir;
+                }   
+            }
+
+            // VALIDACION DE FECHA
+            var anio = fn_ano.value;
+            var mes = fn_mes.value -1;
+            var dia = fn_dia.value;
+            var fecha = new Date(anio, mes, dia);
+
+            if(anio != fecha.getFullYear() | mes != fecha.getMonth() | dia != fecha.getDate() | compararFechas(fecha) == false){
+                info_fecha.innerHTML = "La fecha no es correcta o es menor de 18 años.";
+                salida = false;
+                if(foco == null){
+                    foco = f_dia;
+                }
+            }
+            
+            //VALIDACION DE FECHA V2
+
+            if(sel_fn_ano.value == -1 || sel_fn_mes.value == -1 || sel_fn_dia.value == -1){
+                info_fechaV2.innerHTML = "¡Introduzca la fecha!";
+                error = true;
+                salida = false;
+                if(foco == null){
+                    foco = info_fechaV2;
+                }
+            }
+
+                
+            //VALIDACION DE SEXO
+		    
+            if(!verificarCheckbox(sexo)){
+                info_sexo.innerHTML = "¡Introduzca sexo!";
+                error = true;
+                salida = false;
+                if(foco == null){
+                    foco = sexo;
+                }
+            }
+            //VALIDACION DE CUENTA CORRIENTE
+		
+		    var numeroCuenta = ccc.value; 
+    
+            if(!validarCCC(numeroCuenta)){
+                info_ccc.innerHTML = "¡Introduzca el codigo correcto!";
+                error = true;
+                salida = false;
+                if(foco == null){
+                    foco = ccc;
+                }
+            }
+ 
+            if (foco != null){
+                foco.focus();
+            }				
+
+            if(!salida){
+                return false;
+            }                                            
+    
+        }
+
+        
+		
+      </script>
+		
+		
+		
+		
+  </head>
+
+  <body>
+  <center>FORMULARIO</center>
+  <form id="f1">
+    <p>
+      Nombre: <input type="text" id="nombre">
+      <span id="spnombre"></span>
+    </p>
+    <p>
+      Apellidos: <input type="text" id="apellidos">
+      <span id="spapellidos"></span>
+    </p>
+    <p>
+      NIF: <input type="text" id="nif">
+      <span id="spnif"></span>
+    </p>
+    <p>
+      Usuario: <input type="text" maxlength="15" id="usuario">
+      <span id="spusuario"></span>
+    </p>
+    <p>
+      Clave: <input type="text" id="clave">
+      <span id="spclave"></span>
+    </p>
+    <p>
+      Repetir Clave: <input type="password" id="rep_clave">
+      <span id="sprep_clave"></span>
+    </p>
+    <p>
+      Fecha Nacimiento:
+      <input type="text" id="fn_dia" maxlength="2" size="1" /> / 
+      <input type="text" id="fn_mes" maxlength="2" size="1"/> / 
+      <input type="text" id="fn_ano" maxlength="4" size="3"/> (dd/mm/aaaa) 
+      <span id="spf_nacimiento"></span>
+    </p>
+		
+		<p>
+      Fecha Nacimiento V2:
+			<select id="sel_fn_mes">
+				<option value="-1">mes</option>
+			</select>
+      / 
+			<select id="sel_fn_dia">
+				<option value="-1">dia</option>
+			</select>
+      / 
+			<select id="sel_fn_ano">
+				<option value="-1">año</option>
+			</select>
+      <span id="spSel_f_nacimiento"></span>
+    </p>
+		
+		<p>
+			<label>Sexo: </label>
+      <input type="radio" name="sexo" value="femenino" />
+      <label for="femenino">Femenino</label>
+			<input type="radio" name="sexo" value="masculino" />
+			<label for="masculino">Masculino</label>
+			<input type="radio" name="sexo" value="otro" />
+			<label for="ni_me_acuerdo">Otro</label>
+      <span id="spsexo"></span>
+		</p>
+		
+		<p>
+			<label for="cc">Cuenta Corriente: </label>
+			<input type="text" id="ccc" maxlength="20" size="22" /> 
+      <span id="spccc"></span>
+		</p>
+
+		<br>
+    <p>
+      <input type="submit" value="Enviar" id="btEnviar" /> 
+      <input class="separar" type="reset" value="Limpiar Campos"/>
+    </p>
+  </form>
+</body>
+</html>

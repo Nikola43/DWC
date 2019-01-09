@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8"/>
+    
+    <title>Examen 3. 1ª Evaluación. DWEC</title>
+    
+		<style>
+		fieldset{
+			width: 400px;
+			margin-top: 2em;
+			margin-bottom: 1em;
+			margin-left: 1em;
+		}
+		
+		fieldset label{
+			width: 4.5em;
+			display: inline-block;
+		}
+		
+		</style>
+		
+	<script type="text/javascript" src="pAJAX.js"></script>
+    <script type="text/javascript">
+	
+		var peti = new pAJAX();
+		
+		window.onload = function(){
+			cargaSelect();
+			document.getElementById("factura").onchange = cargaTabla;
+			document.getElementById("btAnade").onclick = anadirDetalle;
+		}
+		
+		function llenaSelect(select){
+			var factura = document.getElementById("factura");
+			for (var i = 0; i < select.length; i++) {
+                factura.innerHTML += "<option value='" + select[i].ID + "'>Factura: " + select[i].NUMERO + ". Fecha: " + select[i].FECHA + "</option>";
+            }
+		}
+		
+		function cargaSelect(){
+			var p = {
+                servicio: "facturas"
+            };
+            p = JSON.stringify(p);
+
+            peti.peticion("servidor.php", "POST", llenaSelect, p);
+		
+		}
+		
+		function muestraTabla(datos){
+			var datosTabla = document.getElementById("filas_tabla");
+			datosTabla.innerHTML = "";
+			var td, tr, iva, total, sumaIva = 0, sumaTotal = 0;
+			
+			if(datos.length!=0){
+				for (var i = 0; i < datos.length; i++) {
+					tr = document.createElement("tr");
+					
+					//ID
+					td = document.createElement("td");
+					td.innerHTML = datos[i].ID;
+					tr.appendChild(td);
+					
+					//CANTIDAD
+					td = document.createElement("td");
+					td.innerHTML = datos[i].CANTIDAD;
+					tr.appendChild(td);
+					
+					//CONCEPTO
+					td = document.createElement("td");
+					td.innerHTML = datos[i].CONCEPTO;
+					tr.appendChild(td);
+					
+					//PRECIO
+					td = document.createElement("td");
+					td.innerHTML = datos[i].PRECIO;
+					tr.appendChild(td);
+					
+					//TIPO_IVA
+					td = document.createElement("td");
+					td.innerHTML = datos[i].TIPO_IVA;
+					tr.appendChild(td);
+					
+					//IVA
+					td = document.createElement("td");
+					iva = (datos[i].CANTIDAD * datos[i].PRECIO * datos[i].TIPO_IVA / 100).toFixed(2);
+					td.innerHTML = iva;
+					tr.appendChild(td);
+					
+					//TOTAL
+					td = document.createElement("td");
+					total = parseFloat((datos[i].CANTIDAD * datos[i].PRECIO) + parseFloat(iva)).toFixed(2);
+					td.innerHTML = total;
+					tr.appendChild(td);
+					
+					//BORRAR
+					td = document.createElement("td");
+					td.innerHTML = "<button>Borrar</button>";
+					td.dataset.idconcepto = datos[i].ID;
+					td.dataset.idfactura = datos[i].ID_FACTURA;
+					td.dataset.nombre = datos[i].CONCEPTO;
+					td.onclick = borraDetalle;
+					tr.appendChild(td);
+					
+					datosTabla.appendChild(tr);
+					
+					sumaIva = sumaIva + parseFloat(iva);
+					sumaTotal = sumaTotal + parseFloat(total);
+					
+					
+					document.getElementById("Tiva").innerHTML = sumaIva.toFixed(2);
+					document.getElementById("Ttotal").innerHTML = sumaTotal.toFixed(2);
+				}
+			}
+			else{
+				document.getElementById("Tiva").innerHTML = "suma iva";
+				document.getElementById("Ttotal").innerHTML = "suma TOTAL";
+			}
+		}
+		
+		function cargaTabla() {
+            document.getElementById("btAnade").dataset.ID = this.value;
+            var p = {
+                servicio: "detalle",
+                id: this.value
+            };
+            p = JSON.stringify(p);
+            peti.peticion("servidor.php", "POST", muestraTabla, p);
+        }
+		
+		function borraDetalle(e){
+			e.preventDefault();
+			if(confirm("¿Estás seguro que quiere eliminar " + this.dataset.nombre + "?")){
+				var p = {
+					servicio: "borra",
+					id: this.dataset.idconcepto,
+					idFactura: this.dataset.idfactura
+				};
+				p = JSON.stringify(p);
+				peti.peticion("servidor.php", "POST", muestraTabla, p);
+			}
+		}
+		
+		function anadirDetalle(e) {
+            e.preventDefault();
+			if(document.getElementById("factura").value!=-1){
+				var p = {
+					servicio: "anade",
+					id: this.dataset.ID,
+					cantidad: document.getElementById("cantidad").value,
+					concepto: document.getElementById("concepto").value,
+					precio: document.getElementById("precio").value,
+					tipo_iva: document.getElementById("tipo_iva").value
+				};
+				p = JSON.stringify(p);
+				peti.peticion("servidor.php", "POST", muestraTabla, p);
+			}
+			else
+				return alert("Para añadir un nuevo detalle debe seleccionar una factura");
+        }
+		
+    </script>
+  </head>
+  
+  <body>
+  	
+    <h2>Examen 3. 1ª Evaluación. DWEC</h2>
+    <h3>Consulta de Facturas</h3>
+    <div>
+    	<p>
+		    <select id="factura">
+		    	<option value="-1">Selecciona una factura para consultar su detalle</option>
+		    </select>
+    	</p>
+    </div>
+    <div>
+    	Detalle de la factura:
+    	<p>
+		    <table id="detalle" border="1">
+		    	<thead>
+		    		<tr>
+		    			<th>ID</th>
+		    			<th>CANTIDAD</th>
+		    			<th>CONCEPTO</th>
+		    			<th>PRECIO</th>
+		    			<th>Tipo IVA</th>
+		    			<th>IVA</th>
+		    			<th>TOTAL</th>
+						<th>BORRAR</th>
+		    		</tr>
+		    	</thead>
+					
+					
+		    	<tbody id="filas_tabla">
+		    		
+						
+		    	</tbody>
+					
+					
+		    	<tfoot>
+		    		<tr>
+		    			<td colspan="5">TOTALES: </td>
+		    			<td id="Tiva">suma iva</td>
+		    			<td id="Ttotal">suma TOTAL</td>
+		    		</tr>
+		    	</tfoot>
+		    </table>
+    	</p>
+    </div>
+		
+		<div>
+			<fieldset>
+				<legend>Añadir detalle</legend>
+				<p>
+					<label for="cantidad">Cantidad: </label>
+					<input type="text" id="cantidad" size="3" value="4" />
+				</p>
+				<p>
+					<label for="concepto">Concepto: </label>
+					<input type="text" id="concepto" size="44" value="Nuevo detalle" />
+				</p>
+				<p>
+					<label for="precio">precio: </label>
+					<input type="text" id="precio" size="4" value="25" /> €
+				</p>
+				
+				<p>
+					<label for="tipo_iva">Tipo IVA: </label>
+					<input type="text" id="tipo_iva" size="2" value="21" /> %
+				</p>
+			
+			</fieldset>
+			
+			<button id="btAnade">Añadir línea de detalle</button>
+		
+		</div>
+    
+  </body>
+</html>

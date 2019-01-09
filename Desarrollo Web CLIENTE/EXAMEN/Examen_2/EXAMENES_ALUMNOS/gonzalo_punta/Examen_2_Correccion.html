@@ -1,0 +1,297 @@
+<html>
+  <head>   
+    <meta charset="UTF-8"/>
+    <title>Examen 2</title>
+		
+		<style type="text/css">
+			span {
+				color: red;
+			}
+			.separar{
+				margin-left: 3em;
+			}
+		</style>
+		
+		
+		<script src="Utilidades_JS.js"></script>
+    <script>
+      window.onload=function(){
+        
+        document.getElementById("nombre").onkeypress=pulsaSoloLetrasYEpacios;
+        document.getElementById("nombre").onkeyup=mayusculas;
+
+        document.getElementById("apellidos").onkeypress=pulsaSoloLetrasYEpacios;
+        document.getElementById("apellidos").onkeyup=mayusculas;
+
+        document.getElementById("nif").onkeyup=mayusculas;
+
+        document.getElementById("f1").onsubmit=ValidarFormulario;
+      }
+        
+        function ValidarFormulario(){
+          var nombreUsuario=document.getElementById("nombre");
+          var apellidoUsuario=document.getElementById("apellidos");
+          var dni=document.getElementById("nif");
+          var usuario=document.getElementById("usuario");
+          var claveUsuario=document.getElementById("clave");
+          var repClaveUsuario=document.getElementById("rep_clave");
+          var dia=document.getElementById("fn_dia").value;
+          var mes=document.getElementById("fn_mes").value-1;
+          var anio=document.getElementById("fn_ano").value;
+          var sexo=document.getElementsByName("sexo");
+          var cuentaCorriente=document.getElementById("ccc");
+          var foco=null;
+
+          //NOMBRE USUARIO CORRECTO
+          if (nombreUsuario.value == ""){
+            document.getElementById("spnombre").innerHTML="Este campo no puede estar en blanco";
+            if (!foco) foco=nombreUsuario.focus();
+          }
+          else{
+            document.getElementById("spnombre").innerHTML="";
+          }
+
+          //APELLIDO CORRECTO
+          if (apellidoUsuario.value == ""){
+            document.getElementById("spapellidos").innerHTML="Este campo no puede estar vacio";
+            if (!foco) foco=apellidoUsuario.focus();
+          }
+          else{
+            document.getElementById("spapellidos").innerHTML="";
+          }
+
+          //VALIDAR DNI CORRECTO
+          if(!(validarDni(dni.value)) || dni.length<9)
+        {
+          document.getElementById("spnif").innerHTML="El DNI es errones o esta incompleto";
+          if (!foco) foco=dni.focus();
+          
+        } 
+        else{
+          document.getElementById("spnif").innerHTML="";
+        }
+
+      //USUARIO CORRECTO
+			for (var i = 0; i < usuario.length; i++) {
+          for (var j=0; j<usuario[i].length; j++){
+            if (usuario[j]=='*' || usuario[j]=='_' || usuario[j]=='@' || usuario[j]=='&' || usuario[j]=='$' || usuario[j]=='%' || usuario[j]=='?' || usuario[j]=='#'){
+              document.getElementById("spusuario")="El caracter " + usuario[j] + "solo puede estar una vez";
+              if (!foco) foco=usuario.focus();
+            }
+          }
+      }
+      if(usuario.value.length<5)
+			{
+        document.getElementById("spusuario").innerHTML="Debe tener un tamaño minimo de 5 caracteres";
+        if (!foco) foco=usuario.focus();
+			}
+			else 	if(usuario.length>20)
+			{
+        document.getElementById("spusuario").innerHTML="Debe tener un tamaño maximo de 20 caracteres";
+        if (!foco) foco=usuario.focus();
+			}
+        
+      else 
+				document.getElementById("spusuario").innerHTML="";
+
+
+      //CLAVE CORRECTA
+      var claveCorrecta=false;
+			var contMayusculas=0;
+			var contMinusculas=0;
+			var contNumero=0;
+			var contSimbolo=0;
+			for (var i = 0; i < claveUsuario.value.length; i++) {
+
+        if ((claveUsuario[i] >= '0') && (claveUsuario[i] <='9')) {
+          contNumero++;
+        }
+
+				if((claveUsuario[i] >= 'a') && (claveUsuario[i] <= 'z')){
+					contMinusculas++;
+        }
+        
+				if((claveUsuario[i] >= 'A') && (claveUsuario[i] <= 'Z')){
+        contMayusculas++;
+        }
+
+				if((claveUsuario[i] == '*') || (claveUsuario[i] == '_') || (claveUsuario[i] == '@') || (claveUsuario[i] == '&') || (claveUsuario[i] == '$') || (claveUsuario[i] == '%') || (claveUsuario[i] == '?') || (claveUsuario[i] == '#')) {
+          contSimbolo++;
+        }
+        
+			}
+			if(claveUsuario.value.length<8){
+        document.getElementById("spclave").innerHTML="Este campo debe tener minimo 8 caracteres";
+        if (!foco) foco=claveUsuario.focus();
+      }
+
+      else if(contNumero==0){
+      document.getElementById("spclave").innerHTML="El campo debe tener minimo un numero";
+      if (!foco) foco=claveUsuario.focus();
+      }
+
+      else if (contMinusculas==0){
+      document.getElementById("spclave").innerHTML="El campo debe tener minimo una letra minuscula";
+      if (!foco) foco=claveUsuario.focus();
+      }
+
+      else if (contMayusculas==0){
+      document.getElementById("spclave").innerHTML="El campo debe tener minimo una letra mayuscula";
+      if (!foco) foco=claveUsuario.focus();
+      }
+
+      else if (contSimbolo==0){
+      document.getElementById("spclave").innerHTML="El campo debe tener minimo uno de estos simbolos * _ @ & $ % ? # ";
+      if (!foco) foco=claveUsuario.focus();
+      }
+
+      else {
+      document.getElementById("spclave").innerHTML="";
+      claveCorrecta=true;
+    }
+			
+			//REPETIR CLAVE CORRECTA
+			if(repClaveUsuario.value.length<8){
+        document.getElementById("sprep_clave").innerHTML="Este campo debe tener minimo 8 caracteres";
+        if (!foco) foco=repClaveUsuario.focus();
+      }
+
+			else if(!claveCorrecta){
+				document.getElementById("sprep_clave").innerHTML="Has introducido la clave repetida incorrectamente";
+        if (!foco) foco=repClaveUsuario.focus();
+      }
+
+      else if(claveCorrecta && (repClaveUsuario!=claveUsuario)){
+        document.getElementById("sprep_clave").innerHTML="Has repetido mal la clave";
+        if (!foco) foco=repClaveUsuario.focus();
+      }
+
+			else 
+				document.getElementById("sprep_clave").innerHTML="";
+       
+      //FECHA CORRECTA
+      var diaHoy=new Date().getDate();
+			var mesHoy=new Date().getMonth();
+			var anioHoy=new Date().getFullYear();
+
+			var valor=new Date(anio,mes, dia);
+			if(dia!=valor.getDate() || mes!=valor.getMonth() || anio!=valor.getFullYear()){
+        document.getElementById("spf_nacimiento").innerHTML="Fecha incorrecta";
+        if (!foco) foco=document.getElementById("fn_dia").focus();
+      }
+      
+			else if(!compararFechas(valor))
+			{
+        document.getElementById("spf_nacimiento").innerHTML="Eres menor de edad";
+        if (!foco) foco=document.getElementById("fn_dia").focus();
+			}
+			else{
+				document.getElementById("spf_nacimiento").innerHTML=""; 
+      }
+
+      //SEXO CORRECTO
+      var opcionSeleccionada=false;
+        for(var i=0; i<sexo.length; i++) {
+          if(sexo[i].checked) {
+              opcionSeleccionada=true;
+              break;
+          }
+        }
+
+        if(!opcionSeleccionada) {
+        document.getElementById("spsexo").innerHTML="Debe elegir una opción";
+    //    if (!foco) foco = document.getElementById("sexo").focus;
+  
+        }
+        else{
+        document.getElementById("spsexo").innerHTML="";
+        }
+      
+      
+        return false;
+			
+		}
+    </script>
+		
+		
+		
+		
+		
+  </head>
+
+  <body>
+  <center>FORMULARIO</center>
+  <form id="f1">
+    <p>
+      Nombre: <input type="text" id="nombre">
+      <span id="spnombre"></span>
+    </p>
+    <p>
+      Apellidos: <input type="text" id="apellidos">
+      <span id="spapellidos"></span>
+    </p>
+    <p>
+      NIF: <input type="text" id="nif">
+      <span id="spnif"></span>
+    </p>
+    <p>
+      Usuario: <input type="text" maxlength="15" id="usuario">
+      <span id="spusuario"></span>
+    </p>
+    <p>
+      Clave: <input type="text" id="clave">
+      <span id="spclave"></span>
+    </p>
+    <p>
+      Repetir Clave: <input type="password" id="rep_clave">
+      <span id="sprep_clave"></span>
+    </p>
+    <p>
+      Fecha Nacimiento:
+      <input type="text" id="fn_dia" maxlength="2" size="1" /> / 
+      <input type="text" id="fn_mes" maxlength="2" size="1"/> / 
+      <input type="text" id="fn_ano" maxlength="4" size="3"/> (dd/mm/aaaa) 
+      <span id="spf_nacimiento"></span>
+    </p>
+		
+		<p>
+      Fecha Nacimiento V2:
+			<select id="sel_fn_mes">
+				<option value="-1">mes</option>
+			</select>
+      / 
+			<select id="sel_fn_dia">
+				<option value="-1">dia</option>
+			</select>
+      / 
+			<select id="sel_fn_ano">
+				<option value="-1">año</option>
+			</select>
+      <span id="spSel_f_nacimiento"></span>
+    </p>
+		
+		<p>
+			<label>Sexo: </label>
+      <input type="radio" name="sexo" value="femenino" />
+      <label for="femenino">Femenino</label>
+			<input type="radio" name="sexo" value="masculino" />
+			<label for="masculino">Masculino</label>
+			<input type="radio" name="sexo" value="otro" />
+			<label for="ni_me_acuerdo">Otro</label>
+      <span id="spsexo"></span>
+		</p>
+		
+		<p>
+			<label for="cc">Cuenta Corriente: </label>
+			<input type="text" id="ccc" maxlength="20" size="22" /> 
+      <span id="spccc"></span>
+		</p>
+
+		<br>
+    <p>
+      <input type="submit" value="Enviar" id="btEnviar" /> 
+      <input class="separar" type="reset" value="Limpiar Campos"/>
+    </p>
+  </form>
+</body>
+</html>

@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+
+    <title>Examen 3. 1ª Evaluación. DWEC</title>
+
+    <style>
+        fieldset {
+            width: 400px;
+            margin-top: 2em;
+            margin-bottom: 1em;
+            margin-left: 1em;
+        }
+
+        fieldset label {
+            width: 4.5em;
+            display: inline-block;
+        }
+
+    </style>
+    <script type="application/javascript" src="utilidad_paJAX.js"></script>
+    <script type="text/javascript">
+
+        var ruta = "servidor.php";
+
+        //--1. Creamos un objeto pAJAX:
+        var peti = new paJAX();
+
+        window.onload = function () {
+            peticionSelect();
+            document.getElementById("factura").onchange = function () {
+                mostrarDatos(this.value);
+            };
+            document.getElementById("btAnade").onclick = insertarDatos;
+        };
+
+        //EJER.1 Enviamos la petición al servidor.
+        function peticionSelect() {
+            //ME CREO EL OBJETO JS
+            var p = {
+                servicio: "facturas"
+            };
+            //JSON.stringify()//DADO UN OBJETO JAVASCRITP CONVERTIRLO EN UN STRING JSON
+            p = JSON.stringify(p);
+            /// Hacemos la petición
+            peti.peticion(ruta, "POST", mostrarNumeroFecha, p);
+        }
+
+        //Para la carga de los datos./callback llamada
+        function mostrarNumeroFecha(datos) {
+            llenarSelectIdFactura(document.getElementById("factura"), datos);
+        }
+
+        //1.Al cargar la página se llena el select con id=factura.
+        function llenarSelectIdFactura(sel, op) {
+            console.log(op);
+            sel.options.length = 1;  //limpiamos y borramos todo
+            var o;
+            for (var i in op) {
+                o = document.createElement('option');
+                o.innerHTML = "FACTURA: " + op[i].NUMERO + ". FECHA: " + op[i].FECHA;
+                o.value = op[i].ID;
+                sel.options.add(o);
+            }
+        }
+
+
+        // 2. Hacemos la petición Ajax para mostrar los datos de los campos correspondientes
+        function mostrarDatos(id) {
+            //creamos el objeto al eniar
+            var p = {
+                servicio: "detalle",
+                id: id
+            };
+            p = JSON.stringify(p);
+            // console.log(p);
+            peti.peticion(ruta, "POST", rellenarTabla, p);
+        }
+
+        //2 -function para rellenar filas de una tabla
+        function rellenarTabla(datos) {
+            var totalSumaIva = 0;
+            var sumaTotal = 0;
+
+            if(datos.length == 0){
+                //console.log("total " + sumaTotal);
+                document.getElementById("Tiva").innerHTML = " ";
+                document.getElementById("Ttotal").innerHTML = " ";
+                document.getElementById("lineas_detalle").innerText = "";
+                return;
+            }
+
+            var tablaBody = document.getElementById("lineas_detalle");
+            tablaBody.innerHTML = "";
+            //llamo a la funcion crear fila mientras recorro el array
+            for (var i = 0; i < datos.length; i++) {
+                tablaBody.appendChild(creaFila(datos[i]));
+
+
+                //4. Pintamos los totales de total sumaIva y total de la sumatOTAL
+                var iva = ((datos[i].CANTIDAD * datos[i].PRECIO * datos[i].TIPO_IVA) / 100);
+                var total = datos[i].CANTIDAD * datos[i].PRECIO + iva;
+
+                //total de la suma del iva
+                totalSumaIva = totalSumaIva + iva;
+                var totalSumaIva1 = totalSumaIva.toFixed(2);
+
+                //suma total
+                sumaTotal = sumaTotal + total;
+                var sumatotal1 = sumaTotal.toFixed(2);
+
+            }
+
+            //console.log("total " + sumaTotal);
+            document.getElementById("Tiva").innerHTML = totalSumaIva1;
+            document.getElementById("Ttotal").innerHTML = sumatotal1;
+        }
+
+        //filaS
+        function creaFila(registro) {
+
+            var fila = document.createElement("tr");
+
+            var td = document.createElement("td");
+            td.innerHTML = registro.ID;
+            fila.appendChild(td);
+
+            td = document.createElement("td");
+            td.innerHTML = registro.CANTIDAD;
+            fila.appendChild(td);
+
+            td = document.createElement("td");
+            td.innerHTML = registro.CONCEPTO;
+            fila.appendChild(td);
+
+            td = document.createElement("td");
+            td.innerHTML = registro.PRECIO;
+            fila.appendChild(td);
+
+            td = document.createElement("td");
+            td.innerHTML = registro.TIPO_IVA;
+            fila.appendChild(td);
+
+            //Ej.3 calculamos y Pintamos las columnas IVA y TOTAL correspondiente.
+            td = document.createElement("td");
+            //me devuelve un string
+            var iva = ((registro.CANTIDAD * registro.PRECIO * registro.TIPO_IVA) / 100).toFixed(2);
+            //lo paso a numero
+            var iva1 = parseFloat(iva);
+            td.innerHTML = iva1;
+            fila.appendChild(td);
+
+            //Pintamos el total de todos los articulo + el iva
+            td = document.createElement("td");
+            var total = registro.CANTIDAD * registro.PRECIO + iva1;
+            var total1 = total.toFixed(2);
+            td.innerHTML = total1;
+            fila.appendChild(td);
+
+
+            //borrar
+            td = document.createElement("td");
+            var boton = document.createElement("button");
+            boton.innerHTML = "Borrar";
+            td.appendChild(boton);
+            boton.dataset.id = registro.ID;
+            boton.dataset.idFactura = registro.ID_FACTURA;
+            boton.onclick = borrarDetalleFactura;
+            fila.appendChild(td);
+
+         return fila;
+        }
+
+        //eje 4 funcion para añadir linea de detalle
+        function insertarDatos(event) {
+            event.preventDefault();
+
+            if (document.getElementById("factura").value != -1) {
+                var p = {
+                    servicio: "anade",
+                    // Creamos un objeto con el tipo de servicio y recojemos los datos
+                    id: document.getElementById("factura").value,
+                    cantidad: document.getElementById("cantidad").value,
+                    concepto: document.getElementById("concepto").value,
+                    precio: document.getElementById("precio").value,
+                    tipo_iva: document.getElementById("tipo_iva").value
+                };
+                p = JSON.stringify(p);
+                peti.peticion(ruta, "POST", rellenarTabla, p);
+
+            }else{
+                alert("Selecciona una factura");
+            }
+        }
+        //ej.5 borrar linea de detalle
+        function borrarDetalleFactura(event) {
+            // Cancela el evento si es cancelable, no detiene el resto del evento
+            event.preventDefault();
+            if (confirm("Esta seguro que desea borrar el ID '" + this.dataset.id + "'")) {
+
+                var p = {
+                    servicio: "borra",
+                    id: this.dataset.id,
+                    idFactura: this.dataset.idFactura
+                };
+                //console.log(p);
+                p = JSON.stringify(p);
+                console.log("id"+this.dataset.id
+                    + " IDFACTURA" + this.dataset.idFactura
+                + " P " + p);
+
+                peti.peticion(ruta, "POST", rellenarTabla, p);
+            }
+        }
+
+    </script>
+</head>
+
+<body>
+
+<h2>Examen 3. 1ª Evaluación. DWEC</h2>
+<h3>Consulta de Facturas</h3>
+<div>
+    <p>
+        <select id="factura">
+            <option value="-1">Selecciona una factura para consultar su detalle</option>
+        </select>
+    </p>
+</div>
+<div>
+    Detalle de la factura:
+    <p>
+    <table id="detalle" border="1">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>CANTIDAD</th>
+            <th>CONCEPTO</th>
+            <th>PRECIO</th>
+            <th>Tipo IVA</th>
+            <th>IVA</th>
+            <th>TOTAL</th>
+            <th>BORRAR</th>
+        </tr>
+        </thead>
+
+        <tbody id="lineas_detalle">
+
+
+        </tbody>
+
+        <tfoot>
+        <tr>
+            <td colspan="5">TOTALES:</td>
+            <td id="Tiva">suma iva</td>
+            <td id="Ttotal">suma TOTAL</td>
+        </tr>
+        </tfoot>
+    </table>
+    </p>
+</div>
+
+<div>
+    <fieldset>
+        <legend>Añadir detalle</legend>
+        <p>
+            <label for="cantidad">Cantidad: </label>
+            <input type="text" id="cantidad" size="3" value="4"/>
+        </p>
+        <p>
+            <label for="concepto">Concepto: </label>
+            <input type="text" id="concepto" size="44" value="Nuevo detalle"/>
+        </p>
+        <p>
+            <label for="precio">precio: </label>
+            <input type="text" id="precio" size="4" value="25"/> €
+        </p>
+
+        <p>
+            <label for="tipo_iva">Tipo IVA: </label>
+            <input type="text" id="tipo_iva" size="2" value="21"/> %
+        </p>
+
+    </fieldset>
+
+    <button id="btAnade">Añadir línea de detalle</button>
+
+</div>
+
+</body>
+</html>

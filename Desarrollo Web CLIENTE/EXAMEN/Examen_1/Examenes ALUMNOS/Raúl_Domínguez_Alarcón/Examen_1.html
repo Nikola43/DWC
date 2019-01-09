@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Examen 1</title>
+    <style type="text/css">
+      #datos_calculo {
+        margin-left: 20px;
+        margin-right: 77px;
+        float: left;
+      }
+      
+      #figuras {
+        text-align: center;
+        margin: 0 20px;
+        float: left;
+        margin-bottom: 40px;
+      }
+      
+      #ecuacion {
+        margin: 0 20px;
+        float: left;
+      }
+  
+      
+    #soluciones {
+      border: solid 1px blue;
+      width: 17em;
+      height: 7em;
+      padding: 0.4em;
+      display: inline-block;
+    }
+    
+    #titulo_sol {
+      font-size: 1.2em;
+      color: blue;
+    }
+    
+    
+    
+    #fracciones {
+    		clear: both;
+        margin-left: 20px;
+        padding: 15px;
+    /*    border: 2px solid blue;  */
+      }
+      
+      .fraccion {
+        float: left;
+        margin: 8px;
+   /*     border: 1px solid blue;     */
+      }
+      
+      .fraccion input {
+        display: block;
+      }
+      
+      #SolFracciones {
+        margin: 25px;
+        overflow: hidden;
+      }
+    
+    
+    
+      
+    </style>
+
+    <script type="text/javascript">
+    
+    window.onload = function(){
+      //Ejercicio 4 examen
+      document.getElementById("btCalcular").onclick = function(){
+        //Recojo cada dato
+        var datoBase = document.getElementById("base").value;
+        var datoAltura = document.getElementById("altura").value;
+        var datoProfundidad = document.getElementById("profundidad").value;
+        var datoRadio = document.getElementById("radio").value;
+
+        //Teniendo ya los valores, procedo a calcular cada area y volumen de manera que los instroduzco en cada "value" 
+        
+          document.getElementById("area_rectangulo").value = datoBase*datoAltura;
+          document.getElementById("area_triangulo").value = (datoBase*datoAltura)/2;
+          document.getElementById("area_circulo").value = Math.PI * datoRadio;
+          document.getElementById("volumen_caja").value = datoBase*datoAltura*datoProfundidad;
+          document.getElementById("volumen_cilindro").value = Math.PI * Math.pow(datoRadio, 2) * datoAltura;
+          document.getElementById("volumen_esfera").value = ((3/4)*Math.PI)*Math.pow(datoRadio, 3);
+      }
+
+      //Ejercicio 5 y 6 examen
+      document.getElementById("btSolEc").onclick = function(){
+        var primerNum = document.getElementById("a").value;
+        var segundoNum = document.getElementById("b").value;
+        var tercerNum = document.getElementById("c").value; 
+        
+        //Teniendo los datos saco la X de la manera suministrada por el profesor.
+        var resulX =  (-segundoNum +- (Math.sqrt(Math.pow(segundoNum,2 )-4*primerNum*tercerNum)))/(2*primerNum);
+        var resulXuno = document.getElementById("sol_x1"); 
+        var resulXdos = document.getElementById("sol_x2");
+        if(!resulX){
+          //En caso de que el número de la raíz cuadrada de fallo
+          resulXuno.innerText = "No se ha podido sacar ya que la raíz cuadrada tenía un número negativo";
+          resulXdos.innerText = "No tiene solución";
+        }else{
+          //Y muestro los resultados tanto en positivo como en negativo
+          resulXuno.innerText = -resulX;
+          resulXdos.innerText = resulX;
+        }
+
+        //Ejemplo que uso: 1,8,2 para ver los resultados y 8,1,2 para ver si pone el error
+      }
+        
+      //Ejercicio 7 examen
+      document.getElementById("btSolF").onclick = function(){
+        var numAuno = document.getElementById("a1").value;
+        var numBuno = document.getElementById("b1").value;
+        var numAdos = document.getElementById("a2").value;
+        var numBdos = document.getElementById("b2").value;
+        
+        var numAtotal = document.getElementById("r1").value=((numAuno*numBdos)+(numAdos*numBuno));
+        var numBtotal = document.getElementById("r2").value=(numBuno*numBdos);
+        document.getElementById("rf").value=(numAtotal/numBtotal);
+      }
+
+      //Ejercicio 8 examen
+
+      document.getElementById("btAnade").onclick = function(){
+        var divLocali = document.getElementById("listaFracciones");
+        var numAuno = document.getElementById("a1").value;
+        var numBuno = document.getElementById("b1").value;
+        var numAclon = numAuno.cloneNode; 
+        var numBclon = numBuno.cloneNode;
+        var divCreadoSig = document.createAttribute("div");
+        var brCreado = document.createAttribute("br")
+        brCreado.className="fraccion";
+        divCreadoSig.innerText="  + ";
+        divLocali.appendChild(divCreadoSig);
+        var inputCreado = document.createAttribute("input");
+        divLocali.appendChild(inputCreado).value=numAclon;
+        divLocali.appendChild(inputCreado).value=numBclon;
+        
+      }
+    }
+    
+
+    
+
+
+    </script>
+
+
+  </head>
+
+  <body>
+
+    <h2>Cálculo de Áreas y Volúmenes</h2>
+
+    <div id="datos_calculo">
+      <p>
+        Introduce los datos para el Cálculo:
+      </p>
+      <p>
+        Base (b) :
+        <input type="text" id="base" name="base" value="" size="4" maxlength="8">
+        <br/>
+        Altura (h):
+        <input type="text" id="altura" name="altura" value="" size="4" maxlength="8">
+        <br/>
+        Profundidad (c):
+        <input type="text" id="profundidad" name="profundidad" value="" size="4" maxlength="8">
+        <br/>
+        Radio (r):
+        <input type="text" id="radio" name="radio" value="" size="4" maxlength="8">
+        <br/>
+      </p>
+      <br/>
+      <input id="btCalcular" type="button" value="CALCULAR">
+    </div>
+    
+    <div id="figuras">
+      <table border="1">
+        <thead>
+          <tr>
+            <th>AREAS</th>
+            <th>VOLUMENES</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td> Rectángulo
+            <br>
+            <img src="imagenes/Rectangulo.gif" width="150" height="150" alt="Rectángulo"/>
+            <br>
+            Area:
+            <input type="text" id="area_rectangulo" name="area_rectangulo" value="" readonly="readonly" />
+            </td>
+            <td> Caja
+            <br>
+            <img src="imagenes/Ortoedro.gif" width="150" height="150" alt="Caja"/>
+            <br>
+            Volumen:
+            <input type="text" id="volumen_caja" name="volumen_caja" value="" readonly="readonly" />
+            </td>
+          </tr>
+          <tr>
+            <td> Triángulo
+            <br>
+            <img src="imagenes/Triangulo.gif" width="150" height="150" alt="Triángulo"/>
+            <br>
+            Area:
+            <input type="text" id="area_triangulo" name="area_triangulo" value="" readonly="readonly" />
+            </td>
+            <td> Cilindro
+            <br>
+            <img src="imagenes/Cilindro.gif" width="150" height="150" alt="Cilindro"/>
+            <br>
+            Volumen:
+            <input type="text" id="volumen_cilindro" name="volumen_cilindro" value="" readonly="readonly" />
+            </td>
+          </tr>
+          <tr>
+            <td> Círculo
+            <br>
+            <img src="imagenes/Circulo.gif" width="150" height="150" alt="Círculo"/>
+            <br>
+            Area:
+            <input type="text" id="area_circulo" name="area_circulo" value="" readonly="readonly" />
+            </td>
+            <td> Esfera
+            <br>
+            <img src="imagenes/Esfera.gif" width="150" height="150" alt="Esfera"/>
+            <br>
+            Volumen:
+            <input type="text" id="volumen_esfera" name="volumen_esfera" value="" readonly="readonly" />
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    
+    
+    <div id="ecuacion">
+      <h3>Solución para la Ecuación de 2º Grado</h3>
+      <p>
+        <input type="text" id="a" name="a" value="" size="1" maxlength="4" /> X2 + 
+        <input type="text" id="b" name="b" value="" size="1" maxlength="4"  /> X + 
+        <input type="text" id="c" name="c" value="" size="1" maxlength="4"  /> = 0 
+        <input id="btSolEc" type="button" value="Calcular Ec.">
+      </p>
+      <p>
+        <div id="soluciones"><span id="titulo_sol">Soluciones:</span> 
+          <span id="valores_sol"> 
+            <p>
+              X1 = <span id="sol_x1"> </span> <br />
+              X2 = <span id="sol_x2"> </span>
+            </p>
+          </span>
+        </div>
+      </p>
+    </div>
+    
+    
+    <br>
+    
+    
+    <div id="fracciones">
+      <h3>Suma de Fracciones:</h3>
+      <div id="SolFracciones">
+      	
+       <div id="listaFracciones">
+       	
+        <div id="f1" class="fraccion">
+        <input type="text" id="a1" name="a1" value="2" size="1" maxlength="4" /> 
+        <div> <hr align="left"> </div>
+        <input type="text" id="b1" name="b1" value="3" size="1" maxlength="4"  /> 
+
+        </div>
+        
+        <div id="fsuma" class="fraccion"><br>  + <br> </div>
+        
+        <div id="f2" class="fraccion">
+        <input type="text" id="a2" name="a2" value="3" size="1" maxlength="4"  /> 
+        <div> <hr align="left"> </div>
+        <input type="text" id="b2" name="b2" value="5" size="1" maxlength="4"  />
+        </div>
+        
+        
+   
+       </div>
+       
+        
+        
+        <div class="fraccion"><br>  = <br> </div>
+        
+        <div class="fraccion">
+        <input type="text" id="r1" name="r1" value="" size="1" maxlength="4" readonly="readonly" /> 
+        <div> <hr align="left"> </div>
+        <input type="text" id="r2" name="r2" value="" size="1" maxlength="4" readonly="readonly" />
+        </div>
+        
+         <div class="fraccion"><br>  = <br> </div>
+        
+        <div class="fraccion"><br>  <input type="text" id="rf" name="rf" readonly="readonly" /> <br> </div>
+        
+      </div>
+      
+       <p>
+       	<input id="btAnade" type="button" value="Añadir Fracción"> 
+       	<input id="btSolF" type="button" value="Calcular Suma">
+        <input id="btSolF_V2" type="button" value="Calcular Suma V2">
+       </p>
+
+      
+    </div>
+    
+    
+
+  </body>
+</html>

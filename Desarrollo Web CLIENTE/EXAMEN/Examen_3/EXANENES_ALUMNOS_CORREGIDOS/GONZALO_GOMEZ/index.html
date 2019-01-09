@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8" />
+
+	<title>Examen 3. 1ª Evaluación. DWEC</title>
+
+	<style>
+		fieldset{
+			width: 400px;
+			margin-top: 2em;
+			margin-bottom: 1em;
+			margin-left: 1em;
+		}
+		
+		fieldset label{
+			width: 4.5em;
+			display: inline-block;
+		}
+		
+		</style>
+	<script type="text/javascript" src="pAJAX.js"></script>
+	<script type="text/javascript">
+		var peti = new pAJAX();
+		function llenaSelect(sel) {
+
+			var fac = document.getElementById("factura");
+			for (var i = 0; i < sel.length; i++) {
+				fac.innerHTML += "<option value='" + sel[i].ID + "'>Factura: " + sel[i].NUMERO + ". Fecha: " + sel[i].FECHA + "</option>";
+			}
+		}
+		function cargar_select() {
+			var p = {
+				servicio: "facturas"
+			};
+			p = JSON.stringify(p);
+			peti.peticion("servidor.php", "POST", llenaSelect, p);
+		}
+		function muestraContenido(contenido) {
+			console.log(contenido);
+			var iva = 0;
+			var total = 0;
+			var t_iva = 0;
+			var t_suma = 0;
+			document.getElementById("Tiva").innerHTML = t_iva.toFixed(2);
+			document.getElementById("Ttotal").innerHTML = t_suma.toFixed(2);
+			var cuerpo_tabla = document.getElementById("filas_tabla");
+			cuerpo_tabla.innerHTML = "";
+			var opcion_td, opcion_tr;
+			for (var i = 0; i < contenido.length; i++) {
+				opcion_td = document.createElement("td");
+				opcion_tr = document.createElement("tr");
+				//pinto ID
+				opcion_td.innerHTML = contenido[i].ID;
+				opcion_tr.appendChild(opcion_td);
+				//pinto cantidad
+				opcion_td = document.createElement("td");
+				opcion_td.innerHTML = contenido[i].CANTIDAD;
+				opcion_tr.appendChild(opcion_td);
+				//pinto concepto
+				opcion_td = document.createElement("td");
+				opcion_td.innerHTML = contenido[i].CONCEPTO;
+				opcion_tr.appendChild(opcion_td);
+				//pinto precio
+				opcion_td = document.createElement("td");
+				opcion_td.innerHTML = contenido[i].PRECIO;
+				opcion_tr.appendChild(opcion_td);
+				//pinto tipo_iva
+				opcion_td = document.createElement("td");
+				opcion_td.innerHTML = contenido[i].TIPO_IVA;
+				opcion_tr.appendChild(opcion_td);
+				//pinto iva
+				opcion_td = document.createElement("td");
+				iva = ((contenido[i].CANTIDAD * contenido[i].PRECIO * contenido[i].TIPO_IVA) / 100).toFixed(2);
+				opcion_td.innerHTML = iva;
+				opcion_tr.appendChild(opcion_td);
+				//pinto total
+				opcion_td = document.createElement("td");
+				total = parseFloat((contenido[i].CANTIDAD * contenido[i].PRECIO) + parseFloat(iva)).toFixed(2);
+				opcion_td.innerHTML = total;
+				opcion_tr.appendChild(opcion_td);
+				cuerpo_tabla.appendChild(opcion_tr);
+				//boton borrar
+				boton = document.createElement("button");
+				boton.innerHTML = "Del";
+				boton.dataset.idc = contenido[i].ID;
+				boton.dataset.idf = document.getElementById("factura").value;
+				boton.onclick = eliminar;
+				opcion_tr.appendChild(boton);
+				cuerpo_tabla.appendChild(opcion_tr);
+
+
+				t_suma = t_suma + parseFloat(total);
+				t_iva = t_iva + parseFloat(iva);
+
+				document.getElementById("Tiva").innerHTML = t_iva.toFixed(2);
+				document.getElementById("Ttotal").innerHTML = t_suma.toFixed(2);
+			}
+		}
+		function error() {
+			alert("Se ha producido un error.");
+			return false;
+		}
+		function eliminar(event) {
+			event.preventDefault();
+			if (confirm("¿Estas seguro que quieres borrarlo?")) {
+				var p = {
+					servicio: "borra",
+					id: this.dataset.idc,
+					idFactura: this.dataset.idf
+				};
+				p = JSON.stringify(p);
+
+				peti.peticion("servidor.php", "POST", muestraContenido, p);
+			}
+		}
+		function anadir(event) {
+			event.preventDefault();
+			if (document.getElementById("factura").value == -1) {
+				error();
+			}
+			else {
+				var p = {
+					servicio: "anade",
+					id: this.dataset.ID,
+					cantidad: document.getElementById("cantidad").value,
+					concepto: document.getElementById("concepto").value,
+					precio: document.getElementById("precio").value,
+					tipo_iva: document.getElementById("tipo_iva").value
+				};
+				p = JSON.stringify(p);
+				peti.peticion("servidor.php", "POST", muestraContenido, p);
+			}
+		}
+		function cargar_Tabla() {
+			document.getElementById("btAnade").dataset.ID = this.value;
+			var p = {
+				servicio: "detalle",
+				id: this.value
+			};
+			p = JSON.stringify(p);
+			peti.peticion("servidor.php", "POST", muestraContenido, p);
+		}
+
+		window.onload = function () {
+			cargar_select();
+
+			document.getElementById("factura").onchange = cargar_Tabla;
+			document.getElementById("btAnade").onclick = anadir;
+
+		}
+	</script>
+</head>
+
+<body>
+
+	<h2>Examen 3. 1ª Evaluación. DWEC</h2>
+	<h3>Consulta de Facturas</h3>
+	<div>
+		<p>
+			<select id="factura">
+				<option value="-1">Selecciona una factura para consultar su detalle</option>
+			</select>
+		</p>
+	</div>
+	<div>
+		Detalle de la factura:
+		<p>
+			<table id="detalle" border="1">
+				<thead>
+					<tr>
+						<th>ID</th>
+						<th>CANTIDAD</th>
+						<th>CONCEPTO</th>
+						<th>PRECIO</th>
+						<th>Tipo IVA</th>
+						<th>IVA</th>
+						<th>TOTAL</th>
+					</tr>
+				</thead>
+
+
+				<tbody id="filas_tabla">
+
+
+				</tbody>
+
+
+				<tfoot>
+					<tr>
+						<td colspan="5">TOTALES: </td>
+						<td id="Tiva">suma iva</td>
+						<td id="Ttotal">suma TOTAL</td>
+					</tr>
+				</tfoot>
+			</table>
+		</p>
+	</div>
+
+	<div>
+		<fieldset>
+			<legend>Añadir detalle</legend>
+			<p>
+				<label for="cantidad">Cantidad: </label>
+				<input type="text" id="cantidad" size="3" value="4" />
+			</p>
+			<p>
+				<label for="concepto">Concepto: </label>
+				<input type="text" id="concepto" size="44" value="Nuevo detalle" />
+			</p>
+			<p>
+				<label for="precio">precio: </label>
+				<input type="text" id="precio" size="4" value="25" /> €
+			</p>
+
+			<p>
+				<label for="tipo_iva">Tipo IVA: </label>
+				<input type="text" id="tipo_iva" size="2" value="21" /> %
+			</p>
+
+		</fieldset>
+
+		<button id="btAnade">Añadir línea de detalle</button>
+
+	</div>
+
+</body>
+
+</html>

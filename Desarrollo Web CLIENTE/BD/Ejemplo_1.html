@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+  <head>   
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
+    <title>Plantilla</title>
+    <script type="text/javascript">
+      
+		var db;		
+    window.onload = function(){
+			db = openDatabase('mydb', '1.0', 'borrar', 20 * 1024 * 1024);
+
+		/*
+		db.transaction(function (tx) {
+			tx.executeSql('DROP TABLE borrar');
+		});
+		*/
+		db.transaction(function (tx) {
+			var sc = "CREATE TABLE IF NOT EXISTS provincias (" +
+				"id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+				"id_provincia INTEGER, " +
+				"provincia VARCHAR(200))";
+			tx.executeSql(sc);
+		});
+		
+		
+		db.transaction(function (tx) {
+			sc = "INSERT INTO `provincias` (`id_provincia`, `provincia`) VALUES(30, 'Murcia')";
+			tx.executeSql(sc);
+			
+			sc = "INSERT INTO `provincias` (`id_provincia`, `provincia`) VALUES(41, 'Sevilla')";
+			tx.executeSql(sc);
+		});
+		
+
+		document.querySelector("#btPintar").onclick=pintaDatos;
+	}
+	
+			
+	function pintaDatos(){
+		var sal = "";
+		var sconsulta = "Select * from provincias";
+		db.readTransaction(function(tx) {
+			tx.executeSql(sconsulta, [], function(t, r) {
+		//		console.log(t);
+				console.log(r);
+				console.log(r.rows);
+				
+				var rs = r.rows;
+				for (var i = 0; i < rs.length; i++) {
+				//	sal += rs.item(i).id_provincia + " : " + rs.item(i).provincia + "<br>\n";
+					sal += rs[i].id_provincia + " : " + rs[i].provincia + "<br>\n";
+				}
+				document.querySelector("#sal").innerHTML = sal;
+			}, function(t, e) {
+				//  No se puede leer:
+				alert("Error. " + e.message);
+			})
+		});
+	
+	}
+      
+    </script>
+  </head>
+  
+  <body>
+
+    <h3>Pintamos los datos: </h3>
+		
+	<button id="btPintar">Pintar datos</button>
+	
+	<p>
+	<div id="sal"> </div>
+	</p>
+		
+  </body>
+  
+</html>

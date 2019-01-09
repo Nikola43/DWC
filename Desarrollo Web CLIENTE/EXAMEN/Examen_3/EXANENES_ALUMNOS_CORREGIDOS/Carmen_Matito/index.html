@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8"/>
+    
+    <title>Examen 3. 1ª Evaluación. DWEC</title>
+    
+	<style>
+		fieldset{
+			width: 400px;
+			margin-top: 2em;
+			margin-bottom: 1em;
+			margin-left: 1em;
+		}
+		
+		fieldset label{
+			width: 4.5em;
+			display: inline-block;
+		}
+	</style>
+		
+	<script type="text/javascript" src="Utilidad_pAJAX.js"></script>
+	<script>
+		//############################## WINDOW.ONLOAD ##############################//
+			window.onload = function(){
+				//Ejercicio 1: Llenamos el select.
+				peticionSelect();
+
+				//Ejercicio 2: Llenamos la tabla.
+				document.getElementById("factura").onchange = peticionDetalles;
+
+				document.getElementById("btAnade").onclick = anadeDetalle;
+			}
+
+		//1. Crear objeto pAJAX.
+			var peti = new pAJAX(); 
+
+		//Ejercicio 1:
+			function peticionSelect(){
+				var p= {
+					servicio:"facturas"
+				};	
+				p = JSON.stringify(p);
+				console.log(p);
+				peti.peticion("servidor.php","post",MostrarNumeroYFecha,p);	
+			}
+
+			function LlenaSelect(sel, factura){
+				var op;
+				for(var i in factura){
+					op = document.createElement('option');
+					//o.value = "Factura: " + factura[i].NUMERO+ " FECHA: "+ factura[i].FECHA;
+					op.value = factura[i].ID;
+					op.innerHTML = "Factura: " +factura[i].NUMERO+ ". FECHA: "+ factura[i].FECHA;
+					sel.options.add(op);
+				}
+			}
+
+			function MostrarNumeroYFecha(datos){
+            	LlenaSelect(document.getElementById("factura"),datos);
+			}
+			
+
+		//Ejercicio 2:
+			function peticionDetalles(id){
+				var p={
+					servicio:"detalle",
+					id:this.value
+				};
+				p = JSON.stringify(p);
+				console.log(p);
+				peti.peticion("servidor.php","post",Llena_Tabla,p);
+			}
+
+			function Llena_Tabla(datos){
+				var sumaIva = 0;
+				var sumaTotal = 0;
+				var tabla = document.getElementById("filas_tabla");
+
+				tabla.innerHTML="";
+				for(var i=0; i<datos.length; i++){
+					tabla.appendChild(creaFila(datos[i]));
+
+					var iva = ((datos[i].CANTIDAD * datos[i].PRECIO * datos[i].TIPO_IVA)/100);
+					var total = ((datos[i].CANTIDAD * datos[i].PRECIO) + iva);
+					
+					sumaIva += iva;
+					var totalSumaIva = sumaIva.toFixed(2);
+
+					sumaTotal += total;
+					var totalSuma = sumaTotal.toFixed(2);
+				}	
+
+				document.getElementById("Tiva").innerHTML=totalSumaIva;
+				document.getElementById("Ttotal").innerHTML=totalSuma;
+			}
+
+
+			//Ejercicio 6:
+			function borrar(evento){
+				evento.preventDefault();
+				//Si el usuario le da a "ACEPTAR", se procederá al borrado.
+				if(confirm("¿Estás seguro de borrar la factura ?")) 
+					var p ={                                                    
+						servicio: "borra",
+						id:this.dataset.idDetalle,
+						idFactura:this.dataset.idFactura                       
+					};
+				p=JSON.stringify(p);                                            
+				console.log(p);
+				peti.peticion("servidor.php","post",Llena_Tabla,p); 
+			}
+
+
+
+			function creaFila(registro) {
+				//Ejercicio 2.
+				var fila = document.createElement("tr")
+			
+				var td = document.createElement("td");
+					td.innerHTML = registro.ID;
+					fila.appendChild(td);
+				
+				td = document.createElement("td");
+					td.innerHTML = registro.CANTIDAD;
+					fila.appendChild(td);
+				
+				td = document.createElement("td");
+					td.innerHTML = registro.CONCEPTO;
+					fila.appendChild(td);
+				
+				td = document.createElement("td");
+					td.innerHTML = registro.PRECIO;
+					fila.appendChild(td);
+
+				td = document.createElement("td");
+					td.innerHTML = registro.TIPO_IVA;
+					fila.appendChild(td);	
+
+				td = document.createElement("td");
+					var iva= (registro.CANTIDAD * registro.PRECIO * registro.TIPO_IVA /100).toFixed(2);
+					td.innerHTML=iva;
+					iva=parseFloat(iva);
+					fila.appendChild(td);
+
+				td = document.createElement("td");
+					var suma=(registro.CANTIDAD * registro.PRECIO + iva).toFixed(2);
+					td.innerHTML=suma;
+					suma=parseFloat(suma);
+					fila.appendChild(td);
+
+
+				//Ejercicio 6:
+				td = document.createElement("td");
+				var boton = document.createElement("button");
+				boton.innerHTML="Borrar";
+				td.appendChild(boton);
+				boton.dataset.idFactura = registro.ID_FACTURA;
+				boton.dataset.idDetalle = registro.ID;
+				boton.dataset.cantDetalle = registro.CANTIDAD;
+				boton.dataset.conceptoDetalle = registro.CONCEPTO;
+				boton.dataset.precioDetalle = registro.PRECIO;
+				boton.dataset.tIvaDetalle = registro.TIPO_IVA;
+				boton.onclick=borrar;
+				fila.appendChild(td);
+
+				return fila;
+			}
+
+			//Ejercicio 5:
+			function anadeDetalle(evento){
+				evento.preventDefault();
+				if(document.getElementById("factura").value == -1){
+					alert("Selecciona una factura");
+				}
+				var p = {                                                       
+					servicio:"anade",
+					id:document.getElementById("factura").value,
+					cantidad:document.getElementById("cantidad").value,
+					concepto:document.getElementById("concepto").value,
+					precio:document.getElementById("precio").value,
+					tipo_iva:document.getElementById("tipo_iva").value
+				}        
+				p=JSON.stringify(p);                                            
+				console.log(p);
+				peti.peticion("servidor.php","post",Llena_Tabla,p); 
+        	}
+
+
+
+	</script>
+  </head>
+  
+  <body>
+  	
+    <h2>Examen 3. 1ª Evaluación. DWEC</h2>
+    <h3>Consulta de Facturas</h3>
+    <div>
+    	<p>
+		    <select id="factura">
+		    	<option value="-1">Selecciona una factura para consultar su detalle</option>
+		    </select>
+    	</p>
+    </div>
+    <div>
+    	Detalle de la factura:
+    	<p>
+		    <table id="detalle" border="1">
+		    	<thead>
+		    		<tr>
+		    			<th>ID</th>
+		    			<th>CANTIDAD</th>
+		    			<th>CONCEPTO</th>
+		    			<th>PRECIO</th>
+		    			<th>Tipo IVA</th>
+		    			<th>IVA</th>
+						<th>TOTAL</th>
+						<th>BORRAR</th>
+		    		</tr>
+		    	</thead>
+					
+					
+		    	<tbody id="filas_tabla">
+		    		
+						
+		    	</tbody>
+					
+					
+		    	<tfoot>
+		    		<tr>
+		    			<td colspan="5">TOTALES: </td>
+		    			<td id="Tiva">suma iva</td>
+		    			<td id="Ttotal">suma TOTAL</td>
+		    		</tr>
+		    	</tfoot>
+		    </table>
+    	</p>
+    </div>
+		
+		<div>
+			<fieldset>
+				<legend>Añadir detalle</legend>
+				<p>
+					<label for="cantidad">Cantidad: </label>
+					<input type="text" id="cantidad" size="3" value="4" />
+				</p>
+				<p>
+					<label for="concepto">Concepto: </label>
+					<input type="text" id="concepto" size="44" value="Nuevo detalle" />
+				</p>
+				<p>
+					<label for="precio">precio: </label>
+					<input type="text" id="precio" size="4" value="25" /> €
+				</p>
+				
+				<p>
+					<label for="tipo_iva">Tipo IVA: </label>
+					<input type="text" id="tipo_iva" size="2" value="21" /> %
+				</p>
+			
+			</fieldset>
+			
+			<button id="btAnade">Añadir línea de detalle</button>
+		
+		</div>
+    
+  </body>
+</html>

@@ -1,0 +1,360 @@
+<html>
+  <head>   
+    <meta charset="UTF-8"/>
+    <title>Examen 2</title>
+		
+		<style type="text/css">
+			span {
+				color: red;
+			}
+			.separar{
+				margin-left: 3em;
+			}
+		</style>
+		
+	<script src="Utilidades.js"></script>
+		<script>
+		
+		window.onload=function(){
+			//Restricciones de entrada:
+			document.getElementById("nombre").onkeypress=SoloLetrasyEspacios;
+			document.getElementById("nombre").onkeyup=aMayuscula;
+			
+			document.getElementById("apellidos").onkeypress=SoloLetrasyEspacios;
+			document.getElementById("apellidos").onkeyup=aMayuscula;
+			
+			document.getElementById("usuario").onkeypress=Todo;
+			
+			document.getElementById("fn_dia").onkeypress=SoloNumeros;
+			document.getElementById("fn_mes").onkeypress=SoloNumeros;
+			document.getElementById("fn_anyo").onkeypress=SoloNumeros;
+		
+			document.getElementById("ccc").onkeypress=SoloNumeros;
+			
+			//Validación de formulario
+			document.getElementById("f1").onsubmit=ValidarFormulario;
+			
+			
+		}
+	function ValidarFormulario(){
+			var dia=document.getElementById("fn_dia").value;
+			var mes=document.getElementById("fn_mes").value-1;
+			var anyo=document.getElementById("fn_anyo").value;
+		
+			var correcto=true;
+			var foco=null;
+			var c=String.fromCharCode(65);
+			console.log(c);
+			//correcto nombre
+			if(document.getElementById("nombre").value.length <1){
+					document.getElementById("spnombre").innerHTML="se requiere un nombre,no puede estar vacio";
+					if (!foco) foco=document.getElementById("nombre");
+					correcto=false;
+				}
+			else{
+				
+				document.getElementById("spnombre").innerHTML="";
+				
+			}
+	
+			//correcto apellidos
+			if(document.getElementById("apellidos").value.length <1){
+					document.getElementById("spapellidos").innerHTML="se requiere un apellido,no puede estar vacio";
+					if (!foco) foco=document.getElementById("apellidos");
+					correcto=false;
+				}
+			else{
+				
+				document.getElementById("spapellidos").innerHTML="";
+				
+			}
+			
+			//correcto dni	
+			var dni=document.getElementById("nif");
+			if(document.getElementById("nif").value.length<9)
+			{
+				
+				document.getElementById("spnif").innerHTML="DNI incompleto";
+				if (!foco) foco = document.getElementById("nif");
+				correcto=false;
+			}
+
+			else if(isNaN(dni.value.substr(0,8))){
+				document.getElementById("spnif").innerHTML="Los 8 digitos principales deben de ser NUMERICOS";
+				if (!foco) foco = document.getElementById("nif");
+				correcto=false;
+			}
+			else if(dni.value.substr(8) != dni.value.substr(8).toUpperCase()){
+				document.getElementById("spnif").innerHTML="La letra debe de ser introducida en MAYUSCULA";
+				if (!foco) foco = document.getElementById("nif");
+				correcto=false;
+			}
+			else if(!(esDNI(dni.value)))
+			{
+				
+				document.getElementById("spnif").innerHTML="DNI erroneo";
+				if (!foco) foco = document.getElementById("nif");
+				correcto=false;
+			}
+			else{
+				document.getElementById("spnif").innerHTML="";
+			}
+			
+		//usuario
+		var usuario=document.getElementById("usuario").value;
+		var simbolo1=0;
+		var simbolo2=0;
+		var simbolo3=0;
+		var simbolo4=0;
+		var simbolo5=0;
+		var simbolo6=0;
+		var simbolo7=0;
+		var simbolo8=0;
+		for (var i = 0; i < usuario.length; i++) {
+                
+			if(usuario[i] == '*') {
+				simbolo1++;
+			}
+			if(usuario[i] == '_'){
+				simbolo2++;
+			}
+			if(usuario[i] == '@'){
+				simbolo3++;
+			}
+			if(usuario[i] == '&'){
+				simbolo4++;
+			}
+			if(usuario[i] == '$'){
+				simbolo5++;
+			}
+			
+			if(usuario[i] == '%'){
+				simbolo6++;
+			}
+			if(usuario[i] == '?'){
+				simbolo7++;
+			}
+			if(usuario[i] == '#') {
+                simbolo8++;
+			}
+		}
+		
+		if (document.getElementById("usuario").value.length<5 ){
+			document.getElementById("spusuario").innerHTML="Usuario con menos de 5 caracteres";
+				if (!foco) foco = document.getElementById("usuario");
+				correcto=false;
+		}
+		else if (simbolo1>1||simbolo2>1 ||simbolo3>1 ||simbolo4>1 ||simbolo5>1 ||simbolo6>1 ||simbolo7>1 ||simbolo8>1){
+			document.getElementById("spusuario").innerHTML="Usuario con más de un Caracter *_@&$%?#, SOLO SE PERMITE UN CARACTER DE CADA UNO";
+				if (!foco) foco = document.getElementById("usuario");
+				correcto=false;
+		}
+		else{
+				document.getElementById("spusuario").innerHTML="";
+			}
+		//clave
+			var clave=document.getElementById("clave").value;
+			var claveCorrecta=false;
+			var Mayus=0;
+			var Min=0;
+			var numero=0;
+			var Simbolos=0;
+			for (var i = 0; i < clave.length; i++) {
+                if ((clave[i] >= '0') && (clave[i]<='9')) {
+                    numero++;
+                }
+				if((clave[i] >= 'a') && (clave[i] <= 'z')){
+					Min++;
+				}
+				if((clave[i] >= 'A') && (clave[i] <= 'Z'))
+					Mayus++;
+				if((clave[i] == '*') || (clave[i] == '_') || (clave[i] == '@') || (clave[i] == '&') || (clave[i] == '$') || (clave[i] == '%') || (clave[i] == '?') || (clave[i] == '#')) {
+                    Simbolos++;
+				}
+			}
+			if(clave.length<8){
+				document.getElementById("spclave").innerHTML="Debe tener un tamaño minimo de 8 caracteres";
+				if (!foco) foco = document.getElementById("clave");
+				correcto=false;
+				}
+			else if(numero==0){
+				document.getElementById("spclave").innerHTML="Debe tener al menos un numero";
+				if (!foco) foco = document.getElementById("clave");
+				correcto=false;
+			}
+			else if (Min==0){
+				document.getElementById("spclave").innerHTML="Debe tener al menos una letra minuscula";
+				if (!foco) foco = document.getElementById("clave");
+				correcto=false;
+				}
+			else if (Mayus==0){
+				document.getElementById("spclave").innerHTML="Debe tener al menos una letra mayuscula";
+				if (!foco) foco = document.getElementById("clave");
+				correcto=false;
+				}
+			else if (Simbolos==0){
+				document.getElementById("spclave").innerHTML="Debe tener uno de estos simbolos * _ @ & $ % ? # ";
+				if (!foco) foco = document.getElementById("clave");
+				correcto=false;
+			}
+			else {
+				document.getElementById("spclave").innerHTML="";
+				claveCorrecta=true;
+			}
+			
+			//Repetir clave
+			 var repite=document.getElementById("rep_clave").value;
+			
+			
+			if(repite.length<8){
+				document.getElementById("sprep_clave").innerHTML="Debe tener minimo 8 caracteres";
+				if (!foco) foco = document.getElementById("rep_clave");
+				correcto=false;
+				}
+			else if(!claveCorrecta){
+				document.getElementById("sprep_clave").innerHTML="Introduce la clave correctamente";
+				if (!foco) foco = document.getElementById("rep_clave");
+				correcto=false;
+				}
+			else if(claveCorrecta && (repite!=clave)){
+				document.getElementById("sprep_clave").innerHTML="Has repetido mal la clave";
+				if (!foco) foco = document.getElementById("rep_clave");
+				correcto=false;
+				}
+			else {
+				document.getElementById("sprep_clave").innerHTML="";
+			}
+			
+		//fecha de nacimiento
+			var fechaUsuario= new Date(anyo,mes,dia);
+			if(!(validaFecha(dia,mes,anyo))){
+				
+				document.getElementById("spf_nacimiento").innerHTML="ponga bien la fecha";
+				if (!foco) foco = document.getElementById("fn_dia");
+				correcto=false;
+			}
+			else if(!compararFechas(fechaUsuario)){
+				document.getElementById("spf_nacimiento").innerHTML="no tienes 18 años";
+				if (!foco) foco = document.getElementById("fn_dia");
+				correcto=false;
+			}
+			else{
+				document.getElementById("spf_nacimiento").innerHTML="";
+			}
+		
+		//para sexo.
+			var sexo = document.getElementsByName("sexo");
+			if(!(ValidoRadio(sexo)))
+			{
+				document.getElementById("spsexo").innerHTML="Debes elegir uno";
+				if (!foco) foco = document.getElementById("sexo");
+				correcto=false;
+				
+			}else{		
+				document.getElementById("spsexo").innerHTML="";
+			}
+
+		//correcto cuenta bancacia
+			var cuenta=document.getElementById("ccc").value;
+			if(!validarCuentaCorriente(cuenta)){
+				document.getElementById("spccc").innerHTML="Cuenta incorrecta";
+				if (!foco) foco=document.getElementById("ccc");
+				correcto=false;
+			}
+			else{
+				
+				document.getElementById("spccc").innerHTML="";
+				
+			}
+
+		
+		if (foco){
+			foco.focus();
+		}
+		return correcto;
+		
+	}	
+
+			
+		</script>	
+		
+		
+		
+  </head>
+
+  <body>
+  <center>FORMULARIO</center>
+  <form id="f1">
+    <p>
+      Nombre: <input type="text" id="nombre">
+      <span id="spnombre"></span>
+    </p>
+    <p>
+      Apellidos: <input type="text" id="apellidos">
+      <span id="spapellidos"></span>
+    </p>
+    <p>
+      NIF: <input type="text" id="nif">
+      <span id="spnif"></span>
+    </p>
+    <p>
+      Usuario: <input type="text" maxlength="15" id="usuario">
+      <span id="spusuario"></span>
+    </p>
+    <p>
+      Clave: <input type="text" id="clave">
+      <span id="spclave"></span>
+    </p>
+    <p>
+      Repetir Clave: <input type="password" id="rep_clave">
+      <span id="sprep_clave"></span>
+    </p>
+    <p>
+      Fecha Nacimiento:
+      <input type="text" id="fn_dia" maxlength="2" size="1" /> / 
+      <input type="text" id="fn_mes" maxlength="2" size="1"/> / 
+      <input type="text" id="fn_anyo" maxlength="4" size="3"/> (dd/mm/aaaa) 
+      <span id="spf_nacimiento"></span>
+    </p>
+		
+		<p>
+      Fecha Nacimiento V2:
+			<select id="sel_fn_mes">
+				<option value="-1">mes</option>
+			</select>
+      / 
+			<select id="sel_fn_dia">
+				<option value="-1">dia</option>
+			</select>
+      / 
+			<select id="sel_fn_anyo">
+				<option value="-1">año</option>
+			</select>
+      <span id="spSel_f_nacimiento"></span>
+    </p>
+		
+		<p>
+			<label>Sexo: </label>
+      <input type="radio" name="sexo" value="femenino" />
+      <label for="femenino">Femenino</label>
+			<input type="radio" name="sexo" value="masculino" />
+			<label for="masculino">Masculino</label>
+			<input type="radio" name="sexo" value="otro" />
+			<label for="ni_me_acuerdo">Otro</label>
+      <span id="spsexo"></span>
+		</p>
+		
+		<p>
+			<label for="cc">Cuenta Corriente: </label>
+			<input type="text" id="ccc" maxlength="20" size="22" /> 
+      <span id="spccc"></span>
+		</p>
+
+		<br>
+    <p>
+      <input type="submit" value="Enviar" id="btEnviar" /> 
+      <input class="separar" type="reset" value="Limpiar Campos"/>
+    </p>
+  </form>
+</body>
+</html>
