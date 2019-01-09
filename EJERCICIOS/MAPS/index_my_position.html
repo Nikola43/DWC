@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <title>Simple Map</title>
+    <meta name="viewport" content="initial-scale=1.0">
+    <meta charset="utf-8">
+    <style>
+        #div_map {
+            height: 700px;
+            width: 700px;
+        }
+    </style>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD6WNrw-Kc3tHPkI5JXJlGhMvlznYkBvqk" async defer></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
+<body>
+<button id="carga_mapa" onclick="cargarMapa()">Cargar Mapa</button>
+<button id="mi_posicion" onclick="irMiLocalizacion()">Ir a mi posicion</button>
+<div id="div_map"></div>
+
+<script>
+    $("#mi_posicion").prop("disabled",true);
+
+    function cargarMapa() {
+        $("#mi_posicion").prop("disabled",false);
+
+        var mapOptions = {
+            center: new google.maps.LatLng(37.392529, -5.994072),
+            zoom: 15
+        };
+
+        var map = new google.maps.Map($("#div_map").get(0), mapOptions);
+    }
+
+    function muestraErr(error) {
+        console.log(error);
+        alert("Ha habido un ERROR. Código: " + error.code + "<br>Descripción: " + error.message);
+    }
+
+    function irMiLocalizacion() {
+        navigator.geolocation.getCurrentPosition(actualizarMapa, muestraErr);
+    }
+
+    function actualizarMapa(pos) {
+        var lat = pos.coords.latitude;
+        var lon = pos.coords.longitude;
+
+        var mapOptions = {
+            center: new google.maps.LatLng(lat, lon),
+            zoom: 15
+        };
+
+        var map = new google.maps.Map($("#div_map").get(0), mapOptions);
+
+        var marker = new google.maps.Marker({
+            position: new google.maps.LatLng(lat, lon),
+            map: map,
+            title: "Un sitio",
+            animation: google.maps.Animation.DROP
+        });
+    }
+</script>
+</body>
+</html>
+

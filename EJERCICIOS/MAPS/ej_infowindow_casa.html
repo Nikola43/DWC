@@ -21,10 +21,16 @@
     function cargarMapa() {
         let mapOptions = {
             center: new google.maps.LatLng(37.392529, -5.994072),
-            zoom: 15
+            zoom: 8
         };
 
         let map = new google.maps.Map($("#div_map").get(0), mapOptions);
+
+        var infowindow = new google.maps.InfoWindow({
+            map: map,
+            position: new google.maps.LatLng(37.3910101, -5.9819043),
+            content: "<b>Mi casa</b><br>Telefono: 999999999"
+        });
     }
 </script>
 </body>

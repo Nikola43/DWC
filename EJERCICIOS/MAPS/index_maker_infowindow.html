@@ -25,6 +25,19 @@
         };
 
         let map = new google.maps.Map($("#div_map").get(0), mapOptions);
+
+        var marker = new google.maps.Marker({
+            position: new google.maps.LatLng(37.392529, -5.994072),
+            map: map,
+            title: "Un sitio",
+            animation: google.maps.Animation.DROP
+        });
+
+        var infowindow = new google.maps.InfoWindow({
+            map: map,
+            position: new google.maps.LatLng(37.402529, -5.996072),
+            content: "<b>Aqui paso algo</b><br>Algo bueno"
+        });
     }
 </script>
 </body>
