@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  	<meta charset="utf-8">
+  	<style type="text/css">
+  	/* TENEMOS QUE DARLE UN TAMAÑO AL DIV QUE CONTIENE EL MAPA. SI NO, NO SE VERÁ  */
+      #divmapa {
+      	width: 700px;
+      	height: 700px;
+      	border: 1px solid blue; 
+     	}
+    </style>
+  	
+    <title>API v3 de Google Maps. Ejemplo Básico 2</title>
+    
+    <script type="text/javascript" 
+    	src="http://maps.google.com/maps/api/js?key=AIzaSyAH_g15vfidwUXX_F_atctTeF2vFhqYQ0A">
+    </script>
+    
+    <script type="text/javascript">
+      
+      function CargarMapa() {
+        alert ("hola");
+      	//  Creamos una referencia al lugar donde vamos a meter el mapa,
+      	//    para trabajar más cómodos.
+        var divMapa= document.getElementById("divmapa");
+        
+        var opciones = {
+          center: new google.maps.LatLng(37.351424,-6.039961600000001),
+          zoom: 17
+        };
+
+        var mapa = new google.maps.Map(divMapa,opciones);
+      }
+    </script>
+  </head>
+  
+  <body>
+    <h3>API v3 de Google Maps. Ejemplo Básico 2</h3>
+    <h5>En esta versión, le introducimos un marcador.</h5>
+    <p>
+    	<button id="btCargarMapa" onclick="CargarMapa()">Cargar Mapa</button>
+    </p>
+    <p>
+    	<div id="divmapa">
+    		Aquí pondremos el mapa
+    	</div>
+    </p>
+  </body>
+  
+</html>

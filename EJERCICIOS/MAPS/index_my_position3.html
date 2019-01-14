@@ -11,7 +11,8 @@
             width: 700px;
         }
     </style>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD6WNrw-Kc3tHPkI5JXJlGhMvlznYkBvqk" async defer></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD6WNrw-Kc3tHPkI5JXJlGhMvlznYkBvqk" async
+            defer></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 <body>
@@ -19,12 +20,17 @@
 <button id="mi_posicion" onclick="irMiLocalizacion()">Ir a mi posicion</button>
 <div id="div_map"></div>
 
+<div id="div">
+    <p>Singana</p>
+
+</div>
+
 <script>
-    $("#mi_posicion").prop("disabled",true);
+    $("#mi_posicion").prop("disabled", true);
     var map;
 
     function cargarMapa() {
-        $("#mi_posicion").prop("disabled",false);
+        $("#mi_posicion").prop("disabled", false);
 
         var mapOptions = {
             center: new google.maps.LatLng(37.392529, -5.994072),
@@ -47,16 +53,8 @@
         var lat = pos.coords.latitude;
         var lon = pos.coords.longitude;
 
-        map.panTo(new google.maps.LatLng(lat, lon));
-
-
-        var infowindow = new google.maps.InfoWindow({
-            map: map,
-            title: "Un sitio",
-            position: new google.maps.LatLng(lat, lon),
-            content: "<b>Aqui paso algo</b><br>Algo bueno"
-        });
-
+        var infowindow = new google.maps.InfoWindow();
+        infowindow.setContent("<p>Singana</p>");
 
         var marker = new google.maps.Marker({
             position: new google.maps.LatLng(lat, lon),
@@ -65,6 +63,23 @@
             animation: google.maps.Animation.DROP,
             icon: "ic_firemanJA_marker.png"
         });
+
+        map.panTo(new google.maps.LatLng(lat, lon));
+
+
+
+        google.maps.event.addListener(marker, "click", function () {
+            infowindow.open(map, marker);
+            setTimeout(function () {
+                map.panTo(marker.getPosition());
+            }, 500);
+            map.setZoom(20);
+            map.setCenter(marker.getPosition());
+        });
+
+
+
+
     }
 </script>
 </body>
