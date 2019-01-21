@@ -1,3 +1,12 @@
 <p>
-  componente-prueba works!
+  componente de prueba
 </p>
+<div>
+  variable: {{ variable }}
+  miArray: {{ miArray[0] }}
+</div>
+<div>
+  <ul>
+    <li *ngFor="let currentElement of miArray">{{currentElement}}</li>
+  </ul>
+</div>

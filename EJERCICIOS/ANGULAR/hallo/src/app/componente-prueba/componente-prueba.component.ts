@@ -6,11 +6,13 @@ import {Component, OnInit} from '@angular/core';
   styleUrls: ['./componente-prueba.component.css']
 })
 export class ComponentePruebaComponent implements OnInit {
-
+  variable: string;
+  miArray: string[];
   constructor() {
   }
 
   ngOnInit() {
+    this.variable = 'hola';
+    this.miArray = ['singana', 'jurdegale', 'nanana'];
   }
-
 }
