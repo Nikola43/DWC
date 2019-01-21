@@ -20,9 +20,17 @@
     <script type="text/javascript">
       
       function CargarMapa() {
+        alert ("hola");
       	//  Creamos una referencia al lugar donde vamos a meter el mapa,
       	//    para trabajar más cómodos.
-      	
+        var divMapa= document.getElementById("divmapa");
+        
+        var opciones = {
+          center: new google.maps.Lating(37.351424,-6.039961600000001),
+          zoom: 17
+        };
+
+        var mapa = new google.maps.Map(divMapa,opciones);
       }
     </script>
   </head>
