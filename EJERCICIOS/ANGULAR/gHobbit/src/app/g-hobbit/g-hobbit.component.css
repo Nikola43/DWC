@@ -1,0 +1,24 @@
+.titulo {
+  color: lime;
+}
+#hobbits {
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+}
+
+#hobbits td, #hobbits th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#hobbits tr:nth-child(even){background-color: #f2f2f2;}
+
+#hobbits tr:hover {background-color: #ddd;}
+
+#hobbits th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #4CAF50;
+  color: white;
+}

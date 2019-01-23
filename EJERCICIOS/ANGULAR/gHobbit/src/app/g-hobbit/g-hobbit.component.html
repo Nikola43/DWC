@@ -1,0 +1,34 @@
+<h4 class="titulo" *ngIf="listaHobbits.length > 0">
+  Lista de Hobbits
+</h4>
+<ul>
+  <li *ngFor="let currentElement of listaHobbits">{{currentElement}}</li>
+</ul>
+
+<div *ngIf="listaHobbits.length === 0">
+  No hay ningun hobbit
+</div>
+
+<table id="hobbits" *ngIf="listaHobbits.length > 0">
+  <thead>
+  <tr>
+    <th>Nombre del Hobbit</th>
+    <th>Accion</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let hobbit of listaHobbits; let i = index">
+    <td>{{hobbit}}</td>
+    <td>
+      <button type="button" (click)="onClickEditar(hobbit, i)">Editar</button>
+      <button type="button" (click)="onClickEliminar(hobbit)">Eliminar</button>
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+<br>
+<form>
+  <input type="text" name="nombre_hobbit" [(ngModel)]="gHobbit" placeholder="Introduzca un nuevo hobit">
+  <button type="button" (click)="insertarModificarHobbit()">{{accion.nombre}}</button>
+</form>
