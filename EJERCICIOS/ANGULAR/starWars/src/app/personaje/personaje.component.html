@@ -1,0 +1,23 @@
+<table class="tabla_personajes center">
+  <caption>Personajes STAR WARS</caption>
+  <thead>
+  <tr>
+    <th>Nombre</th>
+    <th>Altura</th>
+    <th>Peso</th>
+    <th>Nacimiento</th>
+    <th>Género</th>
+    <th>Homeworld</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let personaje of listaPersonajes">
+    <td>{{personaje.name}}</td>
+    <td>{{personaje.height}}</td>
+    <td>{{personaje.mass}}</td>
+    <td>{{personaje.birth_year}}</td>
+    <td>{{personaje.gender}}</td>
+    <td><a href="#" (click)="planetaRequest($event, personaje.homeworld)" >{{personaje.homeworld}}</a></td>
+  </tr>
+  </tbody>
+</table>
