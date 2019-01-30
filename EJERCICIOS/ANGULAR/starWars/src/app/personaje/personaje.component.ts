@@ -21,10 +21,28 @@ export class PersonajeComponent implements OnInit {
   ngOnInit() {
   }
 
+  private asignarDatos(datos: Object) {
+    this.data = datos;
+    this.listaPersonajes = this.data.results;
+  }
+
   planetaRequest(event, url: string) {
     event.preventDefault();
     this.ajaxGetRequest.httpGetRequestUrl(url + '?format=json').subscribe(data => {
       this.datosPlaneta = data;
     });
   }
+
+  siguiente() {
+    this.ajaxGetRequest.httpGetRequestUrl(this.data.next).subscribe(data => {
+      this.asignarDatos(data);
+    });
+  }
+
+  anterior() {
+    this.ajaxGetRequest.httpGetRequestUrl(this.data.previous).subscribe(data => {
+      this.asignarDatos(data);
+    });
+  }
+
 }
