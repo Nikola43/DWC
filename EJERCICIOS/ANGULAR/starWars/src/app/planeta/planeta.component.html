@@ -1,3 +1,12 @@
-<p>
-  planeta works!
-</p>
+<h3>Datos del planeta</h3>
+<div>
+  Nombre: {{planeta.name}}<br>
+  Periodo Rotación: {{planeta.rotation_period}}<br>
+  Periodo Orbital: {{planeta.orbital_period}}<br>
+  Diámetro: {{planeta.diameter | number}}<br>
+  Clima: {{planeta.climate}}<br>
+  Gravedad: {{planeta.gravity}}<br>
+  Terreno: {{planeta.terrain}}<br>
+  Superficie Agua: {{planeta.surface_water}}<br>
+  Población: {{(planeta.population == "unknown") ? planeta.population : planeta.population | number}}<br>
+</div>

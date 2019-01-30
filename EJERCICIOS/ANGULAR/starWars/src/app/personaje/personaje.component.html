@@ -17,7 +17,11 @@
     <td>{{personaje.mass}}</td>
     <td>{{personaje.birth_year}}</td>
     <td>{{personaje.gender}}</td>
-    <td><a href="#" (click)="planetaRequest($event, personaje.homeworld)" >{{personaje.homeworld}}</a></td>
+    <td><a href="#" (click)="planetaRequest($event, personaje.homeworld)">{{personaje.homeworld}}</a></td>
   </tr>
   </tbody>
 </table>
+<div *ngIf="datosPlaneta" class="center">
+  <app-planeta [planeta]="datosPlaneta"></app-planeta>
+</div>
+

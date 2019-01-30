@@ -7,14 +7,14 @@ import {AjaxService} from '../ajax.service';
   styleUrls: ['./personaje.component.css']
 })
 export class PersonajeComponent implements OnInit {
-  public data: any;
-  public listaPersonajes: Object[];
+  public data: any = null;
+  public listaPersonajes: Object[] = null;
+  public datosPlaneta: Object = null;
 
   constructor(private ajaxGetRequest: AjaxService) {
     ajaxGetRequest.httpGetRequest().subscribe(data => {
       this.data = data;
       this.listaPersonajes = this.data.results;
-      console.log(data);
     });
   }
 
@@ -24,9 +24,7 @@ export class PersonajeComponent implements OnInit {
   planetaRequest(event, url: string) {
     event.preventDefault();
     this.ajaxGetRequest.httpGetRequestUrl(url + '?format=json').subscribe(data => {
-      const datos = data;
-      console.log(data);
+      this.datosPlaneta = data;
     });
-    console.log(url + '?format=json');
   }
 }
