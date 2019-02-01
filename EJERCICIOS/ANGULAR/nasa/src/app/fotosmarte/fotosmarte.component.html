@@ -1,0 +1,22 @@
+<h2>Fotos marte</h2>
+
+<ol *ngFor=" let foto of listaFotos ">
+  <li>Imagen: {{foto.id}}</li>
+  <li>Earth Date (fecha de la tierra): {{foto.earth_date}}</li>
+  imagen :<a href="{{foto.img_src}}" target="_blank"><img src="{{foto.img_src}}"></a>
+  <li>Rover:</li>
+  <ul>
+    <li>Name (Nombre): {{foto.rover.name}}</li>
+    <li>Launch date (Fecha de lanzamiento): {{foto.rover.landing_date}}</li>
+    <li>Status "Estado": {{foto.rover.status}}</li>
+  </ul>
+  <br><br><hr>
+</ol>
+
+<ul *ngFor=" let persona of listaPersonas ">
+  <li>DNI: {{persona.DNI}}</li>
+  <li>Nombre: {{persona.NOMBRE}}</li>
+  <li>Apellidos: {{persona.APELLIDOS}}</li>
+  <br><hr>
+</ul>
+
