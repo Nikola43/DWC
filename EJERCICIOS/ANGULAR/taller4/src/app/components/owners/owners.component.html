@@ -5,12 +5,12 @@
 <ul>
   <!--recorre el array owners-->
   <li *ngFor="let p of owners">
-    <a href="#">
-    {{p.firstName}}
-    {{p.lastName}} -
-    {{p.city}}
+    <a routerLink="/owners/{{p.id}}" routerLinkActive="active" (click)="onSelect(p)">
+      Detalles:
+      {{p.firstName}}
+      {{p.lastName}} -
+      {{p.city}}
     </a>
   </li>
-
 </ul>
 

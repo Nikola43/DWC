@@ -18,7 +18,7 @@ const routes: Routes = [
     component: VetsComponent
   },
   {
-    path: 'detail_owner',
+    path: 'owners/:id',
     component: OwnersDetalleComponent
   }
 ];
