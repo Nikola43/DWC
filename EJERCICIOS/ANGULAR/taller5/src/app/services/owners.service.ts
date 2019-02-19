@@ -29,5 +29,16 @@ export class OwnersService {
     return this.http.post<Owner>(this.url, JSON.stringify(pa));
   }
 
+  insertarOwner(owner: Owner) {
+
+    const pa = {
+      accion: 'AnadeOwner',
+      owner: owner,
+    }
+    console.log('Toy en peti Owners');
+    // Owner me devuelve el id osea un objeto de propietarios solo uno
+    return this.http.post(this.url, JSON.stringify(pa));
+  }
+
 
 }

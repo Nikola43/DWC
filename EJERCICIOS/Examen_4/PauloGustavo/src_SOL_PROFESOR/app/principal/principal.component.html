@@ -1,0 +1,24 @@
+<h2>Examen 1. 2ª Evaluación. DWEC</h2>
+<h3>Consulta de Facturas</h3>
+<div>
+  <p>
+    <select id="factura" [(ngModel)]='opcionSeleccionada' (ngModelChange)='onChangeSelect ($event)'>
+      <option selected="selected" value="-1">Selecciona una factura para consultar su detalle</option>
+      <option *ngFor='let opciones of opcionesSelect' [ngValue]='opciones'>Factura: {{opciones.NUMERO}}. Fecha: {{opciones.FECHA}}</option>
+    </select>
+  </p>
+</div>
+
+
+
+<!--
+	<app-lista-detalle *ngIf="opcionSeleccionada" [idFactura]="opcionSeleccionada" [sumaTotal]="sumaTotal" [sumaIVA]="sumaIva"></app-lista-detalle>
+	Modificado por el profesor:
+-->
+<app-lista-detalle *ngIf="opcionSeleccionada" [detalle]="listaDetallesFacturas" [idFactura]="opcionSeleccionada" [sumaTotal]="sumaTotal" [sumaIVA]="sumaIva"></app-lista-detalle>
+
+
+
+
+<br>
+<app-anade-detalle *ngIf="opcionSeleccionada" [idFactura]="opcionSeleccionada"></app-anade-detalle>

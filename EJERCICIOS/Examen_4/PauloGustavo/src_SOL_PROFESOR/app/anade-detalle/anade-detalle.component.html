@@ -1,0 +1,25 @@
+<div>
+  <fieldset>
+    <legend>Añadir detalle</legend>
+    <p>
+      <label for="cantidad">Cantidad: </label>
+      <input  [(ngModel)]="cantidad" type="text" id="cantidad" size="3" value="4" />
+    </p>
+    <p>
+      <label for="concepto">Concepto: </label>
+      <input  [(ngModel)]="concepto" type="text" id="concepto" size="44" value="Nuevo detalle" />
+    </p>
+    <p>
+      <label for="precio">precio: </label>
+      <input  [(ngModel)]="precio" type="text" id="precio" size="4" value="25" /> €
+    </p>
+
+    <p>
+      <label for="tipo_iva">Tipo IVA: </label>
+      <input  [(ngModel)]="tipo_iva" type="text" id="tipo_iva" size="2" value="21" /> %
+    </p>
+
+  </fieldset>
+  <br>
+  <button id="btAnade" type="button" (click)="insertarDetalleFactura()">Añadir línea de detalle</button>
+</div>

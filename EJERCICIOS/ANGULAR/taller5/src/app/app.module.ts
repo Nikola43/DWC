@@ -8,6 +8,8 @@ import { OwnersComponent } from './components/owners/owners.component';
 import {HttpClientModule} from '@angular/common/http';
 import { VetsComponent } from './components/vets/vets.component';
 import { OwnersDetalleComponent } from './components/owners-detalle/owners-detalle.component';
+import { FormOwnerComponent } from './components/form-owner/form-owner.component';
+import {FormsModule} from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -15,12 +17,14 @@ import { OwnersDetalleComponent } from './components/owners-detalle/owners-detal
     HomeComponent,
     OwnersComponent,
     VetsComponent,
-    OwnersDetalleComponent
+    OwnersDetalleComponent,
+    FormOwnerComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

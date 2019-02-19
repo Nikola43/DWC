@@ -1,0 +1,100 @@
+
+	
+	MIRA LA SOLUCIÓN A TU ERROR, HE MODIFICADO UN POCO TU EXAMEN.
+
+	Está en la carpeta: src_SOL_PROFESOR
+
+	SOLO HE MODIFICADO UN POCO LOS FICHEROS:
+		
+	principal.component.html
+	lista-detalle.component.ts
+	lista-detalle.component.html
+
+	Las modificaciones han sido mínimas.
+	Si no lo entiendes dímelo y te lo explico bien.
+
+
+
+1. Crear un componente llamado principal, el cual se mostrará al principio. 
+	Este componente contendrá un desplegable el cual se llenará al inicio. 
+	Con la siguiente información (1 punto):
+
+	NO ESTÁ SELECCIONADA INICIALMENTE LA OPCIÓN DE SELECCIONAR UNA FACTURA,
+	TAL Y COMO INDICA EL ENUNCIADO DEL EJERCICIO.
+	AL SELECCIONAR DICHA OPCIÓN SE PRODUCE UN ERROR DE JAVASCRIPT.
+
+
+	NO Lo hace: 0
+
+
+
+2. Crear un nuevo componente llamado listaDetalle y Ubicarlo dentro del componente
+	 principal (creado en el punto anterior). Este componente recibirá 
+	como parámetro el detalle de la factura seleccionada en el componente anterior. 
+	Este componente se compondrá de una tabla  con las filas y los campos 
+	correspondientes pero SIN incluir las columnas IVA y TOTAL, es decir, 
+	con las columnas: ID, CANTIDAD, CONCEPTO y PRECIO 
+	con los datos de las líneas de detalle de la factura seleccionada por 
+	el usuario (2 puntos).
+
+	NO cambian los datos cuando se selecciona una segunda factura.
+	RECARGAR LA PÁGINA NO ES UNA OPCIÓN EN EL DESARROLLO CLIENTE.
+	ESO ES POR DEFINICIÓN Y PRINCIPIO DE LA ASIGNATURA. 
+	QUE PERSIGUE PRECISAMENTE ESO, NO RECARGAR LA PÁGINA.
+
+	NO Lo hace: 0
+
+
+
+
+3. Una vez hecho el ejercicio anterior, calcular y pintar el contenido de las 
+	columnas IVA y TOTAL correspondiente a las líneas de detalle de la factura 
+	seleccionada por el usuario (1 punto).
+
+
+	NO Lo hace: 0
+
+
+
+
+4. Una vez hecho el ejercicio anterior, calcular y pintar la fila final de la tabla (TOTALES)
+	(2 puntos)
+
+
+	No lo hace: 0
+
+
+
+
+
+5. Crear un nuevo componente llamado anadeDetalle, y ubicarlo dentro del componente 
+	principal, debajo de la etiqueta del componente listaDetalle (2 puntos).
+
+
+	Lo hace: 2
+
+
+
+
+6. Añadir una nueva columna al final de la tabla (en el componente listaDetalle) 
+	la cual se titule: Borrar (1 punto).
+
+
+	Lo hace: 1
+
+
+
+7. Después (y solo después) de haber realizado el punto anterior 
+	(Borrar línea de detalle), hacer que se actualicen los totales 
+	(Total IVA y Total TOTAL), la línea de Totales (1 punto).
+
+
+	NO lo hace: 0
+
+
+
+	NOTA: 3
+
+
+
+
