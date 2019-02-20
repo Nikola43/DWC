@@ -1,0 +1,31 @@
+<div class="container">
+  <div class="row">
+    <h3 class="col-4">
+      Specialities: </h3>
+  </div>
+  <div class="col-4">
+    <a routerLink="/specialities-add/-1">
+      <button class="btn btn-primary" type="button">Añadir Speciality</button>
+    </a>
+  </div>
+
+</div>
+<br>
+<p>Aqui mostramos las especialidades</p>
+
+<h3>SPECIALITIES:</h3>
+<ul>
+  <!--recorre el array vet-->
+  <li *ngFor="let s of specialities">
+    <a href="#">
+      {{s.id}}
+      {{s.name}} -
+    </a>
+
+    <!--botton para eliminar owner / meto el codigo del click en owner.ts-->
+    <button type="button" (click)="del(s)">Delete</button>
+
+    <!--botton para eliminar owner-->
+    <button type="button" (click)="upd(s.id)">Update </button>
+  </li>
+</ul>

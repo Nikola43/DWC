@@ -1,0 +1,97 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#">PetClinic</a>
+  <!--Botón desplegables de 3 rayas.-->
+  <button class="navbar-toggler" type="button" (click)="navBar.isNavbarCollapsed = !navBar.isNavbarCollapsed" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div [ngbCollapse]="navBar.isNavbarCollapsed" class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" routerLink="/">Inicio <span class="sr-only">(current)</span></a>
+      </li>
+
+      <li class="nav-item dropdown" ngbDropdown>
+        <a ngbDropdownToggle class="nav-link dropdown-toggle"  style="cursor: pointer" data-toggle="collapse" data-target="#navbarSupportedContent" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Propietarios
+        </a>
+
+        <div ngbDropdownMenu class="dropdown-menu" aria-labelledby="navbarDropdown" >
+          <a class="dropdown-item" routerLink="/owners">Listar todos</a>
+          <div class="dropdown-divider"> </div>
+          <a class="dropdown-item" routerLink="/owners-add/-1">Añadir nuevo</a>
+        </div>
+      </li>
+
+      <li class="nav-item dropdown" ngbDropdown>
+        <a ngbDropdownToggle class="nav-link dropdown-toggle" style="cursor: pointer" data-toggle="collapse" data-target="#navbarSupportedContent" id="navbarDropdown1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Veterinarios
+        </a>
+
+        <div ngbDropdownMenu class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" routerLink="/vets">Listar todos</a>
+          <div class="dropdown-divider"> </div>
+          <a class="dropdown-item" routerLink="/vets-add/-1">Añadir nuevo</a>
+        </div>
+      </li>
+
+      <li class="nav-item dropdown" ngbDropdown>
+        <a ngbDropdownToggle class="nav-link dropdown-toggle" style="cursor: pointer" data-toggle="collapse" data-target="#navbarSupportedContent" id="navbarDropdown2" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Especialidades
+        </a>
+
+        <div ngbDropdownMenu class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" routerLink="/specialities">Listar todos</a>
+          <div class="dropdown-divider"> </div>
+          <a class="dropdown-item" routerLink="/specialities-add/-1">Añadir nuevo</a>
+        </div>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<!---->
+<!--
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#">PetClinic</a>
+  Botón desplegables de 3 rayas.
+  <button class="navbar-toggler" type="button" (click)="navBar.isNavbarCollapsed = !navBar.isNavbarCollapsed" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div [ngbCollapse]="navBar.isNavbarCollapsed" class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" routerLink="/">Inicio <span class="sr-only">(current)</span></a>
+          </li>
+
+          <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" (click)="navBar.owners.dropdown = !navBar.owners.dropdown" style="cursor: pointer" data-toggle="collapse" data-target="#navbarSupportedContent" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Propietarios
+              </a>
+
+              <div [ngbCollapse]="navBar.owners.dropdown" class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <a class="dropdown-item" routerLink="/owners" (click)="navBar.owners.dropdown = !navBar.owners.dropdown">Listar todos</a>
+                  <div class="dropdown-divider"> </div>
+                  <a class="dropdown-item" routerLink="/owners-add/-1" (click)="navBar.owners.dropdown = !navBar.owners.dropdown">Añadir nuevo</a>
+              </div>
+          </li>
+
+          <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" (click)="navBar.vets.dropdown = !navBar.vets.dropdown" style="cursor: pointer" data-toggle="collapse" data-target="#navbarSupportedContent" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Veterinarios
+              </a>
+
+              <div [ngbCollapse]="navBar.vets.dropdown" class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <a class="dropdown-item" routerLink="/vets" (click)="navBar.vets.dropdown = !navBar.vets.dropdown">Listar todos</a>
+                  <div class="dropdown-divider"> </div>
+                  <a class="dropdown-item" routerLink="/owners-add/-1" (click)="navBar.vets.dropdown = !navBar.vets.dropdown">Añadir nuevo</a>
+              </div>
+          </li>
+    </ul>
+  </div>
+</nav>
+
+-->
+
+<router-outlet></router-outlet>
