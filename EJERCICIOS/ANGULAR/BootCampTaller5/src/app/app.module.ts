@@ -14,6 +14,8 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { FormVetsComponent } from './components/form-vets/form-vets.component';
 import { SpecialitiesComponent } from './components/specialities/specialities.component';
 import { FormSpecialityComponent } from './components/form-speciality/form-speciality.component';
+import { PetTypesComponent } from './components/pet-types/pet-types.component';
+import { FromPetTypesComponent } from './components/from-pet-types/from-pet-types.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +27,9 @@ import { FormSpecialityComponent } from './components/form-speciality/form-speci
     FormOwnerComponent,
     FormVetsComponent,
     SpecialitiesComponent,
-    FormSpecialityComponent
+    FormSpecialityComponent,
+    PetTypesComponent,
+    FromPetTypesComponent
   ],
   imports: [
     BrowserModule,

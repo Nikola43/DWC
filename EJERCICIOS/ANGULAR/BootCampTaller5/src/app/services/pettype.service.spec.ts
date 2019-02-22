@@ -1,12 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 
-import { TypesService } from './types.service';
+import { PettypeService } from './pettype.service';
 
-describe('TypesService', () => {
+describe('PettypeService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: TypesService = TestBed.get(TypesService);
+    const service: PettypeService = TestBed.get(PettypeService);
     expect(service).toBeTruthy();
   });
 });

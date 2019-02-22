@@ -117,14 +117,10 @@ if($objeto != null) {
 				break;	
 				
 			case "AnadeSpecialty": //  Hacemos que devuelva el que ha insertado
-				//print json_encode($modelo->AnadeSpecialty($objeto->specialty));
+				print json_encode($modelo->AnadeSpecialty($objeto->specialty));
 
-				if ($modelo->AnadeSpecialty($objeto->specialty))
-					print '{"result":"OK"}';
-				else
-					print '{"result":"FAIL"}';
 				break;	
-				break;	
+		
 				
 				
 				

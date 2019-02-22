@@ -1,65 +1,64 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Owner} from '../models/owner';
-import {Speciality} from '../models/speciality';
+import {Pettype} from '../models/pettype';
 
 @Injectable({
   providedIn: 'root'
 })
-export class SpecialitiesService {
+export class PettypeService {
   url: string = 'http://localhost/AJAX/petclinic/servicios.php';
 
   constructor(private http: HttpClient) {
   }
 
 // ---------------peticiones Ajax----------------------
-  getSpecialities() {
-    console.log('Toy en peti Speciality');
+  getPetType() {
+    console.log('Toy en peti PetType');
     // Owner[] me devuelve un array de propietarios
-    return this.http.post<Speciality[]>(this.url, JSON.stringify({accion: 'ListarSpecialties'}));
+    return this.http.post<Pettype[]>(this.url, JSON.stringify({accion: 'ListarPettypes'}));
   }
 
-  getSpecialitiesPorId(idSpecialty) {
+  getPetTypePorId(idPetType) {
     const pa = {
-      id: idSpecialty,
-      accion: 'ObtenerSpecialityId'
+      id: idPetType,
+      accion: 'ObtenerOwnerId'
     };
-    console.log('Toy en peti Speciality');
+    console.log('Toy en peti Owners');
     // Owner me devuelve el id osea un objeto de propietarios solo uno
-    return this.http.post<Speciality>(this.url, JSON.stringify(pa));
+    return this.http.post<Pettype>(this.url, JSON.stringify(pa));
   }
 
 // insertar un owner en el formulario
-  insertarSpecialities(specialty: Speciality) {
+  insertarPetType(pettype: Pettype) {
 
     const pa = {
-      accion: 'AnadeSpecialty',
-      specialty: specialty,
+      accion: 'AnadeOwner',
+      owner: pettype,
     };
-    console.log('Toy en peti insertando Speciality');
+    console.log('Toy en peti insertando owners');
     // Owner me devuelve el id osea un objeto de propietarios solo uno
     return this.http.post<any>(this.url, JSON.stringify(pa));
   }
 
 // borramos el owner y mostramos el listado
-  delSpecialitiesList(id: number) {
+  delPetTypeList(id: number) {
     const pa = {
-      accion: 'BorraSpecialty',
+      accion: 'BorraOwner',
       id: id,
       listado: 'OK'
     };
-    console.log('Toy en peti borrando Speciality');
+    console.log('Toy en peti insertando owners');
     // Owner me devuelve el id osea un objeto de propietarios solo uno
     return this.http.post<any>(this.url, JSON.stringify(pa));
   }
 
   // borramos el owner y mostramos el listado
-  updSpecialities(specialty: Speciality) {
+  updPetType(pettype: Pettype) {
     const pa = {
-      accion: 'ModificaSpecialty',
-      specialty: specialty
+      accion: 'ModificaOwner',
+      pettype: pettype
     };
-    console.log('Toy en peti insertando Speciality');
+    console.log('Toy en peti insertando owners');
     // Owner me devuelve el id osea un objeto de propietarios solo uno
     return this.http.post<any>(this.url, JSON.stringify(pa));
   }

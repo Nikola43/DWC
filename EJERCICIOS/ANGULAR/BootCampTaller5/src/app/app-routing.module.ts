@@ -8,6 +8,8 @@ import {FormOwnerComponent} from './components/form-owner/form-owner.component';
 import {FormVetsComponent} from './components/form-vets/form-vets.component';
 import {SpecialitiesComponent} from './components/specialities/specialities.component';
 import {FormSpecialityComponent} from './components/form-speciality/form-speciality.component';
+import {PetTypesComponent} from './components/pet-types/pet-types.component';
+import {FromPetTypesComponent} from './components/from-pet-types/from-pet-types.component';
 
 // rutas
 const routes: Routes = [
@@ -26,6 +28,10 @@ const routes: Routes = [
     component: SpecialitiesComponent
   },
   {
+    path: 'types',
+    component: PetTypesComponent
+  },
+  {
     path: 'owners/:id',
     component: OwnersDetalleComponent
   },
@@ -40,6 +46,11 @@ const routes: Routes = [
   {
     path: 'specialities-add/:id',
     component: FormSpecialityComponent
+  }
+  ,
+  {
+    path: 'types-add/:id',
+    component: FromPetTypesComponent
   }
 ];
 
