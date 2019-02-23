@@ -1,0 +1,20 @@
+
+<p>Aqui mostramos los veterinarios de los animales </p>
+
+<h3>Vets:</h3>
+<ul>
+  <!--recorre el array vet-->
+  <li *ngFor="let v of vets">
+    <a href="#">
+      {{v.id}}
+      {{v.firstName}} -
+      {{v.lastName}}
+    </a>
+
+ <!--botton para eliminar owner / meto el codigo del click en owner.ts-->
+  <button type="button" (click)="del(v)">Delete</button>
+
+  <!--botton para eliminar owner-->
+  <button type="button" (click)="upd(v.id)">Update </button>
+  </li>
+</ul>

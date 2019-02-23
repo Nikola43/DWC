@@ -1,0 +1,26 @@
+<table class="table table-dark
+">
+  <tr>
+    <th>Nombre </th>
+    <td>{{owner.firstName}}</td>
+  </tr>
+  <tr>
+    <th>Address </th>
+    <td>{{owner.address}}</td>
+  </tr>
+  <tr>
+    <th>City </th>
+    <td>{{owner.city}}</td>
+  </tr>
+  <tr>
+    <th>Telephone </th>
+    <td>{{owner.telephone}}</td>
+  </tr>
+
+</table>
+
+<!--botton para eliminar owner / meto el codigo del click en owner.ts-->
+<button type="button" (click)="del(owner)">Delete</button>
+
+<!--botton para eliminar owner-->
+<button type="button" (click)="upd(owner.id)">Update </button>

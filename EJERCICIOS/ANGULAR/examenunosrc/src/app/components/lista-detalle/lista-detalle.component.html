@@ -1,0 +1,38 @@
+<div>
+  Detalle de la factura:
+  <table id="detalle" border="1">
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>CANTIDAD</th>
+      <th>CONCEPTO</th>
+      <th>PRECIO</th>
+      <th>Tipo IVA</th>
+      <th>IVA</th>
+      <th>TOTAL</th>
+      <th>BORRAR</th>
+    </tr>
+    </thead>
+    <tbody id="filas_tabla">
+
+    <tr *ngFor="let detalles of detalle">
+
+      <td>{{detalles.ID}}</td>
+      <td>{{detalles.CANTIDAD | number}}</td>
+      <td>{{detalles.CONCEPTO}}</td>
+      <td>{{detalles.PRECIO | number}}</td>
+      <td>{{detalles.TIPO_IVA | number}}</td>
+      <td>{{detalles.CANTIDAD * detalles.PRECIO * detalles.TIPO_IVA / 100 | number}}</td>
+      <td>{{detalles.CANTIDAD * detalles.PRECIO * detalles.TIPO_IVA / 100 + detalles.CANTIDAD * detalles.PRECIO | number}}</td>
+      <td><button type="button" (click)="borrarDetalleFactura($event, detalles.ID)">Borrar</button></td>
+    </tr>
+    </tbody>
+    <tfoot>
+    <tr>
+      <td colspan="5">TOTALES:</td>
+      <td id="Tiva">{{sumaIVA | number}}</td>
+      <td id="Ttotal">{{sumaTotal | number}}</td>
+    </tr>
+    </tfoot>
+  </table>
+</div>
