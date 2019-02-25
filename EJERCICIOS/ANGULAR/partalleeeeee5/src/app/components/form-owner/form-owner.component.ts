@@ -9,20 +9,20 @@ import {ActivatedRoute, Router} from '@angular/router';
   styleUrls: ['./form-owner.component.css']
 })
 export class FormOwnerComponent implements OnInit {
-  private owner: Owner;
+  public owner: Owner;
   private textoBoton: string;
 
   constructor(private ajax: OwnersService, private route: ActivatedRoute, private router: Router) {
     this.owner = new Owner();
-    this.textoBoton = 'Añadir boton';
+    this.textoBoton = 'Añadir';
   }
 
   ngOnInit() {
     // obtengo el id  que m estan pasando
     const ownerId = this.route.snapshot.params['id'];
     console.log('Id' + ownerId);
-    if (ownerId !== -1) { // se trata de una modificacion
-      this.textoBoton = 'MOdificar Owners';
+    if (ownerId !== '-1') { // se trata de una modificacion
+      this.textoBoton = 'Modificar Owners';
       this.ajax.getOwnerPorId(ownerId).subscribe(datos => {
         this.owner = datos;
       });
@@ -42,9 +42,6 @@ export class FormOwnerComponent implements OnInit {
       );
     } else {
       this.ajax.insertarOwner(owner).subscribe(
-        // resp => this.router.navigate(['/owners']); // primer callBack navegamos  hacia owners
-        // resp => console.log('añadimos y navegamos a la lista de propietarios'),
-        // otra manera de hacer el callBack
         resp => {
           console.log(resp);
           if (resp.result === 'OK') {

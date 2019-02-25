@@ -29,11 +29,11 @@ export class SpecialitiesService {
   }
 
 // insertar un owner en el formulario
-  insertarSpecialities(specialty: Speciality) {
+  insertarSpecialities(specialtyInsertado: Speciality) {
 
     const pa = {
       accion: 'AnadeSpecialty',
-      specialty: specialty,
+      specialty: specialtyInsertado,
     };
     console.log('Toy en peti insertando Speciality');
     // Owner me devuelve el id osea un objeto de propietarios solo uno
@@ -41,11 +41,10 @@ export class SpecialitiesService {
   }
 
 // borramos el owner y mostramos el listado
-  delSpecialitiesList(id: number) {
+  delSpecialitiesList(specialityId: number) {
     const pa = {
       accion: 'BorraSpecialty',
-      id: id,
-      listado: 'OK'
+      id: specialityId
     };
     console.log('Toy en peti borrando Speciality');
     // Owner me devuelve el id osea un objeto de propietarios solo uno
@@ -53,10 +52,10 @@ export class SpecialitiesService {
   }
 
   // borramos el owner y mostramos el listado
-  updSpecialities(specialty: Speciality) {
+  updSpecialities(specialtyActualizado: Speciality) {
     const pa = {
       accion: 'ModificaSpecialty',
-      specialty: specialty
+      specialty: specialtyActualizado
     };
     console.log('Toy en peti insertando Speciality');
     // Owner me devuelve el id osea un objeto de propietarios solo uno

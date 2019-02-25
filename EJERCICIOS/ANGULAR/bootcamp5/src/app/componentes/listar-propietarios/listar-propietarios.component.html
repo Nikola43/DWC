@@ -1,0 +1,31 @@
+<p>
+  Listando propietarios!!!
+</p>
+
+<div>
+    <h3>Owner: </h3>
+  </div>
+  <div >
+    <a routerLink="/propietarios-add/-1">
+      <button  type="button">Añadir Propietario</button>
+    </a>
+  </div>
+
+<h3>Propietario:</h3>
+<ul>
+  <!--recorre el array owners-->
+  <li *ngFor="let p of propietarios">
+    <a routerLink="/propietarios/{{p.id}}" routerLinkActive="active" (click)="onSelect(p)">
+      Detalles:
+      {{p.firstName}}
+      {{p.lastName}} -
+      {{p.city}}
+    </a>
+
+    <!--botton para eliminar owner / meto el codigo del click en propietario.ts-->
+    <button type="button" (click)="del(p)">Delete</button>
+
+    <!--botton para eliminar propietario-->
+    <button type="button" (click)="upd(p)">Update </button>
+  </li>
+</ul>

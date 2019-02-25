@@ -29,11 +29,11 @@ export class OwnersService {
   }
 
 // insertar un owner en el formulario
-  insertarOwner(owner: Owner) {
+  insertarOwner(ownerInsertado: Owner) {
 
     const pa = {
       accion: 'AnadeOwner',
-      owner: owner,
+      owner: ownerInsertado,
     };
     console.log('Toy en peti insertando owners');
     // Owner me devuelve el id osea un objeto de propietarios solo uno
@@ -41,10 +41,10 @@ export class OwnersService {
   }
 
 // borramos el owner y mostramos el listado
-  delOwnerList(id: number) {
+  delOwnerList(ownerId) {
     const pa = {
       accion: 'BorraOwner',
-      id: id,
+      id: ownerId,
       listado: 'OK'
     };
     console.log('Toy en peti insertando owners');
@@ -53,10 +53,10 @@ export class OwnersService {
   }
 
   // borramos el owner y mostramos el listado
-  updOwner(owner: Owner) {
+  updOwner(ownerActualizado: Owner) {
     const pa = {
       accion: 'ModificaOwner',
-      owner: owner
+      owner: ownerActualizado
     };
     console.log('Toy en peti insertando owners');
     // Owner me devuelve el id osea un objeto de propietarios solo uno

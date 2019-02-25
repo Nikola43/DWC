@@ -10,12 +10,13 @@ export class ListaDetalleComponent implements OnInit {
   @Input() idFactura: any = null;
   @Input() sumaIVA: any = 0;
   @Input() sumaTotal: any = 0;
+  @Input() detalle; //  Añadido por el profesor
 	private listaDetallesFacturas;
 	
 
 
-	//  Añadido por el profesor:
-	@Input() detalle;
+	
+
 
 
 	

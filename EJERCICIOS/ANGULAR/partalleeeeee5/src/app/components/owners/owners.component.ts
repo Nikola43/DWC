@@ -22,14 +22,12 @@ export class OwnersComponent implements OnInit {
   ngOnInit() {
   }
 
-
   onSelect(p: Owner) {
     this.router.navigate(['/owners', p.id]);
   }
 // funcion del html del ownwer para borrar Y ME DEVUELVE LA LISTA
   del(owner: Owner) {
     console.log(owner);
-    // alert('aqui borramos');
     const msg = '¿Estas seguro nque quieres borrar a :?' + owner.firstName + ' ' + owner.lastName;
     if (confirm(msg)) {
       this.ownerService.delOwnerList(owner.id).subscribe(datos => {
@@ -40,13 +38,6 @@ export class OwnersComponent implements OnInit {
   }
 // modificamos
   upd(ownerId) {
-    console.log('owner id' + ownerId);
-    // alert('aqui modificamos');
-    // navegando con parametro
     this.router.navigate(['/owners-add', ownerId]);
-    this.ownerService.updOwner(ownerId).subscribe(datos => {
-      this.owners = datos;
-      console.log(this.owners);
-    });
   }
 }

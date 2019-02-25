@@ -1,0 +1,61 @@
+<div>
+
+  <form #propietarioForm="ngForm" (ngSubmit)="onSubmit(propietarioForm.value)">
+    <div>
+      <label>Nombre</label>
+      <input type="text" required [(ngModel)]="propietario.firstName" name="firstName" #firstName="ngModel" placeholder="Introduce el nombre">
+      <div [hidden]="firstName.valid || firstName.pristine">
+
+      </div>
+    </div>
+    <br>
+    <div>
+      <label>Apellidos</label>
+      <input type="text" required [(ngModel)]="propietario.lastName" name="lastName" #lastName="ngModel"
+             placeholder="Introduce el apellido">
+      <div [hidden]="lastName.valid || lastName.pristine">
+
+      </div>
+    </div>
+    <br>
+    <div>
+      <label>Telefono</label>
+      <input type="text" required [(ngModel)]="propietario.telephone" name="telephone" #telephone="ngModel"
+             placeholder="Introduce el telefono">
+      <div [hidden]="telephone.valid || telephone.pristine">
+
+      </div>
+    </div>
+    <br>
+    <div>
+      <label>Ciudad</label>
+      <input type="text" required [(ngModel)]="propietario.city" name="city" #city="ngModel"
+             placeholder="Introduce la ciudad">
+      <div [hidden]="city.valid || city.pristine">
+
+      </div>
+    </div>
+    <br>
+    <div>
+      <label>Direccion</label>
+      <input type="text" required [(ngModel)]="propietario.address" name="address" #address="ngModel"
+             placeholder="Introduce la address">
+      <div [hidden]="address.valid || address.pristine">
+
+      </div>
+    </div>
+    <br>
+    <div>
+      <button type="submit" [disabled]="!propietarioForm.valid">
+        Añadir
+      </button>
+      <a routerLink="/propietarios">
+        <button type="button">
+          Cancelar
+        </button>
+      </a>
+
+    </div>
+
+  </form>
+</div>

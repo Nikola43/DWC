@@ -44,7 +44,6 @@ export class SpecialitiesComponent implements OnInit {
         } else {
           alert('Ha habido una error al eliminar');
         }
-
         console.log(this.specialities);
       });
     }
