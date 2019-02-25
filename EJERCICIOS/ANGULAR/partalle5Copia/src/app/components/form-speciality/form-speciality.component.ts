@@ -1,4 +1,4 @@
-import {Component, OnInit, Output, EventEmitter} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {Speciality} from '../../models/speciality';
 import {ActivatedRoute, Router} from '@angular/router';
 import {SpecialitiesService} from '../../services/specialities.service';
@@ -20,19 +20,13 @@ export class FormSpecialityComponent implements OnInit {
   }
 
   ngOnInit() {
-
   }
 
   onSubmit(speciality: Speciality) {
-    if (speciality.id) {
-      console.log('actualizacion');
-    } else {
-      speciality.id = null;
-      this.specialitiesService.insertarSpecialities(speciality).subscribe(datos => {
-        console.log(datos);
-        this.speciality = datos;
-        this.actualiza.emit(this.speciality);
-      });
-    }
+    speciality.id = null;
+    this.specialitiesService.insertarSpecialities(speciality).subscribe(datos => {
+      this.speciality = datos;
+      this.actualiza.emit(this.speciality);
+    });
   }
 }

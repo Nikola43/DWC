@@ -14,14 +14,11 @@
     <button type="button" (click)="del(s)">Delete</button>
 
     <!--botton para eliminar owner-->
-    <!-- <button type="button" (click)="upd(s.id)">Update </button> -->
-    <button type="submit" (click)="editar(s)">
-      Editar
-    </button>
+    <button type="button" (click)="upd(s)">Update </button>
   </li>
 </ul>
 
 <div *ngIf="ocultarMostrarModificar">
-  <app-form-speciality (actualiza)="actualizaEspecialidad($event)">....</app-form-speciality>
+  <app-form-speciality (actualiza)="actualizaEspecialidad($event)"></app-form-speciality>
 </div>
 <button class="btn btn-primary" (click)="verOcultarFormulario()">Add</button>
