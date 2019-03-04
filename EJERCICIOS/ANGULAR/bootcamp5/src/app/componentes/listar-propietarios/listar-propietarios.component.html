@@ -1,31 +1,23 @@
-<p>
-  Listando propietarios!!!
-</p>
+<div class="row">
+  <h3 class="col-4">Lista de propietarios</h3>
 
-<div>
-    <h3>Owner: </h3>
-  </div>
-  <div >
+  <div class="col-4">
     <a routerLink="/propietarios-add/-1">
-      <button  type="button">Añadir Propietario</button>
+      <button class="btn btn-primary" type="button">
+        Añadir Propietario
+      </button>
     </a>
   </div>
 
-<h3>Propietario:</h3>
-<ul>
-  <!--recorre el array owners-->
-  <li *ngFor="let p of propietarios">
-    <a routerLink="/propietarios/{{p.id}}" routerLinkActive="active" (click)="onSelect(p)">
-      Detalles:
-      {{p.firstName}}
-      {{p.lastName}} -
-      {{p.city}}
-    </a>
+</div>
 
-    <!--botton para eliminar owner / meto el codigo del click en propietario.ts-->
-    <button type="button" (click)="del(p)">Delete</button>
+<ul *ngFor="let p of listaPropietarios">
+  <li><a routerLink="/propietarios/{{p.id}}" routerLinkActive="active">
+    {{p.firstName}} {{p.lastName}} - {{p.city}}
+  </a>
+    <button type="button" class="btn btn-secondary" (click)="eliminarPropietario(p.id)">DEL</button>
 
-    <!--botton para eliminar propietario-->
-    <button type="button" (click)="upd(p)">Update </button>
+    <button type="button" class="btn btn-secondary" (click)="modificarPropietario(p.id)">MOD</button>
   </li>
 </ul>
+

@@ -1,0 +1,31 @@
+<h1>Propietario</h1>
+<table class="table table-striped">
+  <tr>
+    <th>Nombre</th>
+    <td><b>{{propietario.firstName}} {{propietario.lastName}}</b></td>
+  </tr>
+  <tr>
+    <th>Correo</th>
+    <td>{{propietario.address}}</td>
+  </tr>
+  <tr>
+    <th>Ciudad</th>
+    <td>{{propietario.city}}</td>
+  </tr>
+  <tr>
+    <th>Telefono</th>
+    <td>{{propietario.telephone}}</td>
+  </tr>
+</table>
+
+<div class="form-group">
+  <button class="btn btn-primary mr-4" type="submit" (click)="eliminarPropietario(propietario.id)">
+    Eliminar Usuario
+  </button>
+  <a routerLink="/propietarios">
+    <button class="btn btn-secondary" type="button" >
+      Cancelar
+    </button>
+  </a>
+</div>
+

@@ -6,5 +6,15 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'bootcamp5';
+  title = 'bootcamptallerangular5';
+
+  public navBar = {
+    isNavbarCollapsed: true,
+    propietarios: {
+      dropdown: true
+    },
+    vets: {
+      dropdown: true
+    }
+  };
 }

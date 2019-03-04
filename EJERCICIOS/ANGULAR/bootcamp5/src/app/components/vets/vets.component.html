@@ -1,0 +1,15 @@
+
+<p>Aqui mostramos los veterinarios de los animales </p>
+
+<h3>Vets:</h3>
+<ul>
+  <!--recorre el array owners-->
+  <li *ngFor="let v of vets">
+    <a href="#">
+      {{v.id}}
+      {{v.firstName}} -
+      {{v.lastName}}
+    </a>
+  </li>
+
+</ul>

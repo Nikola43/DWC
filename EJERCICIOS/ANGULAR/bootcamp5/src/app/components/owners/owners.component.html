@@ -1,0 +1,16 @@
+
+<p>Aqui mostramos los propietarios de los animales </p>
+
+<h3>Owners:</h3>
+<ul>
+  <!--recorre el array owners-->
+  <li *ngFor="let p of owners">
+    <a routerLink="/owners/{{p.id}}" routerLinkActive="active" (click)="onSelect(p)">
+      Detalles:
+      {{p.firstName}}
+      {{p.lastName}} -
+      {{p.city}}
+    </a>
+  </li>
+</ul>
+

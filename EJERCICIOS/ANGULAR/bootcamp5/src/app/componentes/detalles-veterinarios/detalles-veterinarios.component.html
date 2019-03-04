@@ -1,0 +1,27 @@
+<h1>veterinario</h1>
+<table class="table table-striped">
+  <tr>
+    <th>Id</th>
+    <td><b>{{veterinario.id}}</b></td>
+  </tr>
+  <tr>
+    <th>Nombre</th>
+    <td><b>{{veterinario.firstName}}</b></td>
+  </tr>
+  <tr>
+    <th>Apellidos</th>
+    <td><b>{{veterinario.lastName}}</b></td>
+  </tr>
+</table>
+
+<div class="form-group">
+  <button class="btn btn-primary mr-4" type="submit" (click)="eliminarVeterinario(veterinario.id)">
+    Eliminar Usuario
+  </button>
+  <a routerLink="/veterinarios">
+    <button class="btn btn-secondary" type="button" >
+      Cancelar
+    </button>
+  </a>
+</div>
+

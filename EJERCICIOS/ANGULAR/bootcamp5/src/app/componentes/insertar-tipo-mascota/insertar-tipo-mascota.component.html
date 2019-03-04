@@ -1,0 +1,27 @@
+<div class="container">
+  <form class="form-hotizontal" #tipoMascotaForm="ngForm" (ngSubmit)="onSubmit(tipoMascotaForm.value)">
+
+    <div class="form-group" hidden="true">
+      <input type="text" hidden="true" class="form-control" id="id" [(ngModel)]="tipoMascota.id" name="id">
+    </div>
+
+    <div class="form-group">
+      <label>Nombre: </label>
+      <input type="text" class="form-control" required [(ngModel)]="tipoMascota.name" name="name" #name="ngModel">
+      <div [hidden]="name.valid || name.pristine" class="alert alert-danger">
+        El nombre es obligatorio
+      </div>
+    </div>
+
+    <div class="form-group">
+      <button class="btn btn-primary mr-4" type="submit" [disabled]="!tipoMascotaForm.valid">
+        Guardar
+      </button>
+      <a routerLink="/tipoMascota">
+        <button class="btn btn-secondary" type="button">
+          Cancelar
+        </button>
+      </a>
+    </div>
+  </form>
+</div>

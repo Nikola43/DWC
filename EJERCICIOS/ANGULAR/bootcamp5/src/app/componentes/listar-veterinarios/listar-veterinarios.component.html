@@ -1,0 +1,23 @@
+<div class="row">
+  <h3 class="col-4">Lista de Veterinarios</h3>
+
+  <div class="col-4">
+    <a routerLink="/veterinarios-add/-1">
+      <button class="btn btn-primary" type="button">
+        Añadir Veterinario
+      </button>
+    </a>
+  </div>
+
+</div>
+
+<ul *ngFor="let v of listaVeterinarios">
+  <li><a routerLink="/veterinarios/{{v.id}}" routerLinkActive="active">
+    {{v.id}} - {{v.firstName}} - {{v.lastName}}
+  </a>
+    <button type="button" class="btn btn-secondary" (click)="eliminarVeterinario(v.id)">DEL</button>
+
+    <button type="button" class="btn btn-secondary" (click)="modificarVeterinario(v.id)">MOD</button>
+  </li>
+</ul>
+

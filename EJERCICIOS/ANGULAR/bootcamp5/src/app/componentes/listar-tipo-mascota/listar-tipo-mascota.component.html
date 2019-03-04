@@ -1,0 +1,20 @@
+<div class="row">
+  <h3 class="col-4">Lista de tipos de mascotas</h3>
+</div>
+
+<ul *ngFor="let m of listaTiposMascotas">
+  <li><a routerLink="/tipoMascota/{{m.id}}" routerLinkActive="active">
+    {{m.id}} - {{m.name}}
+  </a>
+    <button type="button" class="btn btn-secondary" (click)="eliminarTiposMascotas(m.id)">DEL</button>
+
+    <button type="button" class="btn btn-secondary" (click)="editarTipoMascota(m)">MOD</button>
+  </li>
+</ul>
+
+<button type="button" class="btn btn-secondary" (click)="mostrarAnadir()">ADD</button>
+
+<div *ngIf="confirmacion">
+  <!--llamo al parametro de entrada de add Specilality-->
+  <app-insertar-tipo-mascota (onNew)="onNewTipoMascota($event)" [tipoMascota]="editado"></app-insertar-tipo-mascota>
+</div>
